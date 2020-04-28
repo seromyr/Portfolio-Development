@@ -1,6 +1,6 @@
 April 28
 	- 1st team meeting at 3:30 PM
-	- Topics: Game Idea, Game Theme, Workflow, How to oversee and sync each other work, Introduce Trello and GitHub, Reports
-	- Things agreed:
-	- Things declined:
-	- Things to come back later:
+	- Topics: Game Idea, Game Theme, Workflow, How to oversee and sync each other work, Introduce Trello, GitHub and Texture Packer, Reports, Prioritizing Tasks, 
+	- Things agreed: All
+	- Things declined: None
+	- Things to come back later: How to use Texture Packer, GitHub
