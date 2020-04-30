@@ -1,0 +1,15 @@
+April 29
+	- [dev] Finished first version of Game Design document
+	- [dev]	Finished Code Architecture
+	- [dev] Finished Presentation file
+	- [art]	Created game setting
+	- [art]	Created a few game concepts including world and main character 
+April 28
+	- [dev] Created GitHub repository
+
+April 27
+	- [dev] Finished brainstorming.
+	- [dev] Created design proposal.
+
+April 23:
+	- [dev] Created Trello board and shared it with members 
