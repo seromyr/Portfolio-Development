@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Background.png"
+],
+
+"framerate": 20,
+"frames": [
+    [1, 1, 347, 275, 0, 173.5, 137.5]
+],
+
+"animations": {
+    "bkg_image": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:20f61d6d0df0c0d268ec6d28d554e55b:b061ca75562db622844702c920da0b1c:4cb33d97ef66be20b5b17a259b174a71$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
