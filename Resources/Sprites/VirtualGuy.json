@@ -1,0 +1,35 @@
+{
+
+"images": [
+    "VirtualGuy.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 24, 25, 0, 12, 25],
+    [27, 1, 24, 25, 0, 12, 25],
+    [27, 1, 24, 25, 0, 12, 25],
+    [1, 28, 24, 26, 0, 12, 26],
+    [1, 28, 24, 26, 0, 12, 26],
+    [27, 28, 24, 27, 0, 12, 27],
+    [27, 28, 24, 27, 0, 12, 27],
+    [27, 28, 24, 27, 0, 12, 27],
+    [27, 28, 24, 27, 0, 12, 27],
+    [1, 57, 24, 26, 0, 12, 26],
+    [1, 57, 24, 26, 0, 12, 26],
+    [27, 57, 24, 29, 0, 12, 29],
+    [1, 88, 25, 27, 0, 12, 27]
+],
+
+"animations": {
+    "VirtualGuy/Idle/VGuy_idle": { "frames": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10] },
+    "VirtualGuy/Jump/VGuy_jump": { "frames": [11] },
+    "VirtualGuy/Fall/VGuy_fall": { "frames": [12] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:29e4020998e7eae1c7f6a6dde70006bc:0f0981a0d41451e06116996264d3304b:687429aba9d238388cea69acfd52e650$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

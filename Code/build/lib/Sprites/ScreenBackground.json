@@ -1,0 +1,23 @@
+{
+
+"images": [
+    "ScreenBackground.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 600, 800, 0, 0, 0],
+    [1, 803, 600, 800, 0, 0, 0]
+],
+
+"animations": {
+    "Gameplay": { "frames": [0] },
+    "MainMenu": { "frames": [1] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:909c122fca3d338a1233ba79cfaa176b:b845f4ff8341d5791b90b99ad6838ad0:040717bd3fd17be8d930f79c7a31c97c$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
