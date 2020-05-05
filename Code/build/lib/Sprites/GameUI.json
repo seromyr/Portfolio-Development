@@ -6,37 +6,39 @@
 
 "framerate": 30,
 "frames": [
-    [1, 1, 293, 91, 0, 146.5, 45.5],
-    [296, 1, 293, 91, 0, 146.5, 45.5],
-    [591, 1, 293, 91, 0, 146.5, 45.5],
-    [886, 1, 293, 91, 0, 146.5, 45.5],
-    [1181, 1, 293, 91, 0, 146.5, 45.5],
-    [1476, 1, 293, 91, 0, 146.5, 45.5],
-    [1, 94, 293, 91, 0, 146.5, 45.5],
-    [296, 94, 293, 91, 0, 146.5, 45.5],
-    [591, 94, 293, 91, 0, 146.5, 45.5],
-    [886, 94, 600, 800, 0, 0, 0],
-    [1, 896, 600, 800, 0, 0, 0],
-    [603, 896, 600, 800, 0, 0, 0]
+    [1, 1, 600, 800, 0, 0, 0],
+    [603, 1, 600, 800, 0, 0, 0],
+    [1205, 1, 600, 800, 0, 0, 0],
+    [1, 803, 293, 91, 0, 146.5, 45.5],
+    [296, 803, 293, 91, 0, 146.5, 45.5],
+    [591, 803, 293, 91, 0, 146.5, 45.5],
+    [886, 803, 293, 91, 0, 146.5, 45.5],
+    [1181, 803, 293, 91, 0, 146.5, 45.5],
+    [1476, 803, 293, 91, 0, 146.5, 45.5],
+    [1, 896, 293, 91, 0, 146.5, 45.5],
+    [296, 896, 293, 91, 0, 146.5, 45.5],
+    [591, 896, 293, 91, 0, 146.5, 45.5],
+    [886, 896, 600, 800, 0, 0, 0]
 ],
 
 "animations": {
-    "play confirm": { "frames": [0] },
-    "play highlight": { "frames": [1] },
-    "play": { "frames": [2] },
-    "return confirm": { "frames": [3] },
-    "return highlight": { "frames": [4] },
-    "return": { "frames": [5] },
-    "shop confirm": { "frames": [6] },
-    "shop highlight": { "frames": [7] },
-    "shop": { "frames": [8] },
-    "Gameplay": { "frames": [9] },
-    "MainMenu": { "frames": [10] },
-    "ShopBackground": { "frames": [11] }
+    "GameOver": { "frames": [0] },
+    "Gameplay": { "frames": [1] },
+    "MainMenu": { "frames": [2] },
+    "play confirm": { "frames": [3] },
+    "play highlight": { "frames": [4] },
+    "play": { "frames": [5] },
+    "return confirm": { "frames": [6] },
+    "return highlight": { "frames": [7] },
+    "return": { "frames": [8] },
+    "shop confirm": { "frames": [9] },
+    "shop highlight": { "frames": [10] },
+    "shop": { "frames": [11] },
+    "ShopBackground": { "frames": [12] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:42caa75c188613f1a30c4a9849100d83:d03f2bd608fdf9d22e12797311eebad9:ba29853d8c454f82443a40af26f6b409$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:bf26e84d8906e087ab00d049b29723fc:8935969d209d04866fcb26f80b3827ee:ba29853d8c454f82443a40af26f6b409$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

@@ -14,6 +14,7 @@ import MainMenuScreen from "./Screens/MainMenuScreen";
 import GameplayScreen from "./Screens/GameplayScreen";
 import GameplayState from "./GameLogic/GameplayState";
 import ShopScreen from "./Screens/ShopScreen";
+import Endcreen from "./Screens/EndScreen";
 
 // game variables
 let stage:createjs.StageGL;
@@ -25,6 +26,7 @@ let mainMenu:MainMenuScreen;
 let gameplayScreen:GameplayScreen;
 let gameplayState:GameplayState;
 let shopScreen:ShopScreen;
+let endScreen:Endcreen;
 
 // BOOT UP GAME
 function onReady(e:createjs.Event):void {
@@ -43,10 +45,14 @@ function onReady(e:createjs.Event):void {
     // instantiate gameplay screen logic
     gameplayState = new GameplayState(assetManager, stage);
 
+    // instantiate end screen
+    endScreen = new Endcreen(assetManager, stage);
+
     // listen to any dispatched event
     stage.on(SCREEN_TITLE[0], ShowMainMenu);
     stage.on(SCREEN_TITLE[1], ShowGameplay);
     stage.on(SCREEN_TITLE[2], ShowShop);
+    stage.on(SCREEN_TITLE[3], ShowGameOver);
     
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
@@ -56,6 +62,7 @@ function onReady(e:createjs.Event):void {
 
 // CUSTOM EVENTS
 function ShowMainMenu():void {
+    endScreen.HideMe();
     shopScreen.HideMe();
     mainMenu.ShowMe();
 }
@@ -68,8 +75,13 @@ function ShowGameplay():void {
 
 function ShowShop():void {
     mainMenu.HideMe();
-    gameplayScreen.HideMe();
     shopScreen.ShowMe();
+}
+
+function ShowGameOver(e:Event):void {        
+    console.log("player has died");
+    gameplayState.Terminate();
+    endScreen.ShowMe();
 }
 
 // GAME UPDATER
@@ -78,7 +90,6 @@ function onTick(e:createjs.Event):void {
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
 
     if (gameplayState.GameStart) {
-
         gameplayState.Update();
     }
 

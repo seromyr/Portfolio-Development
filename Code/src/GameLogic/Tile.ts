@@ -12,17 +12,6 @@ export default class Tile extends Entity {
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         super(assetManager, stage, "tiles");
         this._width = this._sprite.getBounds().width;
-        this._height = this._sprite.getBounds().height;
-        
+        this._height = this._sprite.getBounds().height;        
     }
-
-    // public ShowMe():void {
-        
-    //     //Display tile sprite
-    //     super.ShowMe("Golden");
-        
-    // }
-
-
-
 }

@@ -1,4 +1,4 @@
-import { PLAYER_JUMPSPEED, STAGE_HEIGHT } from "../Constants";
+import { PLAYER_JUMPSPEED, PLAYER_JUMPHEIGHT } from "../Constants";
 import AssetManager from "../Miscs/AssetManager";
 import Character from "./Entity";
 import Tile from "./Tile";
@@ -16,21 +16,17 @@ export default class Player extends Character {
     
     private _isGrounded:boolean;
 
-    // player events
-    private playerCollision:createjs.Event;
-
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         
         super(assetManager, stage, "mainChar");
-
-        // wire up events
-        this.playerCollision = new createjs.Event("collided", true, false);
-
+        this.JumpHeight = PLAYER_JUMPHEIGHT;
+        this.JumpSpeed = PLAYER_JUMPSPEED;
+        this.Jump = false;
     }
 
     public ShowMeIdling():void {
         
-        //Display with idle animation
+        //Display character with looping animation
         super.ShowMe("VirtualGuy/Idle/VGuy_idle");
         // console.log(this._sprite.x);
         // console.log(this._sprite.y);
@@ -39,7 +35,7 @@ export default class Player extends Character {
 
     public ShowMeJumping():void {
         
-        //Display with idle animation
+        //Display character with no looping animation
         super.ShowMe("VirtualGuy/Fall/VGuy_fall", false);
         this._isGrounded = false;
         // console.log(this._sprite.x);
@@ -48,43 +44,11 @@ export default class Player extends Character {
     }
 
     public Update():void {
-
         //if player touches the ground
         if (this._isGrounded && this.Jump) {
 
             this.Y -= this.JumpSpeed;
             this._isGrounded = false;
-            console.log("?");
-            //console.log("start jumping");
-            // this._jumpSpeed++;
-            // this.Y -= Math.cos(this._jumpSpeed) + this._jumpSpeed;
-
-            // if (this.Y <= this.CurrentY - this._jumpHeight) {
-            //     this._atMaxJumpHeight = false;
-            //     this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
-            //     //reset jump speed
-            //     this._jumpSpeed = PLAYER_JUMPSPEED;
-
-            // }
-
-            //this.Y = this.CurrentY;
-            //if (this.Jump) {
-                // player jump up algorithm
-                // if (this._atMaxJumpHeight && this.Y >= this.CurrentY - this._jumpHeight) {
-                //     this._jumpSpeed++;
-                //     this.Y -= Math.cos(this._jumpSpeed) + this._jumpSpeed;
-                    
-                //     if (this.Y <= this.CurrentY - this._jumpHeight) {
-                //         this._atMaxJumpHeight = false;
-                //         this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
-                //         //console.log("reach max height");
-                //         //reset jump speed
-                //         this._jumpSpeed = PLAYER_JUMPSPEED;
-                //         this.Jump = false;
-                //     }
-                // }
-            //}
-
         }
 
         // if player is in mid-air and jumping
@@ -99,8 +63,6 @@ export default class Player extends Character {
 
                     this.Y = this.CurrentY - this._jumpHeight
                     this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
-                    //reset jump speed
-                    //this._jumpSpeed = PLAYER_JUMPSPEED;
                     this.Jump = false;
                 }
             }
@@ -114,56 +76,16 @@ export default class Player extends Character {
             this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
             this.Y += this.JumpSpeed * 0.3;
             console.log("falling");
-
-
-            // if (this.Y >= this.CurrentY) {
-            //     this.Y = this.CurrentY;
-            //     //this._up = true;
-            //     this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
-            //     this._jumpSpeed = PLAYER_JUMPSPEED;
-            //     //this.Jump = false;
-            // }
-        }
-        
-        
-
-        // else {
-        //     this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
-        //     this.Y += this.JumpSpeed * 0.3;
-            
-            // if (this.Y >= this.CurrentY) {
-            //     this.Y = this.CurrentY;
-            //     this._up = true;
-            //     this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
-            //     this._jumpSpeed = PLAYER_JUMPSPEED;
-            //     this.Jump = false;
-            // }
-        
-        
-            
-        //     // player jump down algorithm
-        //     else {
-        //         this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
-        //         this.Y += this.JumpSpeed * 0.3;
-                
-        //         if (this.Y >= this.CurrentY) {
-        //             this.Y = this.CurrentY;
-        //             this._up = true;
-        //             this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
-        //             this._jumpSpeed = PLAYER_JUMPSPEED;
-        //             this.Jump = false;
-        //         }
-        //     }
-        // }   
+        }   
     }
 
     public CollisionCheckWithTiles(tile:Tile[]):void {        
         for (let i:number = 0; i < tile.length; i++) {
             //if player collides with a tile
-            if (this.X >= tile[i].X || this.X <= tile[i].Width) {
+            if (this.X >= tile[i].X && this.X <= tile[i].X + tile[i].Width) {
                 if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
                     console.log(`landed on a ${tile[i].Name} tile`);
-                    this.screen.dispatchEvent(this.playerCollision);
+                    //this.screen.dispatchEvent(this.playerCollision);
                     this._isGrounded = true;
                     this.Jump = true;
                     this.Y = this.CurrentY = tile[i].Y;
@@ -174,7 +96,6 @@ export default class Player extends Character {
 
             else {
                 this._isGrounded = false;
-                //this.CurrentY = STAGE_HEIGHT;
             }
         }
     }
@@ -182,10 +103,10 @@ export default class Player extends Character {
     // collision check with a single tile
     public CollisionCheckWithATile(tile:Tile):void {
         //if player collides with a tile
-        if (this.X > tile.X && this.X < tile.Width) {
+        if (this.X >= tile.X && this.X <= tile.X + tile.Width) {
             if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
                 console.log(`landed on a ${tile.Name} tile`);
-                this.screen.dispatchEvent(this.playerCollision);
+                //this.screen.dispatchEvent(this.playerCollision);
                 this._isGrounded = true;
                 this.Jump = true;
                 this.Y = this.CurrentY = tile.Y;
@@ -193,10 +114,8 @@ export default class Player extends Character {
                 this._jumpSpeed = PLAYER_JUMPSPEED;
             }
         }
-
         else {
             this._isGrounded = false;
-            //this.CurrentY = STAGE_HEIGHT;
         }
     }
 }

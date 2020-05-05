@@ -9975,8 +9975,10 @@ exports.SCREEN_TITLE = [
 ];
 exports.PLAYER_MOVESPEED = 10;
 exports.PLAYER_JUMPSPEED = 1;
-exports.PLAYER_JUMPHEIGHT = 64;
-exports.MAX_TILES = 32;
+exports.PLAYER_JUMPHEIGHT = 96;
+exports.PLAYER_DEFAULT_X = 150;
+exports.PLAYER_DEFAULT_Y = exports.STAGE_HEIGHT * 0.6;
+exports.MAX_TILES = 64;
 exports.ASSET_MANIFEST = [
     {
         type: "json",
@@ -10037,6 +10039,7 @@ const MainMenuScreen_1 = __webpack_require__(/*! ./Screens/MainMenuScreen */ "./
 const GameplayScreen_1 = __webpack_require__(/*! ./Screens/GameplayScreen */ "./src/Screens/GameplayScreen.ts");
 const GameplayState_1 = __webpack_require__(/*! ./GameLogic/GameplayState */ "./src/GameLogic/GameplayState.ts");
 const ShopScreen_1 = __webpack_require__(/*! ./Screens/ShopScreen */ "./src/Screens/ShopScreen.ts");
+const EndScreen_1 = __webpack_require__(/*! ./Screens/EndScreen */ "./src/Screens/EndScreen.ts");
 let stage;
 let canvas;
 let assetManager;
@@ -10044,6 +10047,7 @@ let mainMenu;
 let gameplayScreen;
 let gameplayState;
 let shopScreen;
+let endScreen;
 function onReady(e) {
     console.log(">> adding sprites to game");
     mainMenu = new MainMenuScreen_1.default(assetManager, stage);
@@ -10051,14 +10055,17 @@ function onReady(e) {
     gameplayScreen = new GameplayScreen_1.default(assetManager, stage);
     shopScreen = new ShopScreen_1.default(assetManager, stage);
     gameplayState = new GameplayState_1.default(assetManager, stage);
+    endScreen = new EndScreen_1.default(assetManager, stage);
     stage.on(Constants_1.SCREEN_TITLE[0], ShowMainMenu);
     stage.on(Constants_1.SCREEN_TITLE[1], ShowGameplay);
     stage.on(Constants_1.SCREEN_TITLE[2], ShowShop);
+    stage.on(Constants_1.SCREEN_TITLE[3], ShowGameOver);
     createjs.Ticker.framerate = Constants_1.FRAME_RATE;
     createjs.Ticker.on("tick", onTick);
     console.log(">> game ready");
 }
 function ShowMainMenu() {
+    endScreen.HideMe();
     shopScreen.HideMe();
     mainMenu.ShowMe();
 }
@@ -10069,8 +10076,12 @@ function ShowGameplay() {
 }
 function ShowShop() {
     mainMenu.HideMe();
-    gameplayScreen.HideMe();
     shopScreen.ShowMe();
+}
+function ShowGameOver(e) {
+    console.log("player has died");
+    gameplayState.Terminate();
+    endScreen.ShowMe();
 }
 function onTick(e) {
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
@@ -10163,72 +10174,94 @@ class GameplayState {
     constructor(assetManager, stage) {
         this.stage = stage;
         this.assetManager = assetManager;
-        this.player = new Player_1.default(assetManager, stage);
-        this.player2 = new Player_1.default(assetManager, stage);
+        this.rng = new ProceduralGenerator_1.default();
+        this.mainChar = new Player_1.default(assetManager, stage);
+        this.npc_01 = new Player_1.default(assetManager, stage);
         this.tile_Start = new Tile_1.default(assetManager, stage);
         this.tile_test = new Tile_1.default(assetManager, stage);
-        this.tiles_Golden = [];
-        this.tiles_temp = [];
-        this.player.JumpHeight = Constants_1.PLAYER_JUMPHEIGHT;
-        this.rng = new ProceduralGenerator_1.default();
+        this.dock = new Tile_1.default(assetManager, stage);
+        this.PlayerController();
+        this._playerHasDied = new createjs.Event(Constants_1.SCREEN_TITLE[3], true, false);
+    }
+    get GameStart() { return this._gameStart; }
+    set GameStart(value) { this._gameStart = value; }
+    StartNewGame() {
+        this._gameStart = true;
+        this.CreateActors();
+        this.mainChar.ShowMeJumping();
+        this.npc_01.ShowMeIdling();
+        this.tile_Start.ShowMe("Golden");
+        this.dock.ShowMe("Stone");
+        this.SpawnTiles(Constants_1.MAX_TILES, "Clay", this.tiles_common);
+    }
+    CreateActors() {
+        this.mainChar.Alive = true;
+        this.mainChar.X = Constants_1.PLAYER_DEFAULT_X;
+        this.mainChar.Y = Constants_1.PLAYER_DEFAULT_Y;
+        this.mainChar.CurrentY = this.mainChar.Y;
+        this.npc_01.Alive = true;
+        this.npc_01.X = 125;
+        this.npc_01.Y = Constants_1.STAGE_HEIGHT * 0.75;
+        this.tiles_common = [];
+        this.tile_Start.Name = "Starting";
+        this.tile_Start.X = 120;
+        this.tile_Start.Y = Constants_1.STAGE_HEIGHT * 0.75;
+        this.dock.X = -this.dock.Width;
+        this.dock.Y = Constants_1.STAGE_HEIGHT / 2;
+    }
+    PlayerController() {
         document.onkeydown = (e) => {
             if (e.keyCode == 37 || e.keyCode == 65) {
-                this.player.X -= Constants_1.PLAYER_MOVESPEED;
+                this.mainChar.X -= Constants_1.PLAYER_MOVESPEED;
             }
             else if (e.keyCode == 39 || e.keyCode == 68) {
-                this.player.X += Constants_1.PLAYER_MOVESPEED;
+                this.mainChar.X += Constants_1.PLAYER_MOVESPEED;
             }
         };
         document.onkeyup = (e) => {
             if (e.keyCode == 37 || e.keyCode == 65) { }
             else if (e.keyCode == 39 || e.keyCode == 68) { }
         };
-        stage.on("collided", this.onCollision);
-    }
-    get IsFacingRight() { return this._isFacingRight; }
-    set IsFacingRight(value) { this._isFacingRight = value; }
-    get GameStart() { return this._gameStart; }
-    set GameStart(value) { this._gameStart = value; }
-    StartNewGame() {
-        this._gameStart = true;
-        this.player2.Alive = true;
-        this.player2.X = this.rng.RandomCoordinatesOnScreen()[0][0];
-        this.player2.Y = this.rng.RandomCoordinatesOnScreen()[0][1];
-        this.player2.Jump = false;
-        this.player2.ShowMeIdling();
-        this.player.Alive = true;
-        this.player.X = 130;
-        this.player.Y = Constants_1.STAGE_HEIGHT / 3;
-        this.player.Jump = false;
-        this.player.CurrentY = this.player.Y;
-        this.player.JumpSpeed = Constants_1.PLAYER_JUMPSPEED;
-        this.player.ShowMeJumping();
-        this.tile_Start.Name = "Starting";
-        this.tile_Start.X = 125;
-        this.tile_Start.Y = Constants_1.STAGE_HEIGHT / 2;
-        this.tile_Start.ShowMe("Brick");
-        this.tile_test.Name = "Clay";
-        this.tile_test.X = 150;
-        this.tile_test.Y = Constants_1.STAGE_HEIGHT / 2 - 8 - this.tile_test.Height;
-        this.tile_test.ShowMe("Clay");
-        this.SpawnTiles(4, "Golden", this.tiles_Golden);
-        this.SpawnTiles(Constants_1.MAX_TILES, "Stone", this.tiles_temp);
     }
     Update() {
-        this.player.Update();
-        this.player.CollisionCheckWithATile(this.tile_test);
-        this.player.CollisionCheckWithATile(this.tile_Start);
+        if (this.mainChar.Alive) {
+            this.ObjectShifter();
+            this.mainChar.Update();
+            this.mainChar.CollisionCheckWithTiles(this.tiles_common);
+            this.mainChar.CollisionCheckWithATile(this.tile_test);
+            this.mainChar.CollisionCheckWithATile(this.tile_Start);
+            if ((this.mainChar.Y) >= Constants_1.STAGE_HEIGHT) {
+                this.stage.dispatchEvent(this._playerHasDied);
+                this.mainChar.Alive = false;
+            }
+        }
+    }
+    Terminate() {
+        this._gameStart = false;
+        this.stage.removeAllChildren();
     }
     SpawnTiles(quantity, type = "Clay", tileset) {
         for (let i = 0; i < quantity; i++) {
             tileset[i] = new Tile_1.default(this.assetManager, this.stage);
             tileset[i].Name = type;
-            tileset[i].X = this.rng.RandomCoordinatesOnScreen()[0][0];
-            tileset[i].Y = this.rng.RandomCoordinatesOnScreen()[0][1];
             tileset[i].ShowMe(type);
         }
+        this.rng.RandomGameObjectsInsideStage(tileset);
     }
-    onCollision(e) {
+    ObjectShifter() {
+        if (this.mainChar.Y <= this.dock.Y) {
+            this.npc_01.Y++;
+            this.tile_Start.Y++;
+            for (let i = 0; i < this.tiles_common.length; i++) {
+                this.tiles_common[i].Y++;
+            }
+        }
+        for (let i = 0; i < this.tiles_common.length; i++) {
+            if (this.tiles_common[i].Y > Constants_1.STAGE_HEIGHT) {
+                this.tiles_common[i].Y = -this.tiles_common[i].Height;
+                this.tiles_common[i].X = this.rng.RandomCoordinatesOnScreen()[0][0];
+            }
+        }
     }
 }
 exports.default = GameplayState;
@@ -10251,7 +10284,9 @@ const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts"
 class Player extends Entity_1.default {
     constructor(assetManager, stage) {
         super(assetManager, stage, "mainChar");
-        this.playerCollision = new createjs.Event("collided", true, false);
+        this.JumpHeight = Constants_1.PLAYER_JUMPHEIGHT;
+        this.JumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+        this.Jump = false;
     }
     get JumpHeight() { return this._jumpHeight; }
     set JumpHeight(value) { this._jumpHeight = value; }
@@ -10268,7 +10303,6 @@ class Player extends Entity_1.default {
         if (this._isGrounded && this.Jump) {
             this.Y -= this.JumpSpeed;
             this._isGrounded = false;
-            console.log("?");
         }
         else if (!this._isGrounded && this.Jump) {
             if (this.Y <= this.CurrentY) {
@@ -10290,10 +10324,9 @@ class Player extends Entity_1.default {
     }
     CollisionCheckWithTiles(tile) {
         for (let i = 0; i < tile.length; i++) {
-            if (this.X >= tile[i].X || this.X <= tile[i].Width) {
+            if (this.X >= tile[i].X && this.X <= tile[i].X + tile[i].Width) {
                 if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
                     console.log(`landed on a ${tile[i].Name} tile`);
-                    this.screen.dispatchEvent(this.playerCollision);
                     this._isGrounded = true;
                     this.Jump = true;
                     this.Y = this.CurrentY = tile[i].Y;
@@ -10307,10 +10340,9 @@ class Player extends Entity_1.default {
         }
     }
     CollisionCheckWithATile(tile) {
-        if (this.X > tile.X && this.X < tile.Width) {
+        if (this.X >= tile.X && this.X <= tile.X + tile.Width) {
             if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
                 console.log(`landed on a ${tile.Name} tile`);
-                this.screen.dispatchEvent(this.playerCollision);
                 this._isGrounded = true;
                 this.Jump = true;
                 this.Y = this.CurrentY = tile.Y;
@@ -10340,8 +10372,6 @@ exports.default = Player;
 Object.defineProperty(exports, "__esModule", { value: true });
 const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
 class ProceduralGenerator {
-    constructor() {
-    }
     RandomBetween(low, high) {
         let randomNum = 0;
         randomNum = Math.floor(Math.random() * (high - low + 1)) + low;
@@ -10352,6 +10382,12 @@ class ProceduralGenerator {
         randomCoords[0][0] = this.RandomBetween(0, Constants_1.STAGE_WIDTH);
         randomCoords[0][1] = this.RandomBetween(0, Constants_1.STAGE_HEIGHT);
         return randomCoords;
+    }
+    RandomGameObjectsInsideStage(tileset) {
+        for (let i = 0; i < tileset.length; i++) {
+            tileset[i].X = this.RandomBetween(0, Constants_1.STAGE_WIDTH);
+            tileset[i].Y = this.RandomBetween(0, Constants_1.STAGE_HEIGHT);
+        }
     }
 }
 exports.default = ProceduralGenerator;
@@ -10506,6 +10542,32 @@ exports.default = ShapeFactory;
 
 /***/ }),
 
+/***/ "./src/Screens/EndScreen.ts":
+/*!**********************************!*\
+  !*** ./src/Screens/EndScreen.ts ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const _ScreenManager_1 = __webpack_require__(/*! ./_ScreenManager */ "./src/Screens/_ScreenManager.ts");
+const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+class Endcreen extends _ScreenManager_1.default {
+    constructor(assetManager, stage) {
+        super(assetManager, stage, "GameOver", Constants_1.SCREEN_TITLE[3]);
+        super.ShowReturnButton();
+    }
+    ShowMe() {
+        super.ShowMe();
+    }
+}
+exports.default = Endcreen;
+
+
+/***/ }),
+
 /***/ "./src/Screens/GameplayScreen.ts":
 /*!***************************************!*\
   !*** ./src/Screens/GameplayScreen.ts ***!
@@ -10523,7 +10585,6 @@ class GameplayScreen extends _ScreenManager_1.default {
         super(assetManager, stage, "Gameplay", Constants_1.SCREEN_TITLE[1]);
         super.HideShopButton();
         super.HidePlayButton();
-        super.ShowReturnButton();
     }
     ShowMe() {
         super.ShowMe();

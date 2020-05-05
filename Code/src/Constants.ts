@@ -13,8 +13,10 @@ export const SCREEN_TITLE:string[] =
     ];
 export const PLAYER_MOVESPEED:number = 10;
 export const PLAYER_JUMPSPEED:number = 1;
-export const PLAYER_JUMPHEIGHT:number = 64;
-export const MAX_TILES:number = 32;
+export const PLAYER_JUMPHEIGHT:number = 96;
+export const PLAYER_DEFAULT_X:number = 150;
+export const PLAYER_DEFAULT_Y:number = STAGE_HEIGHT * 0.6;
+export const MAX_TILES:number = 64;
 
 
 // manifest for AssetManager

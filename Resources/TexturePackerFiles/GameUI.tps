@@ -181,6 +181,7 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../Concepts/GameUI/GameOver.png</key>
             <key type="filename">../Concepts/GameUI/Gameplay.png</key>
             <key type="filename">../Concepts/GameUI/MainMenu.png</key>
             <key type="filename">../Concepts/GameUI/ShopBackground.png</key>
@@ -236,6 +237,7 @@
             <filename>../Concepts/GameUI/shop confirm.png</filename>
             <filename>../Concepts/GameUI/shop highlight.png</filename>
             <filename>../Concepts/GameUI/shop.png</filename>
+            <filename>../Concepts/GameUI/GameOver.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
