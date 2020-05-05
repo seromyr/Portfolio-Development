@@ -6,15 +6,21 @@
 
 "framerate": 30,
 "frames": [
-    [1, 1, 48, 16, 0, 0, 0]
+    [1, 1, 48, 16, 0, 0, 0],
+    [1, 19, 48, 16, 0, 0, 0],
+    [1, 37, 48, 16, 0, 0, 0],
+    [1, 55, 48, 16, 0, 0, 0]
 ],
 
 "animations": {
-    "Golden": { "frames": [0] }
+    "Brick": { "frames": [0] },
+    "Clay": { "frames": [1] },
+    "Golden": { "frames": [2] },
+    "Stone": { "frames": [3] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:6eca7261de821808b39f9e77c1bc80d6:263ea61f23c52bfa05f588922acc326b:aa9e305f3b390e1c4824a149595b819a$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:360beb332712b2a91c5ba5d9324b458b:087f350896689d7dc083f1bf88d50733:aa9e305f3b390e1c4824a149595b819a$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

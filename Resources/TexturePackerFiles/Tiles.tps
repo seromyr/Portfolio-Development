@@ -181,7 +181,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../Concepts/Tiles/Brick.png</key>
+            <key type="filename">../Concepts/Tiles/Clay.png</key>
             <key type="filename">../Concepts/Tiles/Golden.png</key>
+            <key type="filename">../Concepts/Tiles/Stone.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -200,6 +203,9 @@
         <key>fileList</key>
         <array>
             <filename>../Concepts/Tiles/Golden.png</filename>
+            <filename>../Concepts/Tiles/Brick.png</filename>
+            <filename>../Concepts/Tiles/Clay.png</filename>
+            <filename>../Concepts/Tiles/Stone.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

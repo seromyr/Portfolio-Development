@@ -1,0 +1,43 @@
+{
+
+"images": [
+    "GameUI.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 293, 91, 0, 146.5, 45.5],
+    [296, 1, 293, 91, 0, 146.5, 45.5],
+    [591, 1, 293, 91, 0, 146.5, 45.5],
+    [886, 1, 293, 91, 0, 146.5, 45.5],
+    [1181, 1, 293, 91, 0, 146.5, 45.5],
+    [1476, 1, 293, 91, 0, 146.5, 45.5],
+    [1, 94, 293, 91, 0, 146.5, 45.5],
+    [296, 94, 293, 91, 0, 146.5, 45.5],
+    [591, 94, 293, 91, 0, 146.5, 45.5],
+    [886, 94, 600, 800, 0, 0, 0],
+    [1, 896, 600, 800, 0, 0, 0],
+    [603, 896, 600, 800, 0, 0, 0]
+],
+
+"animations": {
+    "play confirm": { "frames": [0] },
+    "play highlight": { "frames": [1] },
+    "play": { "frames": [2] },
+    "return confirm": { "frames": [3] },
+    "return highlight": { "frames": [4] },
+    "return": { "frames": [5] },
+    "shop confirm": { "frames": [6] },
+    "shop highlight": { "frames": [7] },
+    "shop": { "frames": [8] },
+    "Gameplay": { "frames": [9] },
+    "MainMenu": { "frames": [10] },
+    "ShopBackground": { "frames": [11] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:42caa75c188613f1a30c4a9849100d83:d03f2bd608fdf9d22e12797311eebad9:ba29853d8c454f82443a40af26f6b409$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

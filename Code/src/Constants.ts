@@ -7,12 +7,14 @@ export const SCREEN_TITLE:string[] =
     [
         "MainMenu",
         "Gameplay",
+        "Shop",
         "GameOver",
         "Leaderboard"
     ];
-export const PLAYER_MOVESPEED:number = 5;
+export const PLAYER_MOVESPEED:number = 10;
 export const PLAYER_JUMPSPEED:number = 1;
 export const PLAYER_JUMPHEIGHT:number = 64;
+export const MAX_TILES:number = 32;
 
 
 // manifest for AssetManager
@@ -20,14 +22,14 @@ export const ASSET_MANIFEST = [
     // - Background -
     {
         type:"json",
-        src:"./lib/Sprites/ScreenBackgrounds.json",
-        id:"bkgImages",
+        src:"./lib/Sprites/GameUI.json",
+        id:"gameUI",
         data:0
     },
     {
         type:"image",
-        src:"./lib/Sprites/ScreenBackgrounds.png",
-        id:"bkgImages",
+        src:"./lib/Sprites/GameUI.png",
+        id:"gameUI",
         data:0
     },
     // - Playable character -

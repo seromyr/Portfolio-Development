@@ -1,62 +1,78 @@
 // createjs typescript definition for TypeScript
 /// <reference path="./../node_modules/@types/createjs/index.d.ts" />
 
-// importing createjs framework
+// import createjs framework
 import "createjs";
 
-// importing game constants
-import { STAGE_WIDTH, STAGE_HEIGHT, BACKGROUND_COLOR, FRAME_RATE, ASSET_MANIFEST } from "./Constants";
+// import game constants
+import { STAGE_WIDTH, STAGE_HEIGHT, BACKGROUND_COLOR, FRAME_RATE, ASSET_MANIFEST, SCREEN_TITLE } from "./Constants";
+
+// import custom classes
 import AssetManager from "./Miscs/AssetManager";
 import ShapeFactory from "./Miscs/ShapeFactory";
-import MainMenu from "./Screens/MainMenu";
+import MainMenuScreen from "./Screens/MainMenuScreen";
 import GameplayScreen from "./Screens/GameplayScreen";
 import GameplayState from "./GameLogic/GameplayState";
-
+import ShopScreen from "./Screens/ShopScreen";
 
 // game variables
 let stage:createjs.StageGL;
 let canvas:HTMLCanvasElement;
 let assetManager:AssetManager;
 
-// player controller
-//let playerController:PlayerController;
-
 // game screens
-let mainMenu:MainMenu;
+let mainMenu:MainMenuScreen;
 let gameplayScreen:GameplayScreen;
 let gameplayState:GameplayState;
+let shopScreen:ShopScreen;
 
-
-// --------------------------------------------------- event handlers
+// BOOT UP GAME
 function onReady(e:createjs.Event):void {
     console.log(">> adding sprites to game");
 
     // show Main Menu upon game start
-    mainMenu = new MainMenu(assetManager, stage);
-    mainMenu.showMe();
+    mainMenu = new MainMenuScreen(assetManager, stage);
+    mainMenu.ShowMe();
 
     // instantiate gameplay screen visual
     gameplayScreen = new GameplayScreen(assetManager, stage);
 
-    // instantiate gameplay screen logic
-    gameplayState = new GameplayState(assetManager, stage, document);
-    
-    // keyboard input monitors
-    stage.on("click", onShowGameplay, null, true);
-    stage.on("gameplay", onShowGameplay);
+    // instantiate shop screen visual
+    shopScreen = new ShopScreen(assetManager, stage);
 
+    // instantiate gameplay screen logic
+    gameplayState = new GameplayState(assetManager, stage);
+
+    // listen to any dispatched event
+    stage.on(SCREEN_TITLE[0], ShowMainMenu);
+    stage.on(SCREEN_TITLE[1], ShowGameplay);
+    stage.on(SCREEN_TITLE[2], ShowShop);
+    
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
     createjs.Ticker.on("tick", onTick);        
     console.log(">> game ready");
 }
 
-function onShowGameplay():void {
-    mainMenu.hideMe();
-    gameplayScreen.showMe();
+// CUSTOM EVENTS
+function ShowMainMenu():void {
+    shopScreen.HideMe();
+    mainMenu.ShowMe();
+}
+
+function ShowGameplay():void {
+    mainMenu.HideMe();
+    gameplayScreen.ShowMe();
     gameplayState.StartNewGame();
 }
 
+function ShowShop():void {
+    mainMenu.HideMe();
+    gameplayScreen.HideMe();
+    shopScreen.ShowMe();
+}
+
+// GAME UPDATER
 function onTick(e:createjs.Event):void {
     // TESTING FPS
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());

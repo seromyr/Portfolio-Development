@@ -1,5 +1,6 @@
 import AssetManager from "../Miscs/AssetManager";
 
+// GAME CHARACTER / OBJECT SUPER CLASS
 export default class Entity {
 
     protected stage:createjs.StageGL;
@@ -14,6 +15,7 @@ export default class Entity {
     private _currentY:number;
     private _jump:boolean;
     private _alive:boolean;
+    private _name:string;
     
     //encapsulation of important variables
     get X():number             {return this._x;}
@@ -30,6 +32,9 @@ export default class Entity {
     
     get Alive():boolean        {return this._alive;}
     set Alive(value:boolean)   {this._alive = value;}
+
+    get Name():string          {return this._name;}
+    set Name(value:string)     {this._name = value;}
     // end of capsulation
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL, spriteID:string) {
@@ -39,8 +44,7 @@ export default class Entity {
         this.screen = new createjs.Container();
 
         //construct Sprite object for screen background
-        this._sprite = assetManager.getSprite(spriteID);
-        
+        this._sprite = assetManager.getSprite(spriteID);        
     }
     
     public ShowMe(animID:string, loop:boolean = true):void {

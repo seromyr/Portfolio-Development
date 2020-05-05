@@ -9969,23 +9969,25 @@ exports.FRAME_RATE = 30;
 exports.SCREEN_TITLE = [
     "MainMenu",
     "Gameplay",
+    "Shop",
     "GameOver",
     "Leaderboard"
 ];
-exports.PLAYER_MOVESPEED = 5;
+exports.PLAYER_MOVESPEED = 10;
 exports.PLAYER_JUMPSPEED = 1;
 exports.PLAYER_JUMPHEIGHT = 64;
+exports.MAX_TILES = 32;
 exports.ASSET_MANIFEST = [
     {
         type: "json",
-        src: "./lib/Sprites/ScreenBackgrounds.json",
-        id: "bkgImages",
+        src: "./lib/Sprites/GameUI.json",
+        id: "gameUI",
         data: 0
     },
     {
         type: "image",
-        src: "./lib/Sprites/ScreenBackgrounds.png",
-        id: "bkgImages",
+        src: "./lib/Sprites/GameUI.png",
+        id: "gameUI",
         data: 0
     },
     {
@@ -10031,31 +10033,44 @@ __webpack_require__(/*! createjs */ "./node_modules/createjs/builds/1.0.0/create
 const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
 const AssetManager_1 = __webpack_require__(/*! ./Miscs/AssetManager */ "./src/Miscs/AssetManager.ts");
 const ShapeFactory_1 = __webpack_require__(/*! ./Miscs/ShapeFactory */ "./src/Miscs/ShapeFactory.ts");
-const MainMenu_1 = __webpack_require__(/*! ./Screens/MainMenu */ "./src/Screens/MainMenu.ts");
+const MainMenuScreen_1 = __webpack_require__(/*! ./Screens/MainMenuScreen */ "./src/Screens/MainMenuScreen.ts");
 const GameplayScreen_1 = __webpack_require__(/*! ./Screens/GameplayScreen */ "./src/Screens/GameplayScreen.ts");
 const GameplayState_1 = __webpack_require__(/*! ./GameLogic/GameplayState */ "./src/GameLogic/GameplayState.ts");
+const ShopScreen_1 = __webpack_require__(/*! ./Screens/ShopScreen */ "./src/Screens/ShopScreen.ts");
 let stage;
 let canvas;
 let assetManager;
 let mainMenu;
 let gameplayScreen;
 let gameplayState;
+let shopScreen;
 function onReady(e) {
     console.log(">> adding sprites to game");
-    mainMenu = new MainMenu_1.default(assetManager, stage);
-    mainMenu.showMe();
+    mainMenu = new MainMenuScreen_1.default(assetManager, stage);
+    mainMenu.ShowMe();
     gameplayScreen = new GameplayScreen_1.default(assetManager, stage);
-    gameplayState = new GameplayState_1.default(assetManager, stage, document);
-    stage.on("click", onShowGameplay, null, true);
-    stage.on("gameplay", onShowGameplay);
+    shopScreen = new ShopScreen_1.default(assetManager, stage);
+    gameplayState = new GameplayState_1.default(assetManager, stage);
+    stage.on(Constants_1.SCREEN_TITLE[0], ShowMainMenu);
+    stage.on(Constants_1.SCREEN_TITLE[1], ShowGameplay);
+    stage.on(Constants_1.SCREEN_TITLE[2], ShowShop);
     createjs.Ticker.framerate = Constants_1.FRAME_RATE;
     createjs.Ticker.on("tick", onTick);
     console.log(">> game ready");
 }
-function onShowGameplay() {
-    mainMenu.hideMe();
-    gameplayScreen.showMe();
+function ShowMainMenu() {
+    shopScreen.HideMe();
+    mainMenu.ShowMe();
+}
+function ShowGameplay() {
+    mainMenu.HideMe();
+    gameplayScreen.ShowMe();
     gameplayState.StartNewGame();
+}
+function ShowShop() {
+    mainMenu.HideMe();
+    gameplayScreen.HideMe();
+    shopScreen.ShowMe();
 }
 function onTick(e) {
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
@@ -10110,6 +10125,8 @@ class Entity {
     set Jump(value) { this._jump = value; }
     get Alive() { return this._alive; }
     set Alive(value) { this._alive = value; }
+    get Name() { return this._name; }
+    set Name(value) { this._name = value; }
     ShowMe(animID, loop = true) {
         if (loop)
             this._sprite.gotoAndPlay(animID);
@@ -10138,29 +10155,35 @@ exports.default = Entity;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const ProceduralGenerator_1 = __webpack_require__(/*! ./ProceduralGenerator */ "./src/GameLogic/ProceduralGenerator.ts");
 const Player_1 = __webpack_require__(/*! ../GameLogic/Player */ "./src/GameLogic/Player.ts");
 const Tile_1 = __webpack_require__(/*! ../GameLogic/Tile */ "./src/GameLogic/Tile.ts");
-const PlayerController_1 = __webpack_require__(/*! ./PlayerController */ "./src/GameLogic/PlayerController.ts");
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
 class GameplayState {
-    constructor(assetManager, stage, document) {
+    constructor(assetManager, stage) {
+        this.stage = stage;
+        this.assetManager = assetManager;
         this.player = new Player_1.default(assetManager, stage);
         this.player2 = new Player_1.default(assetManager, stage);
-        this.tile = new Tile_1.default(assetManager, stage);
-        this.player2.JumpHeight = Constants_1.PLAYER_JUMPHEIGHT;
-        this.playerController = new PlayerController_1.default();
+        this.tile_Start = new Tile_1.default(assetManager, stage);
+        this.tile_test = new Tile_1.default(assetManager, stage);
+        this.tiles_Golden = [];
+        this.tiles_temp = [];
+        this.player.JumpHeight = Constants_1.PLAYER_JUMPHEIGHT;
+        this.rng = new ProceduralGenerator_1.default();
         document.onkeydown = (e) => {
             if (e.keyCode == 37 || e.keyCode == 65) {
-                this.player2.X -= 5;
+                this.player.X -= Constants_1.PLAYER_MOVESPEED;
             }
             else if (e.keyCode == 39 || e.keyCode == 68) {
-                this.player2.X += 5;
+                this.player.X += Constants_1.PLAYER_MOVESPEED;
             }
         };
         document.onkeyup = (e) => {
             if (e.keyCode == 37 || e.keyCode == 65) { }
             else if (e.keyCode == 39 || e.keyCode == 68) { }
         };
+        stage.on("collided", this.onCollision);
     }
     get IsFacingRight() { return this._isFacingRight; }
     set IsFacingRight(value) { this._isFacingRight = value; }
@@ -10168,25 +10191,44 @@ class GameplayState {
     set GameStart(value) { this._gameStart = value; }
     StartNewGame() {
         this._gameStart = true;
-        this.player.Alive = true;
-        this.player.X = 160;
-        this.player.Y = 150;
-        this.player.Jump = true;
-        this.player.ShowMeIdling();
         this.player2.Alive = true;
-        this.player2.X = 130;
-        this.player2.Y = 150;
-        this.player2.Jump = true;
-        this.player2.CurrentY = this.player2.Y;
-        this.player2.JumpSpeed = Constants_1.PLAYER_JUMPSPEED;
-        this.player2.ShowMeJumping();
-        this.tile.X = 125;
-        this.tile.Y = 150;
-        this.tile.ShowMe();
+        this.player2.X = this.rng.RandomCoordinatesOnScreen()[0][0];
+        this.player2.Y = this.rng.RandomCoordinatesOnScreen()[0][1];
+        this.player2.Jump = false;
+        this.player2.ShowMeIdling();
+        this.player.Alive = true;
+        this.player.X = 130;
+        this.player.Y = Constants_1.STAGE_HEIGHT / 3;
+        this.player.Jump = false;
+        this.player.CurrentY = this.player.Y;
+        this.player.JumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+        this.player.ShowMeJumping();
+        this.tile_Start.Name = "Starting";
+        this.tile_Start.X = 125;
+        this.tile_Start.Y = Constants_1.STAGE_HEIGHT / 2;
+        this.tile_Start.ShowMe("Brick");
+        this.tile_test.Name = "Clay";
+        this.tile_test.X = 150;
+        this.tile_test.Y = Constants_1.STAGE_HEIGHT / 2 - 8 - this.tile_test.Height;
+        this.tile_test.ShowMe("Clay");
+        this.SpawnTiles(4, "Golden", this.tiles_Golden);
+        this.SpawnTiles(Constants_1.MAX_TILES, "Stone", this.tiles_temp);
     }
     Update() {
-        console.log("ye");
-        this.player2.Update();
+        this.player.Update();
+        this.player.CollisionCheckWithATile(this.tile_test);
+        this.player.CollisionCheckWithATile(this.tile_Start);
+    }
+    SpawnTiles(quantity, type = "Clay", tileset) {
+        for (let i = 0; i < quantity; i++) {
+            tileset[i] = new Tile_1.default(this.assetManager, this.stage);
+            tileset[i].Name = type;
+            tileset[i].X = this.rng.RandomCoordinatesOnScreen()[0][0];
+            tileset[i].Y = this.rng.RandomCoordinatesOnScreen()[0][1];
+            tileset[i].ShowMe(type);
+        }
+    }
+    onCollision(e) {
     }
 }
 exports.default = GameplayState;
@@ -10204,11 +10246,12 @@ exports.default = GameplayState;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts");
 const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts");
 class Player extends Entity_1.default {
     constructor(assetManager, stage) {
         super(assetManager, stage, "mainChar");
+        this.playerCollision = new createjs.Event("collided", true, false);
     }
     get JumpHeight() { return this._jumpHeight; }
     set JumpHeight(value) { this._jumpHeight = value; }
@@ -10218,30 +10261,65 @@ class Player extends Entity_1.default {
         super.ShowMe("VirtualGuy/Idle/VGuy_idle");
     }
     ShowMeJumping() {
-        super.ShowMe("VirtualGuy/Jump/VGuy_jump", false);
-        this._up = true;
+        super.ShowMe("VirtualGuy/Fall/VGuy_fall", false);
+        this._isGrounded = false;
     }
     Update() {
-        if (this.Jump) {
-            if (this._up && this.Y >= this.CurrentY - this._jumpHeight) {
+        if (this._isGrounded && this.Jump) {
+            this.Y -= this.JumpSpeed;
+            this._isGrounded = false;
+            console.log("?");
+        }
+        else if (!this._isGrounded && this.Jump) {
+            if (this.Y <= this.CurrentY) {
                 this._jumpSpeed++;
-                this.Y -= Math.cos(this._jumpSpeed) + this._jumpSpeed;
-                if (this.Y <= this.CurrentY - this._jumpHeight) {
-                    this._up = false;
+                this.Y -= Math.sin(this._jumpSpeed) + this._jumpSpeed;
+                if (this.Y < this.CurrentY - this._jumpHeight) {
+                    this.Y = this.CurrentY - this._jumpHeight;
                     this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
-                    this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+                    this.Jump = false;
                 }
             }
-            else {
-                this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
-                this.Y += this.JumpSpeed * 0.3;
-                if (this.Y >= this.CurrentY) {
-                    this.Y = this.CurrentY;
-                    this._up = true;
+        }
+        else if (!this._isGrounded && !this.Jump) {
+            this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
+            this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
+            this.Y += this.JumpSpeed * 0.3;
+            console.log("falling");
+        }
+    }
+    CollisionCheckWithTiles(tile) {
+        for (let i = 0; i < tile.length; i++) {
+            if (this.X >= tile[i].X || this.X <= tile[i].Width) {
+                if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
+                    console.log(`landed on a ${tile[i].Name} tile`);
+                    this.screen.dispatchEvent(this.playerCollision);
+                    this._isGrounded = true;
+                    this.Jump = true;
+                    this.Y = this.CurrentY = tile[i].Y;
                     this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
                     this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
                 }
             }
+            else {
+                this._isGrounded = false;
+            }
+        }
+    }
+    CollisionCheckWithATile(tile) {
+        if (this.X > tile.X && this.X < tile.Width) {
+            if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
+                console.log(`landed on a ${tile.Name} tile`);
+                this.screen.dispatchEvent(this.playerCollision);
+                this._isGrounded = true;
+                this.Jump = true;
+                this.Y = this.CurrentY = tile.Y;
+                this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
+                this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+            }
+        }
+        else {
+            this._isGrounded = false;
         }
     }
 }
@@ -10250,49 +10328,33 @@ exports.default = Player;
 
 /***/ }),
 
-/***/ "./src/GameLogic/PlayerController.ts":
-/*!*******************************************!*\
-  !*** ./src/GameLogic/PlayerController.ts ***!
-  \*******************************************/
+/***/ "./src/GameLogic/ProceduralGenerator.ts":
+/*!**********************************************!*\
+  !*** ./src/GameLogic/ProceduralGenerator.ts ***!
+  \**********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-class PlayerController {
+const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+class ProceduralGenerator {
     constructor() {
-        this.rightkey = false;
-        this.leftkey = false;
-        this._keyDownCount = 0;
     }
-    get LeftKey() { return this.leftkey; }
-    set LeftKey(value) { this.leftkey = value; }
-    get RightKey() { return this.rightkey; }
-    set RightKey(value) { this.rightkey = value; }
-    get KeyDownCount() { return this._keyDownCount; }
-    set KeyDownCount(value) { this._keyDownCount = value; }
-    onKeyDown(e) {
-        if (e.keyCode == 37 || e.keyCode == 65) {
-            this.leftkey = true;
-            console.log("Left key is pressed.");
-            console.log(this.leftkey);
-        }
-        else if (e.keyCode == 39 || e.keyCode == 68) {
-            this.rightkey = true;
-            console.log("Right key is pressed.");
-            console.log(this.rightkey);
-        }
+    RandomBetween(low, high) {
+        let randomNum = 0;
+        randomNum = Math.floor(Math.random() * (high - low + 1)) + low;
+        return randomNum;
     }
-    onKeyUp(e) {
-        this._keyDownCount = 0;
-        if (e.keyCode == 37)
-            this.leftkey = false;
-        else if (e.keyCode == 39)
-            this.rightkey = false;
+    RandomCoordinatesOnScreen() {
+        let randomCoords = [[], []];
+        randomCoords[0][0] = this.RandomBetween(0, Constants_1.STAGE_WIDTH);
+        randomCoords[0][1] = this.RandomBetween(0, Constants_1.STAGE_HEIGHT);
+        return randomCoords;
     }
 }
-exports.default = PlayerController;
+exports.default = ProceduralGenerator;
 
 
 /***/ }),
@@ -10311,10 +10373,11 @@ const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts"
 class Tile extends Entity_1.default {
     constructor(assetManager, stage) {
         super(assetManager, stage, "tiles");
+        this._width = this._sprite.getBounds().width;
+        this._height = this._sprite.getBounds().height;
     }
-    ShowMe() {
-        super.ShowMe("Golden");
-    }
+    get Width() { return this._width; }
+    get Height() { return this._height; }
 }
 exports.default = Tile;
 
@@ -10453,14 +10516,17 @@ exports.default = ShapeFactory;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ScreenManager_1 = __webpack_require__(/*! ./ScreenManager */ "./src/Screens/ScreenManager.ts");
+const _ScreenManager_1 = __webpack_require__(/*! ./_ScreenManager */ "./src/Screens/_ScreenManager.ts");
 const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
-class GameplayScreen extends ScreenManager_1.default {
+class GameplayScreen extends _ScreenManager_1.default {
     constructor(assetManager, stage) {
-        super(assetManager, stage, Constants_1.SCREEN_TITLE[1]);
+        super(assetManager, stage, "Gameplay", Constants_1.SCREEN_TITLE[1]);
+        super.HideShopButton();
+        super.HidePlayButton();
+        super.ShowReturnButton();
     }
-    showMe() {
-        super.showMe();
+    ShowMe() {
+        super.ShowMe();
     }
 }
 exports.default = GameplayScreen;
@@ -10468,58 +10534,124 @@ exports.default = GameplayScreen;
 
 /***/ }),
 
-/***/ "./src/Screens/MainMenu.ts":
-/*!*********************************!*\
-  !*** ./src/Screens/MainMenu.ts ***!
-  \*********************************/
+/***/ "./src/Screens/MainMenuScreen.ts":
+/*!***************************************!*\
+  !*** ./src/Screens/MainMenuScreen.ts ***!
+  \***************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const ScreenManager_1 = __webpack_require__(/*! ../Screens/ScreenManager */ "./src/Screens/ScreenManager.ts");
+const _ScreenManager_1 = __webpack_require__(/*! ./_ScreenManager */ "./src/Screens/_ScreenManager.ts");
 const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
-class MainMenu extends ScreenManager_1.default {
+class MainMenuScreen extends _ScreenManager_1.default {
     constructor(assetManager, stage) {
-        super(assetManager, stage, Constants_1.SCREEN_TITLE[0]);
+        super(assetManager, stage, "MainMenu", Constants_1.SCREEN_TITLE[0]);
+        super.ShowPlayButton();
+        super.ShowShopButton();
     }
-    showMe() {
-        super.showMe();
+    ShowMe() {
+        super.ShowMe();
     }
 }
-exports.default = MainMenu;
+exports.default = MainMenuScreen;
 
 
 /***/ }),
 
-/***/ "./src/Screens/ScreenManager.ts":
-/*!**************************************!*\
-  !*** ./src/Screens/ScreenManager.ts ***!
-  \**************************************/
+/***/ "./src/Screens/ShopScreen.ts":
+/*!***********************************!*\
+  !*** ./src/Screens/ShopScreen.ts ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+const _ScreenManager_1 = __webpack_require__(/*! ./_ScreenManager */ "./src/Screens/_ScreenManager.ts");
+const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+class ShopScreen extends _ScreenManager_1.default {
+    constructor(assetManager, stage) {
+        super(assetManager, stage, "ShopBackground", Constants_1.SCREEN_TITLE[2]);
+        super.ShowReturnButton();
+    }
+    ShowMe() {
+        super.ShowMe();
+    }
+}
+exports.default = ShopScreen;
+
+
+/***/ }),
+
+/***/ "./src/Screens/_ScreenManager.ts":
+/*!***************************************!*\
+  !*** ./src/Screens/_ScreenManager.ts ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
 class ScreenManager {
-    constructor(assetManager, stage, bkgImage) {
+    constructor(assetManager, stage, bkgImage, screenType) {
         this.stage = stage;
         this.screen = new createjs.Container();
-        let background = assetManager.getSprite("bkgImages", bkgImage, 0, 0);
+        let background = assetManager.getSprite("gameUI", bkgImage, 0, 0);
         this.screen.addChild(background);
-        this.eventGameplay = new createjs.Event("gameplay", true, false);
+        this.btnPlay = assetManager.getSprite("gameUI", "play", Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2);
+        let btnPlayEffect = new createjs.ButtonHelper(this.btnPlay, "play", "play highlight", "play confirm", false);
+        this.btnShop = assetManager.getSprite("gameUI", "shop", Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2 + 128);
+        let btnShopEffect = new createjs.ButtonHelper(this.btnShop, "shop", "shop highlight", "shop confirm", false);
+        this.btnMainMenu = assetManager.getSprite("gameUI", "return", Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2 + 128);
+        let btnMainMenuEffect = new createjs.ButtonHelper(this.btnMainMenu, "return", "return highlight", "return confirm", false);
+        this.btnPlay.on("click", this.GotoPlay, this);
+        this.btnShop.on("click", this.GotoShop, this);
+        this.btnMainMenu.on("click", this.GotoMainMenu, this);
+        this.eventMainMenu = new createjs.Event(Constants_1.SCREEN_TITLE[0], true, false);
+        this.eventGameplay = new createjs.Event(Constants_1.SCREEN_TITLE[1], true, false);
+        this.eventShopping = new createjs.Event(Constants_1.SCREEN_TITLE[2], true, false);
     }
-    onGameplay(e) {
-        console.log("replay clicked");
-        this.stage.dispatchEvent(this.eventGameplay);
-    }
-    showMe() {
+    ShowMe() {
         this.stage.addChild(this.screen);
     }
-    hideMe() {
+    HideMe() {
         this.stage.removeChild(this.screen);
+    }
+    GotoPlay(e) {
+        console.log("Play button clicked");
+        this.screen.dispatchEvent(this.eventGameplay);
+    }
+    GotoShop(e) {
+        console.log("Shop button clicked");
+        this.screen.dispatchEvent(this.eventShopping);
+    }
+    GotoMainMenu(e) {
+        console.log("Return to Main Menu clicked");
+        this.screen.dispatchEvent(this.eventMainMenu);
+    }
+    ShowPlayButton() {
+        this.screen.addChild(this.btnPlay);
+    }
+    HidePlayButton() {
+        this.screen.removeChild(this.btnPlay);
+    }
+    ShowShopButton() {
+        this.screen.addChild(this.btnShop);
+    }
+    HideShopButton() {
+        this.screen.removeChild(this.btnShop);
+    }
+    ShowReturnButton() {
+        this.screen.addChild(this.btnMainMenu);
+    }
+    HideReturnButton() {
+        this.screen.removeChild(this.btnMainMenu);
     }
 }
 exports.default = ScreenManager;
