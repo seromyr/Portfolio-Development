@@ -1,4 +1,4 @@
-// GLYPH IMAGE MAKER
+ // GLYPH IMAGE MAKER
 // This photoshop script will generate an image file for each glyph at a certain size, color, font and will name the image file according to the glyph name. For instance, the glyph A will be named A.png. The collection of glyph images can then be used in your favourite spritesheet generation tool (e.g. Texture Packer).
 
 // instructions:
@@ -19,13 +19,13 @@
 
 // the glyphs of the bitmaptext
 //var myGlyphs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
-var myGlyphs = "ABCDEFabcdefgjpqy01234"; 
+var myGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,!?"; 
 // color of bitmapttext in hexidecimal (#FF0000)
-var myColor = "#FF0000";
+var myColor = "#FFFFFF";
 // font size of bitmaptext (pt size)
-var mySize = 36;
+var mySize = 30;
 // font name of bitmapttext (must be the postscript name which isn't always the font name shown in apps)
-var myFont = "Calibri";
+var myFont = "Pixeled";
 
 
 

@@ -7,14 +7,16 @@ export default class Player extends Character {
 
     // player variables
     private _jumpHeight:number;
-    get JumpHeight():number           {return this._jumpHeight;}
-    set JumpHeight(value:number)      {this._jumpHeight = value;}
+    get JumpHeight():number      {return this._jumpHeight;}
+    set JumpHeight(value:number) {this._jumpHeight = value;}
     
     private _jumpSpeed:number
-    get JumpSpeed():number           {return this._jumpSpeed;}
-    set JumpSpeed(value:number)      {this._jumpSpeed = value;}
+    get JumpSpeed():number       {return this._jumpSpeed;}
+    set JumpSpeed(value:number)  {this._jumpSpeed = value;}
     
     private _isGrounded:boolean;
+    private _jumpDelay:number = 500;
+    private _jumpTimer:number;
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         
@@ -24,10 +26,10 @@ export default class Player extends Character {
         this.Jump = false;
     }
 
-    public ShowMeIdling():void {
-        
+    public ShowMeIdling():void {        
         //Display character with looping animation
-        super.ShowMe("VirtualGuy/Idle/VGuy_idle");
+        //super.ShowMe("VirtualGuy/Idle/VGuy_idle");
+        super.ShowMe("Dazzle/Dazzle Idle/Dazzle_Idle");
         // console.log(this._sprite.x);
         // console.log(this._sprite.y);
 
@@ -36,8 +38,10 @@ export default class Player extends Character {
     public ShowMeJumping():void {
         
         //Display character with no looping animation
-        super.ShowMe("VirtualGuy/Fall/VGuy_fall", false);
+        //super.ShowMe("VirtualGuy/Fall/VGuy_fall", false);
+        super.ShowMe("Dazzle/Dazzle Jump/Dazzle_Jump", false);
         this._isGrounded = false;
+        //this._jumpTimer = window.setInterval(,this._jumpDelay);
         // console.log(this._sprite.x);
         // console.log(this._sprite.y);
 
@@ -60,9 +64,10 @@ export default class Player extends Character {
     
                 // when player reaches max jump height, starts falling down
                 if (this.Y < this.CurrentY - this._jumpHeight) {
-
+                    this._jumpSpeed = PLAYER_JUMPSPEED;
                     this.Y = this.CurrentY - this._jumpHeight
-                    this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
+                    //this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
                     this.Jump = false;
                 }
             }
@@ -70,9 +75,10 @@ export default class Player extends Character {
 
 
         // if player is in mid-air and falling
-        else if (!this._isGrounded && !this.Jump ){            
+        else if (!this._isGrounded && !this.Jump){            
             //player is constantly falling when not colliding with any tile
-            this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
+            // this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
+            this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
             this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
             this.Y += this.JumpSpeed * 0.3;
             console.log("falling");
@@ -89,7 +95,8 @@ export default class Player extends Character {
                     this._isGrounded = true;
                     this.Jump = true;
                     this.Y = this.CurrentY = tile[i].Y;
-                    this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
+                    // this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
                     this._jumpSpeed = PLAYER_JUMPSPEED;
                 }
             }
@@ -102,7 +109,7 @@ export default class Player extends Character {
 
     // collision check with a single tile
     public CollisionCheckWithATile(tile:Tile):void {
-        //if player collides with a tile
+        //if player collides with a tile while falling down
         if (this.X >= tile.X && this.X <= tile.X + tile.Width) {
             if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
                 console.log(`landed on a ${tile.Name} tile`);
@@ -110,12 +117,25 @@ export default class Player extends Character {
                 this._isGrounded = true;
                 this.Jump = true;
                 this.Y = this.CurrentY = tile.Y;
-                this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
+                // this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
+                this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
                 this._jumpSpeed = PLAYER_JUMPSPEED;
             }
         }
         else {
             this._isGrounded = false;
+        }
+    }
+
+    // flip
+    public FlipMeOver(side:string):void {
+        switch (side) {
+            case "left":
+                this._sprite.scaleX = -1;
+                break;
+            case "right":
+                this._sprite.scaleX = 1;
+                break;
         }
     }
 }

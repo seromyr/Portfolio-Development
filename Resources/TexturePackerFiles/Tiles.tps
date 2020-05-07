@@ -199,6 +199,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../Concepts/Tiles/OceanFloor.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>12,12,24,24</rect>
+                <key>scale9Paddings</key>
+                <rect>12,12,24,24</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -206,6 +221,7 @@
             <filename>../Concepts/Tiles/Brick.png</filename>
             <filename>../Concepts/Tiles/Clay.png</filename>
             <filename>../Concepts/Tiles/Stone.png</filename>
+            <filename>../Concepts/Tiles/OceanFloor.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

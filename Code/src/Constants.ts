@@ -38,12 +38,24 @@ export const ASSET_MANIFEST = [
     {
         type:"json",
         src:"./lib/Sprites/VirtualGuy.json",
-        id:"mainChar",
+        id:"npc01",
         data:0
     },
     {
         type:"image",
         src:"./lib/Sprites/VirtualGuy.png",
+        id:"npc01",
+        data:0
+    },
+    {
+        type:"json",
+        src:"./lib/Sprites/Dazzle.json",
+        id:"mainChar",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./lib/Sprites/Dazzle.png",
         id:"mainChar",
         data:0
     },
@@ -58,6 +70,32 @@ export const ASSET_MANIFEST = [
         type:"image",
         src:"./lib/Sprites/Tiles.png",
         id:"tiles",
+        data:0
+    },
+    // - Foregrounds
+    {
+        type:"json",
+        src:"./lib/Sprites/Environment.json",
+        id:"environment",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./lib/Sprites/Environment.png",
+        id:"environment",
+        data:0
+    },
+    // - Fonts
+    {
+        type:"json",
+        src:"./lib/Sprites/glyphs_Pixeled.json",
+        id:"pixeled",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./lib/Sprites/glyphs_Pixeled.png",
+        id:"pixeled",
         data:0
     },
 ];

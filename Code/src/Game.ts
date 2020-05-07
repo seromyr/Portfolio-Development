@@ -12,7 +12,6 @@ import AssetManager from "./Miscs/AssetManager";
 import ShapeFactory from "./Miscs/ShapeFactory";
 import MainMenuScreen from "./Screens/MainMenuScreen";
 import GameplayScreen from "./Screens/GameplayScreen";
-import GameplayState from "./GameLogic/GameplayState";
 import ShopScreen from "./Screens/ShopScreen";
 import Endcreen from "./Screens/EndScreen";
 
@@ -24,7 +23,6 @@ let assetManager:AssetManager;
 // game screens
 let mainMenu:MainMenuScreen;
 let gameplayScreen:GameplayScreen;
-let gameplayState:GameplayState;
 let shopScreen:ShopScreen;
 let endScreen:Endcreen;
 
@@ -41,9 +39,6 @@ function onReady(e:createjs.Event):void {
 
     // instantiate shop screen visual
     shopScreen = new ShopScreen(assetManager, stage);
-
-    // instantiate gameplay screen logic
-    gameplayState = new GameplayState(assetManager, stage);
 
     // instantiate end screen
     endScreen = new Endcreen(assetManager, stage);
@@ -69,18 +64,23 @@ function ShowMainMenu():void {
 
 function ShowGameplay():void {
     mainMenu.HideMe();
+    endScreen.HideMe();
+    shopScreen.HideMe();
     gameplayScreen.ShowMe();
-    gameplayState.StartNewGame();
 }
 
 function ShowShop():void {
     mainMenu.HideMe();
+    gameplayScreen.HideMe()
+    endScreen.HideMe();
     shopScreen.ShowMe();
 }
 
 function ShowGameOver(e:Event):void {        
     console.log("player has died");
-    gameplayState.Terminate();
+    gameplayScreen.HideMe();
+    mainMenu.HideMe();
+    shopScreen.HideMe();
     endScreen.ShowMe();
 }
 
@@ -89,9 +89,7 @@ function onTick(e:createjs.Event):void {
     // TESTING FPS
     document.getElementById("fps").innerHTML = String(createjs.Ticker.getMeasuredFPS());
 
-    if (gameplayState.GameStart) {
-        gameplayState.Update();
-    }
+    if (gameplayScreen.GameplayIsRunning) {gameplayScreen.UpdateMe();}
 
     // update the stage
     stage.update();
