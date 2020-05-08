@@ -199,6 +199,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../Concepts/GameUI/TopRibbon.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>150,16,300,32</rect>
+                <key>scale9Paddings</key>
+                <rect>150,16,300,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Concepts/GameUI/play confirm.png</key>
             <key type="filename">../Concepts/GameUI/play highlight.png</key>
             <key type="filename">../Concepts/GameUI/play.png</key>
@@ -238,6 +253,7 @@
             <filename>../Concepts/GameUI/shop highlight.png</filename>
             <filename>../Concepts/GameUI/shop.png</filename>
             <filename>../Concepts/GameUI/GameOver.png</filename>
+            <filename>../Concepts/GameUI/TopRibbon.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

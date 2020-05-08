@@ -18,7 +18,8 @@
     [1, 896, 293, 91, 0, 146.5, 45.5],
     [296, 896, 293, 91, 0, 146.5, 45.5],
     [591, 896, 293, 91, 0, 146.5, 45.5],
-    [886, 896, 600, 800, 0, 0, 0]
+    [886, 896, 600, 800, 0, 0, 0],
+    [1, 1698, 600, 64, 0, 0, 0]
 ],
 
 "animations": {
@@ -34,11 +35,12 @@
     "shop confirm": { "frames": [9] },
     "shop highlight": { "frames": [10] },
     "shop": { "frames": [11] },
-    "ShopBackground": { "frames": [12] }
+    "ShopBackground": { "frames": [12] },
+    "TopRibbon": { "frames": [13] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:1b3109826209e446c8ea6f5b567bba3e:4109ddf7252ffa8069f8e25c5ab32852:ba29853d8c454f82443a40af26f6b409$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:b6eafde65f893108b1a9662a7f012aad:aefe459428512b9461fb7bb5146f105b:ba29853d8c454f82443a40af26f6b409$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

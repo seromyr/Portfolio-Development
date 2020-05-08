@@ -47,13 +47,40 @@ export default class ProceduralGenerator {
         tileset[0].X = this.RandomBetween(0, tileStart.X + tileStart.Width * 2);
         tileset[0].Y = this.RandomBetween(tileStart.Y - tileStart.Height * 3, tileStart.Y - tileStart.Height * 4);
 
-        // generate the whole remaining
+        // generate the whole remainings
         for (let i:number = 1; i < tileset.length; i++) {
             tileset[i].X = this.RandomBetween(0,
-                                              tileset[i - 1].X + tileset[i - 1].Width * 2);
+                                              tileset[i - 1].X + tileset[i - 1].Width * 3);
 
-            tileset[i].Y = this.RandomBetween(tileset[i - 1].Y - tileset[i - 1].Height * 2,
-                                              tileset[i - 1].Y - tileset[i - 1].Height * 3);
+            tileset[i].Y = this.RandomBetween(tileset[i - 1].Y - tileset[i - 1].Height * 4,
+                                              tileset[i - 1].Y - tileset[i - 1].Height * 4);
         }
+    }
+
+    // generate the next tile that avoid being to close to the main character
+    public GenerateNextTile(playerX:number, playerW:number):number {
+        let leftOrRight:number = this.RandomBetween(0,1);
+
+        // if left but the space is not wide enough, then generate on the right
+        if (leftOrRight == 0 && playerX < playerW) {
+            leftOrRight = this.RandomBetween(playerX + playerW * 2, playerX + playerW * 3);
+        }
+
+        // if right but the space is not wide enough, then generate on the left
+        else if (leftOrRight == 1 && playerX > playerW) {
+            leftOrRight = this.RandomBetween(playerX - playerW * 3, playerX - playerW * 2);
+        }
+
+        // if left and the space is wide enough
+        else if (leftOrRight == 0 && playerX > playerW) {
+            leftOrRight = this.RandomBetween(playerX - playerW * 3, playerX - playerW * 2);
+        }
+
+        // if right and the space is wide enough
+        else if (leftOrRight == 1 && playerX < playerW) {
+            leftOrRight = this.RandomBetween(playerX + playerW * 2, playerX + playerW * 3);
+        }
+
+        return leftOrRight;
     }
 }

@@ -88,9 +88,9 @@
         <key>maxTextureSize</key>
         <QSize>
             <key>width</key>
-            <int>2048</int>
+            <int>1024</int>
             <key>height</key>
-            <int>2048</int>
+            <int>1024</int>
         </QSize>
         <key>fixedTextureSize</key>
         <QSize>
@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../Sprites/Environment.json</filename>
+                <filename>../Sprites/Trampoline.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -175,81 +175,53 @@
             <key>heuristicMask</key>
             <false/>
             <key>defaultPivotPoint</key>
-            <point_f>0,0</point_f>
+            <point_f>0.5,0.5</point_f>
             <key>writePivotPoints</key>
             <true/>
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Concepts/Environment/air.png</key>
-            <key type="filename">../Concepts/Environment/space.png</key>
+            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_000.png</key>
+            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_001.png</key>
+            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_002.png</key>
+            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_003.png</key>
+            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_004.png</key>
+            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_005.png</key>
+            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_006.png</key>
+            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_007.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0,0</point_f>
+                <point_f>0.5,1</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>150,200,300,400</rect>
+                <rect>7,7,14,14</rect>
                 <key>scale9Paddings</key>
-                <rect>150,200,300,400</rect>
+                <rect>7,7,14,14</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../Concepts/Environment/land.png</key>
+            <key type="filename">../Concepts/Trampoline/Idle/Trampoline_Idle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0,0</point_f>
+                <point_f>0.5,1</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>150,187,300,373</rect>
+                <rect>6,3,11,5</rect>
                 <key>scale9Paddings</key>
-                <rect>150,187,300,373</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Concepts/Environment/land_bg_00.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>150,168,300,336</rect>
-                <key>scale9Paddings</key>
-                <rect>150,168,300,336</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Concepts/Environment/water.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>150,158,300,316</rect>
-                <key>scale9Paddings</key>
-                <rect>150,158,300,316</rect>
+                <rect>6,3,11,5</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Concepts/Environment/water.png</filename>
-            <filename>../Concepts/Environment/air.png</filename>
-            <filename>../Concepts/Environment/land.png</filename>
-            <filename>../Concepts/Environment/space.png</filename>
-            <filename>../Concepts/Environment/land_bg_00.png</filename>
+            <filename>../Concepts/Trampoline</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

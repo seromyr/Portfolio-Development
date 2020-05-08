@@ -196,6 +196,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../Concepts/Fonts/font_Pixeled_full/-.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,3</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>5,2,9,3</rect>
+                <key>scale9Paddings</key>
+                <rect>5,2,9,3</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Concepts/Fonts/font_Pixeled_full/..png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -300,6 +315,21 @@
                 <rect>8,9,15,18</rect>
                 <key>scale9Paddings</key>
                 <rect>8,9,15,18</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Concepts/Fonts/font_Pixeled_full/_.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,1</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>6,2,12,3</rect>
+                <key>scale9Paddings</key>
+                <rect>6,2,12,3</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -466,6 +496,8 @@
             <filename>../Concepts/Fonts/font_Pixeled_full/z-1.png</filename>
             <filename>../Concepts/Fonts/font_Pixeled_full/,.png</filename>
             <filename>../Concepts/Fonts/font_Pixeled_full/..png</filename>
+            <filename>../Concepts/Fonts/font_Pixeled_full/-.png</filename>
+            <filename>../Concepts/Fonts/font_Pixeled_full/_.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

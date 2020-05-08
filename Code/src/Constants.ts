@@ -14,9 +14,10 @@ export const SCREEN_TITLE:string[] =
 export const PLAYER_MOVESPEED:number = 10;
 export const PLAYER_JUMPSPEED:number = 1;
 export const PLAYER_JUMPHEIGHT:number = 96;
-export const PLAYER_DEFAULT_X:number = 150;
+export const PLAYER_DEFAULT_X:number = 350;
 export const PLAYER_DEFAULT_Y:number = STAGE_HEIGHT * 0.6;
 export const MAX_TILES:number = 64;
+export const ANCHOR:number = STAGE_HEIGHT/2
 
 
 // manifest for AssetManager
@@ -70,6 +71,18 @@ export const ASSET_MANIFEST = [
         type:"image",
         src:"./lib/Sprites/Tiles.png",
         id:"tiles",
+        data:0
+    },
+    {
+        type:"json",
+        src:"./lib/Sprites/Trampoline.json",
+        id:"trampoline",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./lib/Sprites/Trampoline.png",
+        id:"trampoline",
         data:0
     },
     // - Foregrounds

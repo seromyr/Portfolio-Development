@@ -13,7 +13,7 @@ export default class Bitmap_Text {
     
     public WriteMessage(x:number, y:number, message:string):void {
         this._message.text = message;
-        this._message.letterSpacing = 3;
+        this._message.letterSpacing = 8;
         this._message.x = x;
         this._message.y = y;
     } 
