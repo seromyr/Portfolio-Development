@@ -19,13 +19,13 @@
 
 // the glyphs of the bitmaptext
 //var myGlyphs = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; 
-var myGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,-_"; 
+var myGlyphs = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789.,?!"; 
 // color of bitmapttext in hexidecimal (#FF0000)
-var myColor = "#FFFFFF";
+var myColor = "#FF0000";
 // font size of bitmaptext (pt size)
 var mySize = 30;
 // font name of bitmapttext (must be the postscript name which isn't always the font name shown in apps)
-var myFont = "Pixeled";
+var myFont = "Calibri";
 
 
 
