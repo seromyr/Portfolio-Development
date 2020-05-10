@@ -1,6 +1,6 @@
 import AssetManager from "../Miscs/AssetManager";
 import ScreenManager from "./_ScreenManager";
-import { SCREEN_TITLE } from "../Constants";
+import { SCREEN_TITLE } from "../Constants/Constants_General";
 import GameplayState from "../GameLogic/GameplayState";
 import BitmapText from "./Bitmap_Text";
 

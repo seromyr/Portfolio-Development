@@ -1,4 +1,4 @@
-import { SCREEN_TITLE, STAGE_HEIGHT } from "../Constants";
+import { SCREEN_TITLE, STAGE_HEIGHT } from "../Constants/Constants_General";
 import AssetManager from "../Miscs/AssetManager";
 import ScreenManager from "./_ScreenManager";
 import Bitmap_Text from "./Bitmap_Text";
@@ -18,7 +18,7 @@ export default class MainMenuScreen extends ScreenManager {
 
     public ShowMe():void {
         super.ShowMe();
-        this.version.WriteMessage(256, STAGE_HEIGHT - 48, "v0.5c");
+        this.version.WriteMessage(256, STAGE_HEIGHT - 48, "v0.5d");
         this.stage.addChild(this.version.DisplayData);
     }
 }

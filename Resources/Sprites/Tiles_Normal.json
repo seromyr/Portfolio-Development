@@ -1,7 +1,7 @@
 {
 
 "images": [
-    "Tiles.png"
+    "Tiles_Normal.png"
 ],
 
 "framerate": 30,
@@ -9,20 +9,18 @@
     [1, 1, 48, 16, 0, 0, 0],
     [1, 19, 48, 16, 0, 0, 0],
     [1, 37, 48, 16, 0, 0, 0],
-    [1, 55, 48, 48, 0, 0, 0],
-    [1, 105, 48, 16, 0, 0, 0]
+    [1, 55, 48, 16, 0, 0, 0]
 ],
 
 "animations": {
     "Brick": { "frames": [0] },
     "Clay": { "frames": [1] },
     "Golden": { "frames": [2] },
-    "OceanFloor": { "frames": [3] },
-    "Stone": { "frames": [4] }
+    "Stone": { "frames": [3] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:79d40a02a38fff3a2e3226d512b2191e:e2695faeecd53a09481c947dda6a054f:aa9e305f3b390e1c4824a149595b819a$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:a12ac098858a4ec3543451d5907b26c4:087f350896689d7dc083f1bf88d50733:70717aaac7171e3f59ea1f3a699a20aa$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

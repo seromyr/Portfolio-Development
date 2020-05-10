@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Tiles_Big.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 48, 48, 0, 0, 0]
+],
+
+"animations": {
+    "OceanFloor": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:ae7a6092c8e900d19a04fa7a2e9cc79e:6d548d868fb4aeb88f1bc940d905b62c:a5fedf71f989fb0e4855e4c88cb110c6$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

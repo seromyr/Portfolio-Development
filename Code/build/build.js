@@ -9952,10 +9952,10 @@ module.exports.formatError = function(err) {
 
 /***/ }),
 
-/***/ "./src/Constants.ts":
-/*!**************************!*\
-  !*** ./src/Constants.ts ***!
-  \**************************/
+/***/ "./src/Constants/Constants_General.ts":
+/*!********************************************!*\
+  !*** ./src/Constants/Constants_General.ts ***!
+  \********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9974,8 +9974,8 @@ exports.SCREEN_TITLE = [
     "Leaderboard"
 ];
 exports.PLAYER_MOVESPEED = 10;
-exports.PLAYER_JUMPSPEED = 1;
-exports.PLAYER_JUMPHEIGHT = 96;
+exports.PLAYER_JUMPSPEED = 7;
+exports.PLAYER_JUMPHEIGHT = 256;
 exports.PLAYER_DEFAULT_X = 350;
 exports.PLAYER_DEFAULT_Y = exports.STAGE_HEIGHT * 0.6;
 exports.MAX_TILES = 64;
@@ -10070,6 +10070,73 @@ exports.ASSET_MANIFEST = [
 
 /***/ }),
 
+/***/ "./src/Constants/Constants_Tiles.ts":
+/*!******************************************!*\
+  !*** ./src/Constants/Constants_Tiles.ts ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.TILE_NORMAL = "tileNormal";
+exports.TILE_BIG = "tileBig";
+exports.TILE_TRAMPOLINE = "tileTrampoline";
+exports.TILE_MANIFEST = [
+    {
+        type: "json",
+        src: "./lib/Sprites/Tiles_Normal.json",
+        id: "tileNormal",
+        data: 0
+    },
+    {
+        type: "image",
+        src: "./lib/Sprites/Tiles_Normal.png",
+        id: "tileNormal",
+        data: 0
+    },
+    {
+        type: "json",
+        src: "./lib/Sprites/Tiles_Big.json",
+        id: "tileBig",
+        data: 0
+    },
+    {
+        type: "image",
+        src: "./lib/Sprites/Tiles_Big.png",
+        id: "tileBig",
+        data: 0
+    },
+    {
+        type: "json",
+        src: "./lib/Sprites/Tiles_Breakable.json",
+        id: "tileBreakable",
+        data: 0
+    },
+    {
+        type: "image",
+        src: "./lib/Sprites/Tiles_Breakable.png",
+        id: "tileBreakable",
+        data: 0
+    },
+    {
+        type: "json",
+        src: "./lib/Sprites/Tiles_Trampoline.json",
+        id: "tileTrampoline",
+        data: 0
+    },
+    {
+        type: "image",
+        src: "./lib/Sprites/Tiles_Trampoline.png",
+        id: "tileTrampoline",
+        data: 0
+    },
+];
+
+
+/***/ }),
+
 /***/ "./src/Game.ts":
 /*!*********************!*\
   !*** ./src/Game.ts ***!
@@ -10081,13 +10148,14 @@ exports.ASSET_MANIFEST = [
 
 Object.defineProperty(exports, "__esModule", { value: true });
 __webpack_require__(/*! createjs */ "./node_modules/createjs/builds/1.0.0/createjs.min.js");
-const Constants_1 = __webpack_require__(/*! ./Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ./Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 const AssetManager_1 = __webpack_require__(/*! ./Miscs/AssetManager */ "./src/Miscs/AssetManager.ts");
 const ShapeFactory_1 = __webpack_require__(/*! ./Miscs/ShapeFactory */ "./src/Miscs/ShapeFactory.ts");
 const MainMenuScreen_1 = __webpack_require__(/*! ./Screens/MainMenuScreen */ "./src/Screens/MainMenuScreen.ts");
 const GameplayScreen_1 = __webpack_require__(/*! ./Screens/GameplayScreen */ "./src/Screens/GameplayScreen.ts");
 const ShopScreen_1 = __webpack_require__(/*! ./Screens/ShopScreen */ "./src/Screens/ShopScreen.ts");
 const EndScreen_1 = __webpack_require__(/*! ./Screens/EndScreen */ "./src/Screens/EndScreen.ts");
+const Constants_Tiles_1 = __webpack_require__(/*! ./Constants/Constants_Tiles */ "./src/Constants/Constants_Tiles.ts");
 let stage;
 let canvas;
 let assetManager;
@@ -10102,11 +10170,11 @@ function onReady(e) {
     gameplayScreen = new GameplayScreen_1.default(assetManager, stage);
     shopScreen = new ShopScreen_1.default(assetManager, stage);
     endScreen = new EndScreen_1.default(assetManager, stage);
-    stage.on(Constants_1.SCREEN_TITLE[0], ShowMainMenu);
-    stage.on(Constants_1.SCREEN_TITLE[1], ShowGameplay);
-    stage.on(Constants_1.SCREEN_TITLE[2], ShowShop);
-    stage.on(Constants_1.SCREEN_TITLE[3], ShowGameOver);
-    createjs.Ticker.framerate = Constants_1.FRAME_RATE;
+    stage.on(Constants_General_1.SCREEN_TITLE[0], ShowMainMenu);
+    stage.on(Constants_General_1.SCREEN_TITLE[1], ShowGameplay);
+    stage.on(Constants_General_1.SCREEN_TITLE[2], ShowShop);
+    stage.on(Constants_General_1.SCREEN_TITLE[3], ShowGameOver);
+    createjs.Ticker.framerate = Constants_General_1.FRAME_RATE;
     createjs.Ticker.on("tick", onTick);
     console.log(">> game ready");
 }
@@ -10145,16 +10213,17 @@ function main() {
     window.focus();
     console.log(">> initializing");
     canvas = document.getElementById("game-canvas");
-    canvas.width = Constants_1.STAGE_WIDTH;
-    canvas.height = Constants_1.STAGE_HEIGHT;
+    canvas.width = Constants_General_1.STAGE_WIDTH;
+    canvas.height = Constants_General_1.STAGE_HEIGHT;
     stage = new createjs.StageGL(canvas, { antialias: true });
     stage.enableMouseOver(10);
     let shapeFactory = new ShapeFactory_1.default(stage);
-    shapeFactory.color = Constants_1.BACKGROUND_COLOR;
-    shapeFactory.rectangle(0, 0, Constants_1.STAGE_WIDTH, Constants_1.STAGE_HEIGHT);
+    shapeFactory.color = Constants_General_1.BACKGROUND_COLOR;
+    shapeFactory.rectangle(0, 0, Constants_General_1.STAGE_WIDTH, Constants_General_1.STAGE_HEIGHT);
     assetManager = new AssetManager_1.default(stage);
     stage.on("allAssetsLoaded", onReady, null, true);
-    assetManager.loadAssets(Constants_1.ASSET_MANIFEST);
+    assetManager.loadAssets(Constants_General_1.ASSET_MANIFEST);
+    assetManager.loadAssets(Constants_Tiles_1.TILE_MANIFEST);
 }
 main();
 
@@ -10242,13 +10311,14 @@ exports.default = Environment;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
+const Constants_Tiles_1 = __webpack_require__(/*! ../Constants/Constants_Tiles */ "./src/Constants/Constants_Tiles.ts");
 const ProceduralGenerator_1 = __webpack_require__(/*! ./ProceduralGenerator */ "./src/GameLogic/ProceduralGenerator.ts");
 const Player_1 = __webpack_require__(/*! ../GameLogic/Player */ "./src/GameLogic/Player.ts");
 const Environment_1 = __webpack_require__(/*! ./Environment */ "./src/GameLogic/Environment.ts");
 const Tile_1 = __webpack_require__(/*! ../GameLogic/Tile */ "./src/GameLogic/Tile.ts");
 const NPC_1 = __webpack_require__(/*! ./NPC */ "./src/GameLogic/NPC.ts");
-const Trap_1 = __webpack_require__(/*! ./Trap */ "./src/GameLogic/Trap.ts");
+const Trampoline_1 = __webpack_require__(/*! ./Trampoline */ "./src/GameLogic/Trampoline.ts");
 class GameplayState {
     constructor(assetManager, stage) {
         this.stage = stage;
@@ -10257,17 +10327,16 @@ class GameplayState {
         this.mainChar = new Player_1.default(assetManager, stage);
         this.npc_01 = new NPC_1.default(assetManager, stage);
         this.npc_02 = new NPC_1.default(assetManager, stage);
-        this.tile_Start = new Tile_1.default(assetManager, stage);
-        this.tile_test = new Tile_1.default(assetManager, stage);
-        this.dock = new Tile_1.default(assetManager, stage);
-        this.trampoline = new Trap_1.default(assetManager, stage);
+        this.tile_Start = new Tile_1.default(assetManager, stage, Constants_Tiles_1.TILE_NORMAL);
+        this.dock = new Tile_1.default(assetManager, stage, Constants_Tiles_1.TILE_NORMAL);
         this.water = new Environment_1.default(assetManager, stage);
         this.land = new Environment_1.default(assetManager, stage);
         this.air = new Environment_1.default(assetManager, stage);
         this.space = new Environment_1.default(assetManager, stage);
         this.land_bg_00 = new Environment_1.default(assetManager, stage);
         this.PlayerController();
-        this._playerHasDied = new createjs.Event(Constants_1.SCREEN_TITLE[3], true, false);
+        this._playerHasDied = new createjs.Event(Constants_General_1.SCREEN_TITLE[3], true, false);
+        this.occupiedID = [];
     }
     get GameStart() { return this._gameStart; }
     set GameStart(value) { this._gameStart = value; }
@@ -10279,40 +10348,38 @@ class GameplayState {
         this.CreateActors();
         this.tile_Start.ShowMe("Golden");
         this.dock.ShowMe("Stone");
-        this.trampoline.ShowMe("Trampoline/Idle/Trampoline_Idle");
         this.SpawnOceanFloorTiles();
-        this.SpawnTiles(1000, "Clay", this.tiles_common);
+        this.SpawnCoreTiles(1400, "Clay", this.tiles_core);
+        this.SpawnTrampolines(2);
         this.npc_01.ShowMeJumping();
         this.npc_02.ShowMeIdling();
-        this.mainChar.ShowMeJumping();
+        this.mainChar.ShowMe("Dazzle/Dazzle Jump/Dazzle_Fall");
         this.water.ShowMe("water");
         this.land.ShowMe("land");
         this.air.ShowMe("air");
         this.space.ShowMe("space");
         this._score = -19;
-        this.trampoline.Name = "Trampoline";
-        this.trampoline.X = this.tiles_common[2].X + this.tiles_common[2].Width / 2;
-        this.trampoline.Y = this.tiles_common[2].Y;
     }
     CreateActors() {
         this.mainChar.Alive = true;
-        this.mainChar.X = Constants_1.PLAYER_DEFAULT_X;
-        this.mainChar.Y = Constants_1.PLAYER_DEFAULT_Y;
+        this.mainChar.X = Constants_General_1.PLAYER_DEFAULT_X;
+        this.mainChar.Y = Constants_General_1.PLAYER_DEFAULT_Y;
         this.mainChar.FlipMeOver("left");
         this.mainChar.CurrentY = this.mainChar.Y;
         this.npc_01.Alive = true;
         this.npc_01.X = 132;
-        this.npc_01.Y = Constants_1.STAGE_HEIGHT - 96;
+        this.npc_01.Y = Constants_General_1.STAGE_HEIGHT - 96;
         this.npc_02.Alive = true;
         this.npc_02.X = 54;
-        this.npc_02.Y = Constants_1.STAGE_HEIGHT - 48;
+        this.npc_02.Y = Constants_General_1.STAGE_HEIGHT - 48;
         this.tiles_OceanFloor = [];
-        this.tiles_common = [];
+        this.tiles_core = [];
         this.tile_Start.Name = "Starting";
         this.tile_Start.X = 128;
-        this.tile_Start.Y = Constants_1.STAGE_HEIGHT - 96;
-        this.dock.X = -this.dock.Width + 2;
-        this.dock.Y = Constants_1.ANCHOR;
+        this.tile_Start.Y = Constants_General_1.STAGE_HEIGHT - 96;
+        this.dock.X = Constants_General_1.STAGE_WIDTH + this.dock.Width - 64;
+        this.dock.Y = Constants_General_1.ANCHOR;
+        this.trampoline = [];
     }
     CreateProps() {
         this.water.Name = "Water";
@@ -10320,13 +10387,13 @@ class GameplayState {
         this.water.Y = 168;
         this.land.Name = "Land";
         this.land.X = 0;
-        this.land.Y = -Constants_1.STAGE_HEIGHT / 2;
+        this.land.Y = -Constants_General_1.STAGE_HEIGHT / 2;
         this.air.Name = "Air";
         this.air.X = 0;
-        this.air.Y = this.land.Y - Constants_1.STAGE_HEIGHT;
+        this.air.Y = this.land.Y - Constants_General_1.STAGE_HEIGHT;
         this.space.Name = "Space";
         this.space.X = 0;
-        this.space.Y = this.air.Y - Constants_1.STAGE_HEIGHT;
+        this.space.Y = this.air.Y - Constants_General_1.STAGE_HEIGHT;
         this.land_bg_00.Name = "UnderwaterBG";
         this.land_bg_00.X = 0;
         this.land_bg_00.Y = 128;
@@ -10334,11 +10401,11 @@ class GameplayState {
     PlayerController() {
         document.onkeydown = (e) => {
             if (e.keyCode == 37 || e.keyCode == 65) {
-                this.mainChar.X -= Constants_1.PLAYER_MOVESPEED;
+                this.mainChar.X -= Constants_General_1.PLAYER_MOVESPEED;
                 this.mainChar.FlipMeOver("left");
             }
             else if (e.keyCode == 39 || e.keyCode == 68) {
-                this.mainChar.X += Constants_1.PLAYER_MOVESPEED;
+                this.mainChar.X += Constants_General_1.PLAYER_MOVESPEED;
                 this.mainChar.FlipMeOver("right");
             }
         };
@@ -10349,16 +10416,15 @@ class GameplayState {
     }
     Update() {
         if (this.mainChar.Alive) {
-            this.ObjectShifter();
+            this.Camera();
             this.mainChar.Update();
             if (!this.mainChar.Jump) {
-                this.mainChar.CollisionCheckWithTiles(this.tiles_common);
+                this.mainChar.CollisionCheckWithTiles(this.tiles_core);
                 this.mainChar.CollisionCheckWithTiles(this.tiles_OceanFloor);
-                this.mainChar.CollisionCheckWithATile(this.tile_test);
                 this.mainChar.CollisionCheckWithATile(this.tile_Start);
-                this.mainChar.CollisionCheckWithATrampoline(this.trampoline);
+                this.mainChar.CollisionCheckWithTrampolines(this.trampoline);
             }
-            if ((this.mainChar.Y) >= Constants_1.STAGE_HEIGHT) {
+            if ((this.mainChar.Y) >= Constants_General_1.STAGE_HEIGHT) {
                 this.stage.dispatchEvent(this._playerHasDied);
                 this.mainChar.Alive = false;
             }
@@ -10372,47 +10438,64 @@ class GameplayState {
     }
     Terminate() {
         this._gameStart = false;
-        this.mainChar.JumpSpeed = Constants_1.PLAYER_JUMPSPEED;
-        this.npc_01.JumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+        this.mainChar.JumpSpeed = 7;
+        this.npc_01.JumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
         this.stage.removeAllChildren();
     }
-    SpawnTiles(quantity, type = "Clay", tileset) {
+    SpawnCoreTiles(quantity, type = "Clay", tileset) {
         for (let i = 0; i < quantity; i++) {
-            tileset[i] = new Tile_1.default(this.assetManager, this.stage);
+            tileset[i] = new Tile_1.default(this.assetManager, this.stage, Constants_Tiles_1.TILE_NORMAL);
             tileset[i].Name = type;
             tileset[i].ShowMe(type);
         }
         this.rng.GenerateTiles(tileset, this.tile_Start);
     }
+    SpawnTrampolines(quantity) {
+        for (let i = 0; i < quantity; i++) {
+            this.trampoline[i] = new Trampoline_1.default(this.assetManager, this.stage);
+            this.trampoline[i].Name = "Trampoline";
+            let n = this.rng.RandomBetween(2, 5);
+            this.trampoline[i].X = this.tiles_core[n].X + this.tiles_core[n].Width / 2;
+            this.trampoline[i].Y = this.tiles_core[n].Y;
+            this.trampoline[i].ShowMe("Trampoline/Idle/Trampoline_Idle");
+        }
+    }
     SpawnOceanFloorTiles() {
         let x = 48;
         for (let i = 0; i < 8; i++) {
-            this.tiles_OceanFloor[i] = new Tile_1.default(this.assetManager, this.stage);
+            this.tiles_OceanFloor[i] = new Tile_1.default(this.assetManager, this.stage, Constants_Tiles_1.TILE_BIG);
             this.tiles_OceanFloor[i].Name = "OceanFloor";
             this.tiles_OceanFloor[i].X = x;
-            this.tiles_OceanFloor[i].Y = Constants_1.STAGE_HEIGHT - this.tiles_OceanFloor[i].Height * 3;
+            this.tiles_OceanFloor[i].Y = Constants_General_1.STAGE_HEIGHT - this.tiles_OceanFloor[i].Height;
             this.tiles_OceanFloor[i].ShowMe("OceanFloor");
             x += this.tiles_OceanFloor[i].Width;
+            console.log(this.tiles_OceanFloor[0].Width + " " + this.tiles_OceanFloor[0].Height);
         }
     }
-    ObjectShifter() {
-        let h = 16;
-        if (this.mainChar.Y <= this.dock.Y && this.mainChar.Jump) {
+    Camera() {
+        if (this.mainChar.Y < Constants_General_1.STAGE_HEIGHT * .5 && this.mainChar.Jump) {
             this._score++;
-            this.tile_Start.Y += h;
-            this.npc_01.Y += h;
-            this.npc_02.Y += h;
+            let h = this.mainChar.JumpSpeed * 2;
             this.water.Y += h;
             this.land.Y += h / 3;
             this.air.Y += h / 3;
             this.space.Y += h / 3;
             this.land_bg_00.Y += h / 1.3;
-            this.trampoline.Y += h;
-            for (let i = 0; i < this.tiles_common.length; i++) {
-                this.tiles_common[i].Y += h;
+            this.tile_Start.Y += h;
+            this.npc_01.Y += h;
+            this.npc_02.Y += h;
+            for (let i = 0; i < this.tiles_core.length; i++) {
+                if (this.tiles_core[i].Y < this.mainChar.Y) {
+                    this.tiles_core[i].Y += h / 2;
+                }
+                else
+                    this.tiles_core[i].Y += h;
             }
             for (let i = 0; i < this.tiles_OceanFloor.length; i++) {
                 this.tiles_OceanFloor[i].Y += h;
+            }
+            for (let i = 0; i < this.trampoline.length; i++) {
+                this.trampoline[i].Y += h;
             }
         }
     }
@@ -10432,14 +10515,14 @@ exports.default = GameplayState;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts");
 class NPC extends Entity_1.default {
     constructor(assetManager, stage) {
         super(assetManager, stage, "npc01");
         this._jumpDelay = 500;
         this.JumpHeight = 64;
-        this.JumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+        this.JumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
         this.Jump = false;
     }
     get JumpHeight() { return this._jumpHeight; }
@@ -10463,7 +10546,7 @@ class NPC extends Entity_1.default {
                 this._jumpSpeed++;
                 this.Y -= Math.sin(this._jumpSpeed) + this._jumpSpeed;
                 if (this.Y < this.CurrentY - this._jumpHeight) {
-                    this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+                    this._jumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
                     this.Y = this.CurrentY - this._jumpHeight;
                     this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
                     this.Jump = false;
@@ -10474,7 +10557,6 @@ class NPC extends Entity_1.default {
             this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
             this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
             this.Y += this.JumpSpeed * 0.3;
-            console.log("falling");
         }
     }
     CollisionCheckWithTiles(tile) {
@@ -10486,7 +10568,7 @@ class NPC extends Entity_1.default {
                     this.Jump = true;
                     this.Y = this.CurrentY = tile[i].Y;
                     this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
-                    this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+                    this._jumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
                 }
             }
             else {
@@ -10502,7 +10584,7 @@ class NPC extends Entity_1.default {
                 this.Jump = true;
                 this.Y = this.CurrentY = tile.Y;
                 this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
-                this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+                this._jumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
             }
         }
         else {
@@ -10535,48 +10617,40 @@ exports.default = NPC;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts");
 class Player extends Entity_1.default {
     constructor(assetManager, stage) {
         super(assetManager, stage, "mainChar");
-        this.JumpHeight = Constants_1.PLAYER_JUMPHEIGHT;
-        this.JumpSpeed = Constants_1.PLAYER_JUMPSPEED;
         this.Jump = false;
+        this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED;
     }
-    get JumpHeight() { return this._jumpHeight; }
-    set JumpHeight(value) { this._jumpHeight = value; }
-    get JumpSpeed() { return this._jumpSpeed; }
-    set JumpSpeed(value) { this._jumpSpeed = value; }
-    get HeightDiff() { return this.heightDiff; }
-    ShowMeIdling() {
-        super.ShowMe("Dazzle/Dazzle Idle/Dazzle_Idle");
-    }
-    ShowMeJumping() {
-        super.ShowMe("Dazzle/Dazzle Jump/Dazzle_Jump", false);
-        this._isGrounded = false;
-    }
+    get JumpSpeed() { return this._jumpVelocity; }
+    set JumpSpeed(value) { this._jumpVelocity = value; }
     Update() {
         if (this._isGrounded && this.Jump) {
-            this.Y -= this.JumpSpeed;
             this._isGrounded = false;
         }
         else if (!this._isGrounded && this.Jump) {
             if (this.Y <= this.CurrentY) {
-                this._jumpSpeed++;
-                this.Y -= Math.sin(this._jumpSpeed) + this._jumpSpeed;
-                if (this.Y < this.CurrentY - this._jumpHeight) {
-                    this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
-                    this.Y = this.CurrentY - this._jumpHeight;
-                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
+                this._jumpVelocity -= 0.2;
+                if (this._jumpVelocity < Constants_General_1.PLAYER_JUMPSPEED * 0.5) {
+                    this._jumpVelocity -= 0.1;
+                }
+                this.Y -= this._jumpVelocity;
+                if (this._jumpVelocity < 0) {
+                    this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED * 0.5;
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Fall");
                     this.Jump = false;
                 }
             }
         }
         else if (!this._isGrounded && !this.Jump) {
-            this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-            this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
-            this.Y += this.JumpSpeed * 0.3;
+            this._jumpVelocity += 0.1;
+            if (this._jumpVelocity > Constants_General_1.PLAYER_JUMPSPEED * 0.5) {
+                this._jumpVelocity += 0.2;
+            }
+            this.Y += this._jumpVelocity;
         }
     }
     CollisionCheckWithTiles(tile) {
@@ -10584,17 +10658,11 @@ class Player extends Entity_1.default {
             if (this.X >= tile[i].X - 4 && this.X <= tile[i].X + tile[i].Width + 4) {
                 if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
                     console.log(`landed on a ${tile[i].Name} tile`);
-                    if (tile[i].Y >= Constants_1.ANCHOR) {
-                        this.heightDiff = this._sprite.getBounds().height - tile[i].Height;
-                    }
-                    else {
-                        this.heightDiff = this._sprite.getBounds().height + tile[i].Height;
-                    }
                     this._isGrounded = true;
                     this.Jump = true;
                     this.Y = this.CurrentY = tile[i].Y;
-                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-                    this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
+                    this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED;
                 }
             }
             else {
@@ -10606,17 +10674,11 @@ class Player extends Entity_1.default {
         if (this.X >= tile.X - 4 && this.X <= tile.X + tile.Width + 4) {
             if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
                 console.log(`landed on a ${tile.Name} tile`);
-                if (tile.Y >= Constants_1.ANCHOR) {
-                    this.heightDiff = this._sprite.getBounds().height - tile.Height;
-                }
-                else {
-                    this.heightDiff = this._sprite.getBounds().height + tile.Height;
-                }
                 this._isGrounded = true;
                 this.Jump = true;
                 this.Y = this.CurrentY = tile.Y;
-                this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-                this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
+                this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
+                this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED;
             }
         }
         else {
@@ -10633,23 +10695,22 @@ class Player extends Entity_1.default {
                 break;
         }
     }
-    CollisionCheckWithATrampoline(tile) {
-        if (this.X >= tile.X - 16 && this.X <= tile.X + tile.Width + 16) {
-            if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
-                console.log(`landed on a ${tile.Name} tile`);
-                this._isGrounded = true;
-                this.Jump = true;
-                this.Y = this.CurrentY = tile.Y;
-                this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-                this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED;
-                tile.ActivateMe();
-                this._jumpHeight = Constants_1.PLAYER_JUMPHEIGHT * 3;
-                this._jumpSpeed = Constants_1.PLAYER_JUMPSPEED * 3;
+    CollisionCheckWithTrampolines(trampoline) {
+        for (let i = 0; i < trampoline.length; i++) {
+            if (this.X >= trampoline[i].X - 24 && this.X <= trampoline[i].X + 24) {
+                if (this.Y >= trampoline[i].Y && this.Y < trampoline[i].Y + trampoline[i].Height) {
+                    console.log(`landed on a ${trampoline[i].Name}`);
+                    this._isGrounded = true;
+                    this.Jump = true;
+                    this.Y = this.CurrentY = trampoline[i].Y;
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
+                    trampoline[i].ActivateMe();
+                    this._jumpVelocity = trampoline[i].JumpVelocityBoost;
+                }
             }
-        }
-        else {
-            this._isGrounded = false;
-            this._jumpHeight = Constants_1.PLAYER_JUMPHEIGHT;
+            else {
+                this._isGrounded = false;
+            }
         }
     }
 }
@@ -10668,7 +10729,7 @@ exports.default = Player;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 class ProceduralGenerator {
     RandomBetween(low, high) {
         let randomNum = 0;
@@ -10677,14 +10738,14 @@ class ProceduralGenerator {
     }
     RandomCoordinatesOnScreen() {
         let randomCoords = [[], []];
-        randomCoords[0][0] = this.RandomBetween(0, Constants_1.STAGE_WIDTH);
-        randomCoords[0][1] = this.RandomBetween(0, Constants_1.STAGE_HEIGHT);
+        randomCoords[0][0] = this.RandomBetween(0, Constants_General_1.STAGE_WIDTH);
+        randomCoords[0][1] = this.RandomBetween(0, Constants_General_1.STAGE_HEIGHT);
         return randomCoords;
     }
     RandomGameObjectsInsideStage(tileset) {
         for (let i = 0; i < tileset.length; i++) {
-            tileset[i].X = this.RandomBetween(0, Constants_1.STAGE_WIDTH);
-            tileset[i].Y = this.RandomBetween(0, Constants_1.STAGE_HEIGHT - tileset[i].Height * 6);
+            tileset[i].X = this.RandomBetween(0, Constants_General_1.STAGE_WIDTH);
+            tileset[i].Y = this.RandomBetween(0, Constants_General_1.STAGE_HEIGHT - tileset[i].Height * 6);
         }
     }
     GenerateTiles(tileset, tileStart) {
@@ -10728,39 +10789,46 @@ exports.default = ProceduralGenerator;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 class Tile extends Entity_1.default {
-    constructor(assetManager, stage) {
-        super(assetManager, stage, "tiles");
+    constructor(assetManager, stage, type) {
+        super(assetManager, stage, type);
         this._width = this._sprite.getBounds().width;
         this._height = this._sprite.getBounds().height;
+        this._allowCollision = true;
+        this._interactable = false;
+        this._jumpVelocityBoost = Constants_General_1.PLAYER_JUMPSPEED;
     }
     get Width() { return this._width; }
     get Height() { return this._height; }
+    get CollisionPermission() { return this._allowCollision; }
+    set CollisionPermission(value) { this._allowCollision = value; }
+    get Interactable() { return this._interactable; }
+    get JumpVelocityBoost() { return this._jumpVelocityBoost; }
 }
 exports.default = Tile;
 
 
 /***/ }),
 
-/***/ "./src/GameLogic/Trap.ts":
-/*!*******************************!*\
-  !*** ./src/GameLogic/Trap.ts ***!
-  \*******************************/
+/***/ "./src/GameLogic/Trampoline.ts":
+/*!*************************************!*\
+  !*** ./src/GameLogic/Trampoline.ts ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts");
-class Trap extends Entity_1.default {
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
+const Constants_Tiles_1 = __webpack_require__(/*! ../Constants/Constants_Tiles */ "./src/Constants/Constants_Tiles.ts");
+const Tile_1 = __webpack_require__(/*! ./Tile */ "./src/GameLogic/Tile.ts");
+class Trampoline extends Tile_1.default {
     constructor(assetManager, stage) {
-        super(assetManager, stage, "trampoline");
-        this._width = this._sprite.getBounds().width;
-        this._height = this._sprite.getBounds().height;
+        super(assetManager, stage, Constants_Tiles_1.TILE_TRAMPOLINE);
+        this._jumpVelocityBoost = Constants_General_1.PLAYER_JUMPSPEED * 1.5;
     }
-    get Width() { return this._width; }
-    get Height() { return this._height; }
     ActivateMe() {
         this._sprite.gotoAndPlay("Trampoline/Active/Trampoline_Active");
         this._sprite.on("animationend", function () {
@@ -10768,7 +10836,7 @@ class Trap extends Entity_1.default {
         }, this, true);
     }
 }
-exports.default = Trap;
+exports.default = Trampoline;
 
 
 /***/ }),
@@ -10933,10 +11001,10 @@ exports.default = Bitmap_Text;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ScreenManager_1 = __webpack_require__(/*! ./_ScreenManager */ "./src/Screens/_ScreenManager.ts");
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 class Endcreen extends _ScreenManager_1.default {
     constructor(assetManager, stage) {
-        super(assetManager, stage, "GameOver", Constants_1.SCREEN_TITLE[3]);
+        super(assetManager, stage, "GameOver", Constants_General_1.SCREEN_TITLE[3]);
         super.ShowReturnButton();
     }
     ShowMe() {
@@ -10959,12 +11027,12 @@ exports.default = Endcreen;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ScreenManager_1 = __webpack_require__(/*! ./_ScreenManager */ "./src/Screens/_ScreenManager.ts");
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 const GameplayState_1 = __webpack_require__(/*! ../GameLogic/GameplayState */ "./src/GameLogic/GameplayState.ts");
 const Bitmap_Text_1 = __webpack_require__(/*! ./Bitmap_Text */ "./src/Screens/Bitmap_Text.ts");
 class GameplayScreen extends _ScreenManager_1.default {
     constructor(assetManager, stage) {
-        super(assetManager, stage, "Gameplay", Constants_1.SCREEN_TITLE[1]);
+        super(assetManager, stage, "Gameplay", Constants_General_1.SCREEN_TITLE[1]);
         super.HideShopButton();
         super.HidePlayButton();
         this._gameplayState = new GameplayState_1.default(assetManager, stage);
@@ -11010,19 +11078,19 @@ exports.default = GameplayScreen;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 const _ScreenManager_1 = __webpack_require__(/*! ./_ScreenManager */ "./src/Screens/_ScreenManager.ts");
 const Bitmap_Text_1 = __webpack_require__(/*! ./Bitmap_Text */ "./src/Screens/Bitmap_Text.ts");
 class MainMenuScreen extends _ScreenManager_1.default {
     constructor(assetManager, stage) {
-        super(assetManager, stage, "MainMenu", Constants_1.SCREEN_TITLE[0]);
+        super(assetManager, stage, "MainMenu", Constants_General_1.SCREEN_TITLE[0]);
         super.ShowPlayButton();
         super.ShowShopButton();
         this.version = new Bitmap_Text_1.default(assetManager, stage);
     }
     ShowMe() {
         super.ShowMe();
-        this.version.WriteMessage(256, Constants_1.STAGE_HEIGHT - 48, "v0.5c");
+        this.version.WriteMessage(256, Constants_General_1.STAGE_HEIGHT - 48, "v0.5d");
         this.stage.addChild(this.version.DisplayData);
     }
 }
@@ -11042,10 +11110,10 @@ exports.default = MainMenuScreen;
 
 Object.defineProperty(exports, "__esModule", { value: true });
 const _ScreenManager_1 = __webpack_require__(/*! ./_ScreenManager */ "./src/Screens/_ScreenManager.ts");
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 class ShopScreen extends _ScreenManager_1.default {
     constructor(assetManager, stage) {
-        super(assetManager, stage, "ShopBackground", Constants_1.SCREEN_TITLE[2]);
+        super(assetManager, stage, "ShopBackground", Constants_General_1.SCREEN_TITLE[2]);
         super.ShowReturnButton();
     }
     ShowMe() {
@@ -11067,25 +11135,25 @@ exports.default = ShopScreen;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-const Constants_1 = __webpack_require__(/*! ../Constants */ "./src/Constants.ts");
+const Constants_General_1 = __webpack_require__(/*! ../Constants/Constants_General */ "./src/Constants/Constants_General.ts");
 class ScreenManager {
     constructor(assetManager, stage, bkgImage, screenType) {
         this.stage = stage;
         this.screen = new createjs.Container();
         let background = assetManager.getSprite("gameUI", bkgImage, 0, 0);
         this.screen.addChild(background);
-        this.btnPlay = assetManager.getSprite("gameUI", "play", Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2);
+        this.btnPlay = assetManager.getSprite("gameUI", "play", Constants_General_1.STAGE_WIDTH / 2, Constants_General_1.STAGE_HEIGHT / 2);
         let btnPlayEffect = new createjs.ButtonHelper(this.btnPlay, "play", "play highlight", "play confirm", false);
-        this.btnShop = assetManager.getSprite("gameUI", "shop", Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2 + 128);
+        this.btnShop = assetManager.getSprite("gameUI", "shop", Constants_General_1.STAGE_WIDTH / 2, Constants_General_1.STAGE_HEIGHT / 2 + 128);
         let btnShopEffect = new createjs.ButtonHelper(this.btnShop, "shop", "shop highlight", "shop confirm", false);
-        this.btnMainMenu = assetManager.getSprite("gameUI", "return", Constants_1.STAGE_WIDTH / 2, Constants_1.STAGE_HEIGHT / 2 + 128);
+        this.btnMainMenu = assetManager.getSprite("gameUI", "return", Constants_General_1.STAGE_WIDTH / 2, Constants_General_1.STAGE_HEIGHT / 2 + 128);
         let btnMainMenuEffect = new createjs.ButtonHelper(this.btnMainMenu, "return", "return highlight", "return confirm", false);
         this.btnPlay.on("click", this.GotoPlay, this);
         this.btnShop.on("click", this.GotoShop, this);
         this.btnMainMenu.on("click", this.GotoMainMenu, this);
-        this.eventMainMenu = new createjs.Event(Constants_1.SCREEN_TITLE[0], true, false);
-        this.eventGameplay = new createjs.Event(Constants_1.SCREEN_TITLE[1], true, false);
-        this.eventShopping = new createjs.Event(Constants_1.SCREEN_TITLE[2], true, false);
+        this.eventMainMenu = new createjs.Event(Constants_General_1.SCREEN_TITLE[0], true, false);
+        this.eventGameplay = new createjs.Event(Constants_General_1.SCREEN_TITLE[1], true, false);
+        this.eventShopping = new createjs.Event(Constants_General_1.SCREEN_TITLE[2], true, false);
     }
     ShowMe() {
         this.stage.addChild(this.screen);

@@ -1,58 +1,34 @@
-import { PLAYER_JUMPSPEED, PLAYER_JUMPHEIGHT, STAGE_HEIGHT, ANCHOR } from "../Constants";
+import { PLAYER_JUMPSPEED, ANCHOR } from "../Constants/Constants_General";
 import AssetManager from "../Miscs/AssetManager";
 import Character from "./Entity";
 import Tile from "./Tile";
-import Trap from "./Trap";
+import Trampoline from "./Trampoline";
 
 export default class Player extends Character {
 
-    // player variables
-    private _jumpHeight:number;
-    get JumpHeight():number      {return this._jumpHeight;}
-    set JumpHeight(value:number) {this._jumpHeight = value;}
-    
-    private _jumpSpeed:number
-    get JumpSpeed():number       {return this._jumpSpeed;}
-    set JumpSpeed(value:number)  {this._jumpSpeed = value;}
-    
+    // player variables    
     private _isGrounded:boolean;
 
-    //height difference of a tile
-    private heightDiff:number;
-    get HeightDiff():number {return this.heightDiff;}
+    // new jump mechanism
+    private _jumpVelocity: number;
+    get JumpSpeed():number       {return this._jumpVelocity;}
+    set JumpSpeed(value:number)  {this._jumpVelocity = value;}
+    //private _jumpMaxVelocity:number;
 
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         
         super(assetManager, stage, "mainChar");
-        this.JumpHeight = PLAYER_JUMPHEIGHT;
-        this.JumpSpeed = PLAYER_JUMPSPEED;
         this.Jump = false;
-    }
 
-    public ShowMeIdling():void {        
-        //Display character with looping animation
-        super.ShowMe("Dazzle/Dazzle Idle/Dazzle_Idle");
-        // console.log(this._sprite.x);
-        // console.log(this._sprite.y);
-
-    }
-
-    public ShowMeJumping():void {
-        
-        //Display character with no looping animation
-        super.ShowMe("Dazzle/Dazzle Jump/Dazzle_Jump", false);
-        this._isGrounded = false;
-        // console.log(this._sprite.x);
-        // console.log(this._sprite.y);
-
+        //new jump
+        this._jumpVelocity = PLAYER_JUMPSPEED;
+        //this._jumpMaxVelocity = 7;
     }
 
     public Update():void {
         //if player touches the ground
         if (this._isGrounded && this.Jump) {
-
-            this.Y -= this.JumpSpeed;
             this._isGrounded = false;
         }
 
@@ -60,13 +36,22 @@ export default class Player extends Character {
         else if (!this._isGrounded && this.Jump) {
             if (this.Y <= this.CurrentY) {
 
-                this._jumpSpeed++;
-                this.Y -= Math.sin(this._jumpSpeed) + this._jumpSpeed;
-                // when player reaches max jump height, starts falling down
-                if (this.Y < this.CurrentY - this._jumpHeight) {
-                    this._jumpSpeed = PLAYER_JUMPSPEED;
-                    this.Y = this.CurrentY - this._jumpHeight
-                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
+                // if the distance difference between player CurrentY and MiddleScreen < Max Jump Height
+                // let player jump normal
+
+                this._jumpVelocity -= 0.2;
+                // decrease jump velocity deacceleration 
+                if (this._jumpVelocity < PLAYER_JUMPSPEED * 0.5) {
+                    this._jumpVelocity -= 0.1;
+                }
+                
+                this.Y -= this._jumpVelocity;                
+
+                // when jump velocity reaches 0, player starts falling down
+                if (this._jumpVelocity < 0) {
+                    //slowly fall down
+                    this._jumpVelocity = PLAYER_JUMPSPEED * 0.5;
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Fall");
                     this.Jump = false;
                 }
             }
@@ -75,10 +60,13 @@ export default class Player extends Character {
         // if player is in mid-air and falling
         else if (!this._isGrounded && !this.Jump){            
             //player is constantly falling when not colliding with any tile
-            this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-            this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
-            this.Y += this.JumpSpeed * 0.3;
-            //console.log("falling");
+            this._jumpVelocity += 0.1;
+            // increase jump velocity acceleration 
+            if (this._jumpVelocity > PLAYER_JUMPSPEED * 0.5) {
+                this._jumpVelocity += 0.2;
+            }
+            
+            this.Y += this._jumpVelocity;
         }   
     }
 
@@ -89,20 +77,11 @@ export default class Player extends Character {
                 if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
                     console.log(`landed on a ${tile[i].Name} tile`);
 
-                    // get height diff between tile and anchor to shift tile correctly
-                    if (tile[i].Y >= ANCHOR) {
-                        this.heightDiff = this._sprite.getBounds().height - tile[i].Height;
-                    }
-                    else {
-                        this.heightDiff = this._sprite.getBounds().height + tile[i].Height
-                    }
-
                     this._isGrounded = true;
                     this.Jump = true;
                     this.Y = this.CurrentY = tile[i].Y;
-                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-                    this._jumpSpeed = PLAYER_JUMPSPEED;
-
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
+                    this._jumpVelocity = PLAYER_JUMPSPEED;
                 }
             }
 
@@ -119,19 +98,11 @@ export default class Player extends Character {
             if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
                 console.log(`landed on a ${tile.Name} tile`);
 
-                // get height diff between tile and anchor to shift tile correctly
-                if (tile.Y >= ANCHOR) {
-                    this.heightDiff = this._sprite.getBounds().height - tile.Height;
-                }
-                else {
-                    this.heightDiff = this._sprite.getBounds().height + tile.Height
-                }
-
                 this._isGrounded = true;
                 this.Jump = true;
                 this.Y = this.CurrentY = tile.Y;
-                this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-                this._jumpSpeed = PLAYER_JUMPSPEED;
+                this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
+                this._jumpVelocity = PLAYER_JUMPSPEED;
             }
         }
         else {
@@ -152,30 +123,26 @@ export default class Player extends Character {
     }
 
     // collision check with a trap (trampoline in test)
-    public CollisionCheckWithATrampoline(tile:Trap):void {
-        //if player collides with a tile while falling down
-        if (this.X >= tile.X - 16 && this.X <= tile.X + tile.Width + 16) {
-            if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
-                console.log(`landed on a ${tile.Name} tile`);
+    public CollisionCheckWithTrampolines(trampoline:Trampoline[]):void {
+        for (let i:number = 0; i < trampoline.length; i++) {
+            //if player collides with a tile while falling down
+            if (this.X >= trampoline[i].X - 24 && this.X <= trampoline[i].X + 24) {
+                if (this.Y >= trampoline[i].Y && this.Y < trampoline[i].Y + trampoline[i].Height) {
+                    console.log(`landed on a ${trampoline[i].Name}`);
 
-                this._isGrounded = true;
-                this.Jump = true;
-                this.Y = this.CurrentY = tile.Y;
-                this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-                this._jumpSpeed = PLAYER_JUMPSPEED;
-                
-                tile.ActivateMe();
-                this._jumpHeight = PLAYER_JUMPHEIGHT * 3;
-                this._jumpSpeed = PLAYER_JUMPSPEED * 3;
-                //tile.ShowMe("Trampoline/Active/Trampoline_Active", true);
-                
+                    this._isGrounded = true;
+                    this.Jump = true;
+                    this.Y = this.CurrentY = trampoline[i].Y;
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
+                    
+                    trampoline[i].ActivateMe();
+                    this._jumpVelocity = trampoline[i].JumpVelocityBoost;
+                }
             }
-        }
-        else {
-            this._isGrounded = false;
-            this._jumpHeight = PLAYER_JUMPHEIGHT;
-            //this._jumpSpeed = PLAYER_JUMPSPEED;
-        }
+            else {
+                this._isGrounded = false;
+            }
+        }        
     }
 }
 

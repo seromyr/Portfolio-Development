@@ -5,7 +5,7 @@
 import "createjs";
 
 // import game constants
-import { STAGE_WIDTH, STAGE_HEIGHT, BACKGROUND_COLOR, FRAME_RATE, ASSET_MANIFEST, SCREEN_TITLE } from "./Constants";
+import { STAGE_WIDTH, STAGE_HEIGHT, BACKGROUND_COLOR, FRAME_RATE, ASSET_MANIFEST, SCREEN_TITLE } from "./Constants/Constants_General";
 
 // import custom classes
 import AssetManager from "./Miscs/AssetManager";
@@ -14,6 +14,7 @@ import MainMenuScreen from "./Screens/MainMenuScreen";
 import GameplayScreen from "./Screens/GameplayScreen";
 import ShopScreen from "./Screens/ShopScreen";
 import Endcreen from "./Screens/EndScreen";
+import { TILE_MANIFEST } from "./Constants/Constants_Tiles";
 
 // game variables
 let stage:createjs.StageGL;
@@ -105,6 +106,7 @@ function main():void {
 
     // get reference to canvas
     canvas = <HTMLCanvasElement> document.getElementById("game-canvas");
+    
     // set canvas width and height - this will be the stage size
     canvas.width = STAGE_WIDTH;
     canvas.height = STAGE_HEIGHT;
@@ -121,8 +123,10 @@ function main():void {
     // construct AssetManager object to load spritesheet and sound assets
     assetManager = new AssetManager(stage);
     stage.on("allAssetsLoaded", onReady, null, true);
+
     // load the assets
     assetManager.loadAssets(ASSET_MANIFEST);
+    assetManager.loadAssets(TILE_MANIFEST);
 }
 
 main();

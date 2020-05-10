@@ -15,7 +15,8 @@
 
 "animations": {
     "Dazzle/Dazzle Idle/Dazzle_Idle": { "frames": [0, 1] },
-    "Dazzle/Dazzle Jump/Dazzle_Jump": { "frames": [2, 3, 4] }
+    "Dazzle/Dazzle Jump/Dazzle_Jump": { "frames": [2, 3, 4],
+	"Dazzle/Dazzle Fall/Dazzle_Fall": { "frames": [4]	}
 },
 
 "texturepacker": [

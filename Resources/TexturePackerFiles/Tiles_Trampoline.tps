@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../Sprites/Tiles.json</filename>
+                <filename>../Sprites/Tiles_Trampoline.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,58 +181,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Concepts/Tiles/Breakables/Breakable 1.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Breakable 2.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Breakable 3.png</key>
-            <key type="filename">../Concepts/Tiles/Hollow/Hollow.png</key>
-            <key type="filename">../Concepts/Tiles/Normal/Brick.png</key>
-            <key type="filename">../Concepts/Tiles/Normal/Clay.png</key>
-            <key type="filename">../Concepts/Tiles/Normal/Golden.png</key>
-            <key type="filename">../Concepts/Tiles/Normal/Stone.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,4,24,8</rect>
-                <key>scale9Paddings</key>
-                <rect>12,4,24,8</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Concepts/Tiles/Normal/OceanFloor.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,0</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,12,24,24</rect>
-                <key>scale9Paddings</key>
-                <rect>12,12,24,24</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Concepts/Tiles/Spiked/Spikes.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0,1</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>12,2,23,3</rect>
-                <key>scale9Paddings</key>
-                <rect>12,2,23,3</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
             <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_000.png</key>
             <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_001.png</key>
             <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_002.png</key>
@@ -273,10 +221,6 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Concepts/Tiles/Breakables</filename>
-            <filename>../Concepts/Tiles/Hollow</filename>
-            <filename>../Concepts/Tiles/Normal</filename>
-            <filename>../Concepts/Tiles/Spiked</filename>
             <filename>../Concepts/Trampoline</filename>
         </array>
         <key>ignoreFileList</key>

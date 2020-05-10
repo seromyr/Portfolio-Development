@@ -1,5 +1,5 @@
 import AssetManager from "../Miscs/AssetManager";
-import { SCREEN_TITLE, STAGE_WIDTH, STAGE_HEIGHT } from "../Constants";
+import { SCREEN_TITLE, STAGE_WIDTH, STAGE_HEIGHT } from "../Constants/Constants_General";
 
 export default class ScreenManager { 
     

@@ -1,4 +1,4 @@
-import { STAGE_WIDTH, STAGE_HEIGHT } from "../Constants";
+import { STAGE_WIDTH, STAGE_HEIGHT } from "../Constants/Constants_General";
 import Tile from "./Tile";
 
 export default class ProceduralGenerator {

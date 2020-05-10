@@ -1,4 +1,4 @@
-import { PLAYER_JUMPSPEED, PLAYER_JUMPHEIGHT } from "../Constants";
+import { PLAYER_JUMPSPEED } from "../Constants/Constants_General";
 import AssetManager from "../Miscs/AssetManager";
 import Character from "./Entity";
 import Tile from "./Tile";
@@ -77,7 +77,7 @@ export default class NPC extends Character {
             this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
             this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
             this.Y += this.JumpSpeed * 0.3;
-            console.log("falling");
+            //console.log("falling");
         }   
     }
 

@@ -1,7 +1,7 @@
 {
 
 "images": [
-    "Trampoline.png"
+    "Tiles_Trampoline.png"
 ],
 
 "framerate": 30,
@@ -23,7 +23,7 @@
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:737c57d935d84f903565f666ce624701:76831df5d7f94e7be36d191a4bc21353:aaffda4f90e3ebc78f5371f27f09757d$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:8ef01c0da9198542e8e3feca1c737e46:76831df5d7f94e7be36d191a4bc21353:c8469208a91154ad7a47695827d32b38$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 
