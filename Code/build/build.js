@@ -9974,11 +9974,9 @@ exports.SCREEN_TITLE = [
     "Leaderboard"
 ];
 exports.PLAYER_MOVESPEED = 10;
-exports.PLAYER_JUMPSPEED = 7;
-exports.PLAYER_JUMPHEIGHT = 256;
+exports.PLAYER_JUMPSPEED = 20;
 exports.PLAYER_DEFAULT_X = 350;
 exports.PLAYER_DEFAULT_Y = exports.STAGE_HEIGHT * 0.6;
-exports.MAX_TILES = 64;
 exports.ANCHOR = exports.STAGE_HEIGHT / 2;
 exports.ASSET_MANIFEST = [
     {
@@ -10083,6 +10081,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.TILE_NORMAL = "tileNormal";
 exports.TILE_BIG = "tileBig";
 exports.TILE_TRAMPOLINE = "tileTrampoline";
+exports.TILE_HOLLOW = "tileHollow";
 exports.TILE_MANIFEST = [
     {
         type: "json",
@@ -10130,6 +10129,18 @@ exports.TILE_MANIFEST = [
         type: "image",
         src: "./lib/Sprites/Tiles_Trampoline.png",
         id: "tileTrampoline",
+        data: 0
+    },
+    {
+        type: "json",
+        src: "./lib/Sprites/Tiles_Hollow.json",
+        id: "tileHollow",
+        data: 0
+    },
+    {
+        type: "image",
+        src: "./lib/Sprites/Tiles_Hollow.png",
+        id: "tileHollow",
         data: 0
     },
 ];
@@ -10317,8 +10328,8 @@ const ProceduralGenerator_1 = __webpack_require__(/*! ./ProceduralGenerator */ "
 const Player_1 = __webpack_require__(/*! ../GameLogic/Player */ "./src/GameLogic/Player.ts");
 const Environment_1 = __webpack_require__(/*! ./Environment */ "./src/GameLogic/Environment.ts");
 const Tile_1 = __webpack_require__(/*! ../GameLogic/Tile */ "./src/GameLogic/Tile.ts");
-const NPC_1 = __webpack_require__(/*! ./NPC */ "./src/GameLogic/NPC.ts");
 const Trampoline_1 = __webpack_require__(/*! ./Trampoline */ "./src/GameLogic/Trampoline.ts");
+const NPC_1 = __webpack_require__(/*! ./NPC */ "./src/GameLogic/NPC.ts");
 class GameplayState {
     constructor(assetManager, stage) {
         this.stage = stage;
@@ -10327,8 +10338,6 @@ class GameplayState {
         this.mainChar = new Player_1.default(assetManager, stage);
         this.npc_01 = new NPC_1.default(assetManager, stage);
         this.npc_02 = new NPC_1.default(assetManager, stage);
-        this.tile_Start = new Tile_1.default(assetManager, stage, Constants_Tiles_1.TILE_NORMAL);
-        this.dock = new Tile_1.default(assetManager, stage, Constants_Tiles_1.TILE_NORMAL);
         this.water = new Environment_1.default(assetManager, stage);
         this.land = new Environment_1.default(assetManager, stage);
         this.air = new Environment_1.default(assetManager, stage);
@@ -10336,7 +10345,6 @@ class GameplayState {
         this.land_bg_00 = new Environment_1.default(assetManager, stage);
         this.PlayerController();
         this._playerHasDied = new createjs.Event(Constants_General_1.SCREEN_TITLE[3], true, false);
-        this.occupiedID = [];
     }
     get GameStart() { return this._gameStart; }
     set GameStart(value) { this._gameStart = value; }
@@ -10346,11 +10354,10 @@ class GameplayState {
         this.CreateProps();
         this.land_bg_00.ShowMe("land_bg_00");
         this.CreateActors();
-        this.tile_Start.ShowMe("Golden");
-        this.dock.ShowMe("Stone");
         this.SpawnOceanFloorTiles();
-        this.SpawnCoreTiles(1400, "Clay", this.tiles_core);
+        this.SpawnCoreTiles(30);
         this.SpawnTrampolines(2);
+        this.SpawnHollowTiles(4);
         this.npc_01.ShowMeJumping();
         this.npc_02.ShowMeIdling();
         this.mainChar.ShowMe("Dazzle/Dazzle Jump/Dazzle_Fall");
@@ -10358,7 +10365,7 @@ class GameplayState {
         this.land.ShowMe("land");
         this.air.ShowMe("air");
         this.space.ShowMe("space");
-        this._score = -19;
+        this._score = -25;
     }
     CreateActors() {
         this.mainChar.Alive = true;
@@ -10367,19 +10374,21 @@ class GameplayState {
         this.mainChar.FlipMeOver("left");
         this.mainChar.CurrentY = this.mainChar.Y;
         this.npc_01.Alive = true;
-        this.npc_01.X = 132;
+        this.npc_01.X = 96;
         this.npc_01.Y = Constants_General_1.STAGE_HEIGHT - 96;
         this.npc_02.Alive = true;
         this.npc_02.X = 54;
         this.npc_02.Y = Constants_General_1.STAGE_HEIGHT - 48;
-        this.tiles_OceanFloor = [];
-        this.tiles_core = [];
-        this.tile_Start.Name = "Starting";
-        this.tile_Start.X = 128;
-        this.tile_Start.Y = Constants_General_1.STAGE_HEIGHT - 96;
-        this.dock.X = Constants_General_1.STAGE_WIDTH + this.dock.Width - 64;
-        this.dock.Y = Constants_General_1.ANCHOR;
-        this.trampoline = [];
+        this.tile_OceanFloor = [];
+        this.tile_Core = [];
+        this.tile_Hollow = [];
+        this.tile_Start = [];
+        this.tile_Start[0] = new Tile_1.default(this.assetManager, this.stage, Constants_Tiles_1.TILE_NORMAL);
+        this.tile_Start[0].Name = "Start";
+        this.tile_Start[0].X = 128;
+        this.tile_Start[0].Y = Constants_General_1.STAGE_HEIGHT - 96;
+        this.tile_Start[0].ShowMe("Clay");
+        this.tile_Trampoline = [];
     }
     CreateProps() {
         this.water.Name = "Water";
@@ -10419,10 +10428,10 @@ class GameplayState {
             this.Camera();
             this.mainChar.Update();
             if (!this.mainChar.Jump) {
-                this.mainChar.CollisionCheckWithTiles(this.tiles_core);
-                this.mainChar.CollisionCheckWithTiles(this.tiles_OceanFloor);
-                this.mainChar.CollisionCheckWithATile(this.tile_Start);
-                this.mainChar.CollisionCheckWithTrampolines(this.trampoline);
+                this.mainChar.CollisionCheckWithTiles(this.tile_Core);
+                this.mainChar.CollisionCheckWithTiles(this.tile_OceanFloor);
+                this.mainChar.CollisionCheckWithTiles(this.tile_Start);
+                this.mainChar.CollisionCheckWithTrampolines(this.tile_Trampoline);
             }
             if ((this.mainChar.Y) >= Constants_General_1.STAGE_HEIGHT) {
                 this.stage.dispatchEvent(this._playerHasDied);
@@ -10432,70 +10441,95 @@ class GameplayState {
         if (this.npc_01.Alive) {
             this.npc_01.Update();
             if (!this.npc_01.Jump) {
-                this.npc_01.CollisionCheckWithATile(this.tile_Start);
+                this.npc_01.CollisionCheckWithTiles(this.tile_OceanFloor);
             }
         }
     }
     Terminate() {
         this._gameStart = false;
-        this.mainChar.JumpSpeed = 7;
-        this.npc_01.JumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
         this.stage.removeAllChildren();
     }
-    SpawnCoreTiles(quantity, type = "Clay", tileset) {
+    SpawnCoreTiles(quantity) {
         for (let i = 0; i < quantity; i++) {
-            tileset[i] = new Tile_1.default(this.assetManager, this.stage, Constants_Tiles_1.TILE_NORMAL);
-            tileset[i].Name = type;
-            tileset[i].ShowMe(type);
+            this.tile_Core[i] = new Tile_1.default(this.assetManager, this.stage, Constants_Tiles_1.TILE_NORMAL);
+            this.tile_Core[i].Name = "Core";
+            this.tile_Core[i].ShowMe("Clay");
         }
-        this.rng.GenerateTiles(tileset, this.tile_Start);
+        this.rng.GenerateTiles(this.tile_Core, this.tile_Start[0]);
+    }
+    SpawnHollowTiles(quantity) {
+        for (let i = 0; i < quantity; i++) {
+            this.tile_Hollow[i] = new Tile_1.default(this.assetManager, this.stage, Constants_Tiles_1.TILE_HOLLOW);
+            this.tile_Hollow[i].Name = "Hollow";
+            this.tile_Hollow[i].ShowMe("Hollow");
+        }
+        this.rng.GenerateTiles(this.tile_Hollow, this.tile_Start[0]);
     }
     SpawnTrampolines(quantity) {
         for (let i = 0; i < quantity; i++) {
-            this.trampoline[i] = new Trampoline_1.default(this.assetManager, this.stage);
-            this.trampoline[i].Name = "Trampoline";
-            let n = this.rng.RandomBetween(2, 5);
-            this.trampoline[i].X = this.tiles_core[n].X + this.tiles_core[n].Width / 2;
-            this.trampoline[i].Y = this.tiles_core[n].Y;
-            this.trampoline[i].ShowMe("Trampoline/Idle/Trampoline_Idle");
+            this.tile_Trampoline[i] = new Trampoline_1.default(this.assetManager, this.stage);
+            this.tile_Trampoline[i].Name = "Trampoline";
+            let n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
+            this.tile_Trampoline[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
+            this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
+            this.tile_Trampoline[i].ShowMe("Trampoline/Idle/Trampoline_Idle");
         }
     }
     SpawnOceanFloorTiles() {
         let x = 48;
         for (let i = 0; i < 8; i++) {
-            this.tiles_OceanFloor[i] = new Tile_1.default(this.assetManager, this.stage, Constants_Tiles_1.TILE_BIG);
-            this.tiles_OceanFloor[i].Name = "OceanFloor";
-            this.tiles_OceanFloor[i].X = x;
-            this.tiles_OceanFloor[i].Y = Constants_General_1.STAGE_HEIGHT - this.tiles_OceanFloor[i].Height;
-            this.tiles_OceanFloor[i].ShowMe("OceanFloor");
-            x += this.tiles_OceanFloor[i].Width;
-            console.log(this.tiles_OceanFloor[0].Width + " " + this.tiles_OceanFloor[0].Height);
+            this.tile_OceanFloor[i] = new Tile_1.default(this.assetManager, this.stage, Constants_Tiles_1.TILE_BIG);
+            this.tile_OceanFloor[i].Name = "OceanFloor";
+            this.tile_OceanFloor[i].X = x;
+            this.tile_OceanFloor[i].Y = Constants_General_1.STAGE_HEIGHT - this.tile_OceanFloor[i].Height;
+            this.tile_OceanFloor[i].ShowMe("OceanFloor");
+            x += this.tile_OceanFloor[i].Width;
         }
     }
     Camera() {
         if (this.mainChar.Y < Constants_General_1.STAGE_HEIGHT * .5 && this.mainChar.Jump) {
             this._score++;
-            let h = this.mainChar.JumpSpeed * 2;
+            let h = this.mainChar.JumpSpeed;
             this.water.Y += h;
             this.land.Y += h / 3;
             this.air.Y += h / 3;
             this.space.Y += h / 3;
             this.land_bg_00.Y += h / 1.3;
-            this.tile_Start.Y += h;
+            this.tile_Start[0].Y += h;
             this.npc_01.Y += h;
             this.npc_02.Y += h;
-            for (let i = 0; i < this.tiles_core.length; i++) {
-                if (this.tiles_core[i].Y < this.mainChar.Y) {
-                    this.tiles_core[i].Y += h / 2;
+            for (let i = 0; i < this.tile_Core.length; i++) {
+                this.tile_Core[i].Y += h;
+            }
+            for (let i = 0; i < this.tile_OceanFloor.length; i++) {
+                this.tile_OceanFloor[i].Y += h;
+            }
+            for (let i = 0; i < this.tile_Trampoline.length; i++) {
+                this.tile_Trampoline[i].Y += h;
+            }
+            for (let i = 0; i < this.tile_Hollow.length; i++) {
+                this.tile_Hollow[i].Y += h;
+            }
+            for (let i = 0; i < this.tile_Core.length; i++) {
+                if (this.tile_Core[i].Y > Constants_General_1.STAGE_HEIGHT) {
+                    this.tile_Core[i].X = this.rng.RandomBetween(0, Constants_General_1.STAGE_WIDTH - this.tile_Core[i].Width);
+                    this.tile_Core.splice(this.tile_Core.length - 1, 0, this.tile_Core.shift());
+                    this.tile_Core[this.tile_Core.length - 1].Y = this.rng.RandomBetween(this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * 3, this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * 4);
                 }
-                else
-                    this.tiles_core[i].Y += h;
             }
-            for (let i = 0; i < this.tiles_OceanFloor.length; i++) {
-                this.tiles_OceanFloor[i].Y += h;
+            for (let i = 0; i < this.tile_Trampoline.length; i++) {
+                if (this.tile_Trampoline[i].Y > Constants_General_1.STAGE_HEIGHT) {
+                    let n = this.rng.RandomBetween(this.tile_Core.length - 17, this.tile_Core.length - 1);
+                    this.tile_Trampoline[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
+                    this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
+                }
             }
-            for (let i = 0; i < this.trampoline.length; i++) {
-                this.trampoline[i].Y += h;
+            for (let i = 0; i < this.tile_Hollow.length; i++) {
+                if (this.tile_Hollow[i].Y > Constants_General_1.STAGE_HEIGHT) {
+                    this.tile_Hollow[i].X = this.rng.RandomBetween(0, Constants_General_1.STAGE_WIDTH - this.tile_Hollow[i].Width);
+                    this.tile_Hollow.splice(this.tile_Hollow.length - 1, 0, this.tile_Hollow.shift());
+                    this.tile_Hollow[this.tile_Hollow.length - 1].Y = this.rng.RandomBetween(this.tile_Hollow[this.tile_Hollow.length - 2].Y - this.tile_Hollow[i].Height * 3, this.tile_Hollow[this.tile_Hollow.length - 2].Y - this.tile_Hollow[i].Height * 4);
+                }
             }
         }
     }
@@ -10520,15 +10554,12 @@ const Entity_1 = __webpack_require__(/*! ./Entity */ "./src/GameLogic/Entity.ts"
 class NPC extends Entity_1.default {
     constructor(assetManager, stage) {
         super(assetManager, stage, "npc01");
-        this._jumpDelay = 500;
-        this.JumpHeight = 64;
-        this.JumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
         this.Jump = false;
+        this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED * 0.5;
+        this._jumpVelocityModifer = 1;
     }
-    get JumpHeight() { return this._jumpHeight; }
-    set JumpHeight(value) { this._jumpHeight = value; }
-    get JumpSpeed() { return this._jumpSpeed; }
-    set JumpSpeed(value) { this._jumpSpeed = value; }
+    get JumpSpeed() { return this._jumpVelocity; }
+    set JumpSpeed(value) { this._jumpVelocity = value; }
     ShowMeIdling() {
         super.ShowMe("VirtualGuy/Idle/VGuy_idle");
     }
@@ -10538,57 +10569,51 @@ class NPC extends Entity_1.default {
     }
     Update() {
         if (this._isGrounded && this.Jump) {
-            this.Y -= this.JumpSpeed;
             this._isGrounded = false;
         }
         else if (!this._isGrounded && this.Jump) {
             if (this.Y <= this.CurrentY) {
-                this._jumpSpeed++;
-                this.Y -= Math.sin(this._jumpSpeed) + this._jumpSpeed;
-                if (this.Y < this.CurrentY - this._jumpHeight) {
-                    this._jumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
-                    this.Y = this.CurrentY - this._jumpHeight;
+                if (this.Y < Constants_General_1.ANCHOR) {
+                    this.Y = Constants_General_1.ANCHOR - 1;
+                }
+                if (this._jumpVelocity < Constants_General_1.PLAYER_JUMPSPEED * 0.3) {
+                    this._jumpVelocityModifer = 0.3;
+                }
+                else
+                    this._jumpVelocityModifer = 1;
+                this._jumpVelocity -= this._jumpVelocityModifer;
+                this.Y -= this._jumpVelocity;
+                if (this._jumpVelocity <= 0) {
+                    this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED * 0.3;
                     this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
                     this.Jump = false;
                 }
             }
         }
         else if (!this._isGrounded && !this.Jump) {
-            this._sprite.gotoAndPlay("VirtualGuy/Fall/VGuy_fall");
-            this._jumpSpeed += this._jumpSpeed * 0.01 + 1;
-            this.Y += this.JumpSpeed * 0.3;
+            this._jumpVelocityModifer = 0.1;
+            this._jumpVelocity += this._jumpVelocityModifer;
+            if (this._jumpVelocity > Constants_General_1.PLAYER_JUMPSPEED * 0.5) {
+                this._jumpVelocity += 0.2;
+            }
+            this.Y += this._jumpVelocity;
         }
     }
     CollisionCheckWithTiles(tile) {
         for (let i = 0; i < tile.length; i++) {
-            if (this.X >= tile[i].X && this.X <= tile[i].X + tile[i].Width) {
+            if (this.X >= tile[i].X - 24 && this.X <= tile[i].X + tile[i].Width + 24) {
                 if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
-                    console.log(`landed on a ${tile[i].Name} tile`);
                     this._isGrounded = true;
                     this.Jump = true;
                     this.Y = this.CurrentY = tile[i].Y;
                     this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
-                    this._jumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
+                    this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED * 0.5;
+                    this._jumpVelocityModifer = 0.3;
                 }
             }
             else {
                 this._isGrounded = false;
             }
-        }
-    }
-    CollisionCheckWithATile(tile) {
-        if (this.X >= tile.X && this.X <= tile.X + tile.Width) {
-            if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
-                console.log(`landed on a ${tile.Name} tile`);
-                this._isGrounded = true;
-                this.Jump = true;
-                this.Y = this.CurrentY = tile.Y;
-                this._sprite.gotoAndPlay("VirtualGuy/Jump/VGuy_jump");
-                this._jumpSpeed = Constants_General_1.PLAYER_JUMPSPEED;
-            }
-        }
-        else {
-            this._isGrounded = false;
         }
     }
     FlipMeOver(side) {
@@ -10624,6 +10649,7 @@ class Player extends Entity_1.default {
         super(assetManager, stage, "mainChar");
         this.Jump = false;
         this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED;
+        this._jumpVelocityModifer = 1;
     }
     get JumpSpeed() { return this._jumpVelocity; }
     set JumpSpeed(value) { this._jumpVelocity = value; }
@@ -10631,22 +10657,29 @@ class Player extends Entity_1.default {
         if (this._isGrounded && this.Jump) {
             this._isGrounded = false;
         }
-        else if (!this._isGrounded && this.Jump) {
+        if (!this._isGrounded && this.Jump) {
             if (this.Y <= this.CurrentY) {
-                this._jumpVelocity -= 0.2;
-                if (this._jumpVelocity < Constants_General_1.PLAYER_JUMPSPEED * 0.5) {
-                    this._jumpVelocity -= 0.1;
+                if (this.Y < Constants_General_1.ANCHOR) {
+                    this.Y = Constants_General_1.ANCHOR + 1;
                 }
+                if (this._jumpVelocity < Constants_General_1.PLAYER_JUMPSPEED * 0.3) {
+                    this._jumpVelocityModifer = 0.4;
+                }
+                else {
+                    this._jumpVelocityModifer = 1;
+                }
+                this._jumpVelocity -= this._jumpVelocityModifer;
                 this.Y -= this._jumpVelocity;
-                if (this._jumpVelocity < 0) {
+                if (this._jumpVelocity <= 0) {
                     this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED * 0.5;
                     this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Fall");
                     this.Jump = false;
                 }
             }
         }
-        else if (!this._isGrounded && !this.Jump) {
-            this._jumpVelocity += 0.1;
+        if (!this._isGrounded && !this.Jump) {
+            this._jumpVelocityModifer = 0.1;
+            this._jumpVelocity += this._jumpVelocityModifer;
             if (this._jumpVelocity > Constants_General_1.PLAYER_JUMPSPEED * 0.5) {
                 this._jumpVelocity += 0.2;
             }
@@ -10655,7 +10688,7 @@ class Player extends Entity_1.default {
     }
     CollisionCheckWithTiles(tile) {
         for (let i = 0; i < tile.length; i++) {
-            if (this.X >= tile[i].X - 4 && this.X <= tile[i].X + tile[i].Width + 4) {
+            if (this.X >= tile[i].X - 16 && this.X <= tile[i].X + tile[i].Width + 16) {
                 if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
                     console.log(`landed on a ${tile[i].Name} tile`);
                     this._isGrounded = true;
@@ -10663,36 +10696,12 @@ class Player extends Entity_1.default {
                     this.Y = this.CurrentY = tile[i].Y;
                     this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
                     this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED;
+                    this._jumpVelocityModifer = 1;
                 }
             }
             else {
                 this._isGrounded = false;
             }
-        }
-    }
-    CollisionCheckWithATile(tile) {
-        if (this.X >= tile.X - 4 && this.X <= tile.X + tile.Width + 4) {
-            if (this.Y >= tile.Y && this.Y < tile.Y + tile.Height) {
-                console.log(`landed on a ${tile.Name} tile`);
-                this._isGrounded = true;
-                this.Jump = true;
-                this.Y = this.CurrentY = tile.Y;
-                this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
-                this._jumpVelocity = Constants_General_1.PLAYER_JUMPSPEED;
-            }
-        }
-        else {
-            this._isGrounded = false;
-        }
-    }
-    FlipMeOver(side) {
-        switch (side) {
-            case "left":
-                this._sprite.scaleX = -1;
-                break;
-            case "right":
-                this._sprite.scaleX = 1;
-                break;
         }
     }
     CollisionCheckWithTrampolines(trampoline) {
@@ -10706,11 +10715,22 @@ class Player extends Entity_1.default {
                     this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
                     trampoline[i].ActivateMe();
                     this._jumpVelocity = trampoline[i].JumpVelocityBoost;
+                    this._jumpVelocityModifer = 1;
                 }
             }
             else {
                 this._isGrounded = false;
             }
+        }
+    }
+    FlipMeOver(side) {
+        switch (side) {
+            case "left":
+                this._sprite.scaleX = -1;
+                break;
+            case "right":
+                this._sprite.scaleX = 1;
+                break;
         }
     }
 }
@@ -11085,12 +11105,11 @@ class MainMenuScreen extends _ScreenManager_1.default {
     constructor(assetManager, stage) {
         super(assetManager, stage, "MainMenu", Constants_General_1.SCREEN_TITLE[0]);
         super.ShowPlayButton();
-        super.ShowShopButton();
         this.version = new Bitmap_Text_1.default(assetManager, stage);
     }
     ShowMe() {
         super.ShowMe();
-        this.version.WriteMessage(256, Constants_General_1.STAGE_HEIGHT - 48, "v0.5d");
+        this.version.WriteMessage(256, Constants_General_1.STAGE_HEIGHT - 48, "v0.5e");
         this.stage.addChild(this.version.DisplayData);
     }
 }

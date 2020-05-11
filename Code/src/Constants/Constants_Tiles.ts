@@ -3,6 +3,8 @@
 export const TILE_NORMAL:string = "tileNormal";
 export const TILE_BIG:string    = "tileBig";
 export const TILE_TRAMPOLINE:string = "tileTrampoline";
+export const TILE_HOLLOW:string = "tileHollow";
+
 
 export const TILE_MANIFEST = [
     // - Normal with different skins -
@@ -55,6 +57,19 @@ export const TILE_MANIFEST = [
         type:"image",
         src:"./lib/Sprites/Tiles_Trampoline.png",
         id:"tileTrampoline",
+        data:0
+    },
+    // - Hollow -
+    {
+        type:"json",
+        src:"./lib/Sprites/Tiles_Hollow.json",
+        id:"tileHollow",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./lib/Sprites/Tiles_Hollow.png",
+        id:"tileHollow",
         data:0
     },
 ];

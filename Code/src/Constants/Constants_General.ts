@@ -12,12 +12,10 @@ export const SCREEN_TITLE:string[] =
         "Leaderboard"
     ];
 export const PLAYER_MOVESPEED:number = 10;
-export const PLAYER_JUMPSPEED:number = 7;
-export const PLAYER_JUMPHEIGHT:number = 256;
+export const PLAYER_JUMPSPEED:number = 20;
 export const PLAYER_DEFAULT_X:number = 350;
 export const PLAYER_DEFAULT_Y:number = STAGE_HEIGHT * 0.6;
-export const MAX_TILES:number = 64;
-export const ANCHOR:number = STAGE_HEIGHT/2
+export const ANCHOR:number = STAGE_HEIGHT / 2
 
 
 // manifest for AssetManager

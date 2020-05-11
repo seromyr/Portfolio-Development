@@ -11,14 +11,14 @@ export default class MainMenuScreen extends ScreenManager {
 
         super(assetManager, stage, "MainMenu", SCREEN_TITLE[0]);
         super.ShowPlayButton();
-        super.ShowShopButton();
+        //super.ShowShopButton();
 
         this.version = new Bitmap_Text(assetManager, stage);
     }
 
     public ShowMe():void {
         super.ShowMe();
-        this.version.WriteMessage(256, STAGE_HEIGHT - 48, "v0.5d");
+        this.version.WriteMessage(256, STAGE_HEIGHT - 48, "v0.5e");
         this.stage.addChild(this.version.DisplayData);
     }
 }

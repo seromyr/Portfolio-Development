@@ -1,12 +1,12 @@
-import { PLAYER_JUMPSPEED, PLAYER_MOVESPEED, STAGE_HEIGHT, SCREEN_TITLE, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y, ANCHOR, STAGE_WIDTH } from "../Constants/Constants_General";
-import { TILE_BIG, TILE_NORMAL } from "../Constants/Constants_Tiles";
+import { PLAYER_MOVESPEED, STAGE_HEIGHT, SCREEN_TITLE, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y, ANCHOR, STAGE_WIDTH } from "../Constants/Constants_General";
+import { TILE_BIG, TILE_NORMAL, TILE_HOLLOW } from "../Constants/Constants_Tiles";
 import ProceduralGenerator from "./ProceduralGenerator";
 import AssetManager from "../Miscs/AssetManager";
 import Player from "../GameLogic/Player";
 import Environment from "./Environment";
 import Tile from "../GameLogic/Tile";
-import NPC from "./NPC";
 import Trampoline from "./Trampoline";
+import NPC from "./NPC";
 
 export default class GameplayState {
 
@@ -17,10 +17,11 @@ export default class GameplayState {
     private mainChar:Player;
     private npc_01:NPC;
     private npc_02:NPC;
-    private tile_Start:Tile;
-    private tiles_OceanFloor:Tile[];
-    private tiles_core:Tile[];
-    private trampoline:Trampoline[];
+    private tile_Start:Tile[];
+    private tile_OceanFloor:Tile[];
+    private tile_Core:Tile[];
+    private tile_Trampoline:Trampoline[];
+    private tile_Hollow:Tile[];
     
     // foregrounds
     private water:Environment;
@@ -39,11 +40,8 @@ export default class GameplayState {
 
     // game logic variables
     private rng:ProceduralGenerator;
-    private dock:Tile;
     private _score:number;
     get Score():number {return this._score;}
-
-    private occupiedID:number[];
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         // get current stage and asset manager
@@ -56,11 +54,7 @@ export default class GameplayState {
         // construct actors
         this.mainChar = new Player(assetManager, stage);
         this.npc_01 = new NPC(assetManager, stage);
-        this.npc_02 = new NPC(assetManager, stage);
-        this.tile_Start = new Tile(assetManager, stage, TILE_NORMAL);
-
-        this.dock = new Tile(assetManager, stage, TILE_NORMAL);
-        //this.trampoline = new Trampoline(assetManager, stage);
+        this.npc_02 = new NPC(assetManager, stage); 
 
         // construcct props
         this.water = new Environment(assetManager, stage);
@@ -73,10 +67,7 @@ export default class GameplayState {
         this.PlayerController();
         
         // wire up events
-        this._playerHasDied = new createjs.Event(SCREEN_TITLE[3], true, false);   
-
-        // construct core tile occupied ID array, so that 2 special tiles spawned at the same place
-        this.occupiedID = [];
+        this._playerHasDied = new createjs.Event(SCREEN_TITLE[3], true, false);
     }
 
     // start new game method
@@ -90,14 +81,11 @@ export default class GameplayState {
 
         this.CreateActors();
         
-        // spawnn tiles
-        this.tile_Start.ShowMe("Golden");
-        this.dock.ShowMe("Stone");
-        //this.trampoline.ShowMe("Trampoline/Idle/Trampoline_Idle");
-        
+        // spawnn tiles        
         this.SpawnOceanFloorTiles();
-        this.SpawnCoreTiles(1400, "Clay", this.tiles_core);
+        this.SpawnCoreTiles(30);
         this.SpawnTrampolines(2);
+        this.SpawnHollowTiles(4);
         
         this.npc_01.ShowMeJumping();
         this.npc_02.ShowMeIdling();
@@ -109,12 +97,7 @@ export default class GameplayState {
         this.space.ShowMe("space");
 
         // starting score
-        this._score = -19;
-
-        // construct traps
-        // this.trampoline.Name = "Trampoline";
-        // this.trampoline.X = this.tiles_common[2].X + this.tiles_common[2].Width / 2;
-        // this.trampoline.Y = this.tiles_common[2].Y;
+        this._score = -25;
     }
 
     private CreateActors():void {
@@ -127,7 +110,7 @@ export default class GameplayState {
         
         // construct NPCs
         this.npc_01.Alive = true;
-        this.npc_01.X = 132;
+        this.npc_01.X = 96;
         this.npc_01.Y = STAGE_HEIGHT - 96;
 
         this.npc_02.Alive = true;
@@ -135,18 +118,19 @@ export default class GameplayState {
         this.npc_02.Y = STAGE_HEIGHT - 48;
 
         // construct tiles
-        this.tiles_OceanFloor = [];
-        this.tiles_core = [];
+        this.tile_OceanFloor = [];
+        this.tile_Core = [];
+        this.tile_Hollow = [];
 
-        this.tile_Start.Name = "Starting";
-        this.tile_Start.X = 128;
-        this.tile_Start.Y = STAGE_HEIGHT - 96;
-
-        this.dock.X = STAGE_WIDTH + this.dock.Width - 64;
-        this.dock.Y = ANCHOR;
+        this.tile_Start = [];
+        this.tile_Start[0] = new Tile(this.assetManager, this.stage, TILE_NORMAL);
+        this.tile_Start[0].Name = "Start";
+        this.tile_Start[0].X = 128;
+        this.tile_Start[0].Y = STAGE_HEIGHT - 96;
+        this.tile_Start[0].ShowMe("Clay");
 
         // -- trampolines
-        this.trampoline = [];
+        this.tile_Trampoline = [];
     }
 
     private CreateProps():void {
@@ -209,11 +193,10 @@ export default class GameplayState {
 
             // update collision check
             if (!this.mainChar.Jump) {
-                this.mainChar.CollisionCheckWithTiles(this.tiles_core);
-                this.mainChar.CollisionCheckWithTiles(this.tiles_OceanFloor);
-                this.mainChar.CollisionCheckWithATile(this.tile_Start);
-
-                this.mainChar.CollisionCheckWithTrampolines(this.trampoline);
+                this.mainChar.CollisionCheckWithTiles(this.tile_Core);
+                this.mainChar.CollisionCheckWithTiles(this.tile_OceanFloor);
+                this.mainChar.CollisionCheckWithTiles(this.tile_Start);
+                this.mainChar.CollisionCheckWithTrampolines(this.tile_Trampoline);
             }
 
             // one of conditions where player has to die
@@ -230,57 +213,68 @@ export default class GameplayState {
 
             // update collision check
             if (!this.npc_01.Jump) {
-                this.npc_01.CollisionCheckWithATile(this.tile_Start);
+                this.npc_01.CollisionCheckWithTiles(this.tile_OceanFloor);
             }
         }
     }
 
     public Terminate():void {
         this._gameStart = false;
-        this.mainChar.JumpSpeed = 7;
-        this.npc_01.JumpSpeed = PLAYER_JUMPSPEED;
+        //this.mainChar.JumpSpeed = PLAYER_JUMPSPEED;
+        //this.npc_01.JumpSpeed = PLAYER_JUMPSPEED;
         this.stage.removeAllChildren();
     }
 
     // spawn core tiles on the screen
-    private SpawnCoreTiles(quantity:number, type:string = "Clay", tileset:Tile[]):void {
+    private SpawnCoreTiles(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {            
-            tileset[i] = new Tile(this.assetManager, this.stage, TILE_NORMAL);
-            tileset[i].Name = type;
-            tileset[i].ShowMe(type);
+            this.tile_Core[i] = new Tile(this.assetManager, this.stage, TILE_NORMAL);
+            this.tile_Core[i].Name = "Core";
+            this.tile_Core[i].ShowMe("Clay");
         }
 
-        //this.rng.RandomGameObjectsInsideStage(tileset);
-        this.rng.GenerateTiles(tileset, this.tile_Start);
+        // Generate tiles based on the starting tile
+        this.rng.GenerateTiles(this.tile_Core, this.tile_Start[0]);
+
+    }
+
+       // spawn hollow tiles on the screen
+       private SpawnHollowTiles(quantity:number):void {
+        for (let i:number = 0; i < quantity; i++) {            
+            this.tile_Hollow[i] = new Tile(this.assetManager, this.stage, TILE_HOLLOW);
+            this.tile_Hollow[i].Name = "Hollow";
+            this.tile_Hollow[i].ShowMe("Hollow");
+        }
+
+        // Generate tiles based on the starting tile
+        this.rng.GenerateTiles(this.tile_Hollow, this.tile_Start[0]);
+
     }
 
     // spawn trampolines on the screen, attached to some core tiles
     private SpawnTrampolines(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
-            this.trampoline[i] = new Trampoline(this.assetManager, this.stage);
-            this.trampoline[i].Name = "Trampoline";
-            let n:number = this.rng.RandomBetween(2, 5); //this.tiles_common.length
-            this.trampoline[i].X = this.tiles_core[n].X + this.tiles_core[n].Width / 2;
-            this.trampoline[i].Y = this.tiles_core[n].Y;
-            this.trampoline[i].ShowMe("Trampoline/Idle/Trampoline_Idle");
+            this.tile_Trampoline[i] = new Trampoline(this.assetManager, this.stage);
+            this.tile_Trampoline[i].Name = "Trampoline";
+            let n:number = this.rng.RandomBetween(2, this.tile_Core.length - 1);
+            this.tile_Trampoline[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
+            this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
+            this.tile_Trampoline[i].ShowMe("Trampoline/Idle/Trampoline_Idle");
             //this.trampoline[i]
         }
     }
-
-
 
     // spawn ocean floor tiles on the screen
     private SpawnOceanFloorTiles():void {
         let x:number = 48;
         for (let i:number = 0; i < 8; i++) {
             
-            this.tiles_OceanFloor[i] = new Tile(this.assetManager, this.stage, TILE_BIG);
-            this.tiles_OceanFloor[i].Name = "OceanFloor";
-            this.tiles_OceanFloor[i].X = x;
-            this.tiles_OceanFloor[i].Y = STAGE_HEIGHT - this.tiles_OceanFloor[i].Height;
-            this.tiles_OceanFloor[i].ShowMe("OceanFloor");
-            x += this.tiles_OceanFloor[i].Width;
-            console.log(this.tiles_OceanFloor[0].Width + " " + this.tiles_OceanFloor[0].Height);
+            this.tile_OceanFloor[i] = new Tile(this.assetManager, this.stage, TILE_BIG);
+            this.tile_OceanFloor[i].Name = "OceanFloor";
+            this.tile_OceanFloor[i].X = x;
+            this.tile_OceanFloor[i].Y = STAGE_HEIGHT - this.tile_OceanFloor[i].Height;
+            this.tile_OceanFloor[i].ShowMe("OceanFloor");
+            x += this.tile_OceanFloor[i].Width;
         }
     }
 
@@ -292,86 +286,76 @@ export default class GameplayState {
             this._score++;
 
             // set camera speed
-            let h:number = this.mainChar.JumpSpeed * 2;
+            let h:number = this.mainChar.JumpSpeed;
 
             // as player crossed the line, move all objects down with different speed
             // to create parallax effect
-            this.water.Y      += h;
-            this.land.Y       += h / 3;
-            this.air.Y        += h / 3;
-            this.space.Y      += h / 3;
-            this.land_bg_00.Y += h / 1.3;
+            this.water.Y         += h;
+            this.land.Y          += h / 3;
+            this.air.Y           += h / 3;
+            this.space.Y         += h / 3;
+            this.land_bg_00.Y    += h / 1.3;
 
-
-            // object higher than player move slower?
-            this.tile_Start.Y += h;
-            this.npc_01.Y     += h;
-            this.npc_02.Y     += h;
+            this.tile_Start[0].Y += h;
+            this.npc_01.Y        += h;
+            this.npc_02.Y        += h;
 
             // shift tiles
-            for (let i:number = 0; i < this.tiles_core.length; i++) {
-                if (this.tiles_core[i].Y < this.mainChar.Y) {
-                    this.tiles_core[i].Y +=h/2;
+            for (let i:number = 0; i < this.tile_Core.length; i++) {
+                this.tile_Core[i].Y +=h;
+            }
+            
+            for (let i:number = 0; i < this.tile_OceanFloor.length; i++) {               
+                this.tile_OceanFloor[i].Y += h;
+            }
+            
+            for (let i:number = 0; i < this.tile_Trampoline.length; i++) {               
+                this.tile_Trampoline[i].Y += h;
+            }
+
+            for (let i:number = 0; i < this.tile_Hollow.length; i++) {               
+                this.tile_Hollow[i].Y += h;
+            }
+            
+            // move any tile that falls out of the screen to the top            
+            // core tiles first
+            for (let i:number = 0; i < this.tile_Core.length; i++) {
+                if (this.tile_Core[i].Y > STAGE_HEIGHT) {
+                    this.tile_Core[i].X = this.rng.RandomBetween(0, STAGE_WIDTH - this.tile_Core[i].Width);
+
+                    // shift this tile and move it to last index 
+                    this.tile_Core.splice(this.tile_Core.length - 1, 0 ,  this.tile_Core.shift());
+
+                    // this tile now become the highest tile
+                    this.tile_Core[this.tile_Core.length - 1].Y = this.rng.RandomBetween(
+                        this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * 3,
+                        this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * 4);
                 }
-                else this.tiles_core[i].Y +=h;
             }
 
-            for (let i:number = 0; i < this.tiles_OceanFloor.length; i++) {               
-                this.tiles_OceanFloor[i].Y +=h;
+            // attached the fell out trampoline to a new core tile
+            for (let i:number = 0; i < this.tile_Trampoline.length; i++) {
+                if (this.tile_Trampoline[i].Y > STAGE_HEIGHT) {
+
+                    let n:number = this.rng.RandomBetween(this.tile_Core.length - 17, this.tile_Core.length - 1);
+                    this.tile_Trampoline[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
+                    this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
+                }
             }
 
-            for (let i:number = 0; i < this.trampoline.length; i++) {               
-                this.trampoline[i].Y +=h;
-            }
-            
-            
+            for (let i:number = 0; i < this.tile_Hollow.length; i++) {
+                if (this.tile_Hollow[i].Y > STAGE_HEIGHT) {
+                    this.tile_Hollow[i].X = this.rng.RandomBetween(0, STAGE_WIDTH - this.tile_Hollow[i].Width);
 
+                    // shift this tile and move it to last index 
+                    this.tile_Hollow.splice(this.tile_Hollow.length - 1, 0 ,  this.tile_Hollow.shift());
+
+                    // this tile now become the highest tile
+                    this.tile_Hollow[this.tile_Hollow.length - 1].Y = this.rng.RandomBetween(
+                        this.tile_Hollow[this.tile_Hollow.length - 2].Y - this.tile_Hollow[i].Height * 3,
+                        this.tile_Hollow[this.tile_Hollow.length - 2].Y - this.tile_Hollow[i].Height * 4);
+                }
+            }
         }
-
-        // set camera speed which always follows player
-        //let h:number = this.mainChar.JumpSpeed + Math.abs(this.mainChar.Y - this.dock.Y);
-        //h = 1;
-        
-        //this.mainChar.HeightDiff;
-        // Math.abs(this.mainChar.Y - this.dock.Y);
-        // if (this.mainChar.Y <= this.dock.Y ) { //&& this.mainChar.Jump
-        //     //update score
-        //     this._score++;
-
-        //     // parallax effect
-        //     this.tile_Start.Y += h;
-        //     this.npc_01.Y     += h;
-        //     this.npc_02.Y     += h;
-        //     this.water.Y      += h;
-        //     this.land.Y       += h / 3;
-        //     this.air.Y        += h / 3;
-        //     this.space.Y      += h / 3;
-        //     this.land_bg_00.Y += h / 1.3;
-
-        //     // shift tiles
-        //     for (let i:number = 0; i < this.tiles_core.length; i++) {               
-        //         this.tiles_core[i].Y +=h;
-        //     }
-
-        //     for (let i:number = 0; i < this.tiles_OceanFloor.length; i++) {               
-        //         this.tiles_OceanFloor[i].Y +=h;
-        //     }
-
-        //     for (let i:number = 0; i < this.trampoline.length; i++) {               
-        //         this.trampoline[i].Y +=h;
-        //     }
-            
-        // }
-
-        // remove unused backgrounds
-
-        // for (let i:number = 0; i < this.tiles_common.length; i++) {
-        //     if (this.tiles_common[i].Y > STAGE_HEIGHT) {
-
-        //         this.tiles_common[i].Y = - this.tiles_common[i].Height;
-        //         this.tiles_common[i].X = this.rng.GenerateNextTile(this.mainChar.X, 64);
-        //     }
-        // }
-        
     }
 }
