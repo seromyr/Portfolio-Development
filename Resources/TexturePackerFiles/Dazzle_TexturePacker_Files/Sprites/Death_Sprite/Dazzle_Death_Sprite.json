@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Dazzle_Death_Sprite.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 87, 126, 0, 43, 126]
+],
+
+"animations": {
+    "Dazzle_Death_Sprite": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:73eddd1c9eace60bac362e23fa3f3cd1:b840cea3223c33c23b26278f092facf8:24f1f46d6363fd8e90b8eff0dea51535$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

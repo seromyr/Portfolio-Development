@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Dazzle_Idle_Sprite.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 126, 0, 41, 126]
+],
+
+"animations": {
+    "Dazzle_Idle_Sprite": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:8df50622e3d44297f41e4299b2cc1fce:b49c4179e536411f493b7dfc257054b4:3af43ff33b1a2cc978abc357ac2b315e$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

@@ -1,0 +1,24 @@
+{
+
+"images": [
+    "Dazzle_Jump_Animation.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 84, 125, 0, 42, 125],
+    [87, 1, 87, 121, 0, 42, 121],
+    [1, 128, 86, 126, 0, 43, 126],
+    [89, 128, 86, 126, 0, 43, 126]
+],
+
+"animations": {
+    "Dazzle Jump/Dazzle Jump Animation/Dazzle_Jump": { "frames": [0, 1, 2, 3] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:c56bc6adb50f7c95573cbb6bac17fc7b:4292ddf77a21fc99d80d7bd6570b1450:dcf710a06a069ceae8eef0bb08b9aab4$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
