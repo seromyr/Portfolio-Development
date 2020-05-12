@@ -1,6 +1,6 @@
-import { PLAYER_JUMPSPEED } from "../Constants/Constants_General";
-import { TILE_TRAMPOLINE } from "../Constants/Constants_Tiles";
-import AssetManager from "../Miscs/AssetManager";
+import { PLAYER_JUMPSPEED } from "../../Constants/Constants_General";
+import { TILE_TRAMPOLINE } from "../../Constants/Constants_Tiles";
+import AssetManager from "../../Miscs/AssetManager";
 import Tile from "./Tile";
 
 export default class Trampoline extends Tile {    

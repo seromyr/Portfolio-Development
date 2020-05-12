@@ -7,18 +7,27 @@
 "framerate": 30,
 "frames": [
     [1, 1, 48, 16, 0, 0, 0],
+    [51, 1, 36, 16, 0, 0, 0],
     [1, 19, 48, 16, 0, 0, 0],
-    [1, 37, 48, 16, 0, 0, 0]
+    [51, 19, 48, 16, 0, 0, 0],
+    [1, 37, 48, 16, 0, 0, 0],
+    [51, 37, 48, 16, 0, 0, 0],
+    [1, 55, 48, 16, 0, 0, 0],
+    [51, 55, 48, 16, 0, 0, 0],
+    [1, 73, 48, 16, 0, 0, 0]
 ],
 
 "animations": {
-    "Breakable 1": { "frames": [0] },
-    "Breakable 2": { "frames": [1] },
-    "Breakable 3": { "frames": [2] }
+    "Bubble/ExplodeA/Bubble_Explode_a": { "frames": [0, 1, 2] },
+    "Bubble/ExplodeB/Bubble_Explode_b": { "frames": [3, 4] },
+    "Bubble/Idle/Bubble_Idle": { "frames": [5] },
+    "Stone/Stone_Idle 01": { "frames": [6] },
+    "Stone/Stone_Idle 02": { "frames": [7] },
+    "Stone/Stone_Idle 03": { "frames": [8] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:9a1ceaa9516b0bbd10ff277628843308:19268c8a73a5a8f67b6adeb9b2248b2d:78ffde1f12886b5df75075795af01d61$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:708787bb1681ff10b1157120d1b286d7:2774b6f3272ed9a692ec638fe98af2c6:78ffde1f12886b5df75075795af01d61$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

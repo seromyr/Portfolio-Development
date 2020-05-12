@@ -181,9 +181,15 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Concepts/Tiles/Breakables/Breakable 1.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Breakable 2.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Breakable 3.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeA/Bubble_Explode_a_000.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeA/Bubble_Explode_a_001.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeA/Bubble_Explode_a_002.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeB/Bubble_Explode_b_000.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeB/Bubble_Explode_b_001.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubble/Idle/Bubble_Idle.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Stone/Stone_Idle 01.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Stone/Stone_Idle 02.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Stone/Stone_Idle 03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -201,9 +207,8 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Concepts/Tiles/Breakables/Breakable 1.png</filename>
-            <filename>../Concepts/Tiles/Breakables/Breakable 2.png</filename>
-            <filename>../Concepts/Tiles/Breakables/Breakable 3.png</filename>
+            <filename>../Concepts/Tiles/Breakables/Stone</filename>
+            <filename>../Concepts/Tiles/Breakables/Bubble</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -58,31 +58,6 @@ export const ASSET_MANIFEST = [
         id:"mainChar",
         data:0
     },
-    // - Tiles -
-    {
-        type:"json",
-        src:"./lib/Sprites/Tiles.json",
-        id:"tiles",
-        data:0
-    },
-    {
-        type:"image",
-        src:"./lib/Sprites/Tiles.png",
-        id:"tiles",
-        data:0
-    },
-    {
-        type:"json",
-        src:"./lib/Sprites/Trampoline.json",
-        id:"trampoline",
-        data:0
-    },
-    {
-        type:"image",
-        src:"./lib/Sprites/Trampoline.png",
-        id:"trampoline",
-        data:0
-    },
     // - Foregrounds
     {
         type:"json",

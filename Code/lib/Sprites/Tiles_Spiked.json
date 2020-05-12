@@ -6,7 +6,7 @@
 
 "framerate": 30,
 "frames": [
-    [1, 1, 47, 7, 0, 0, 0]
+    [1, 1, 47, 7, 0, 0, 7]
 ],
 
 "animations": {
@@ -14,7 +14,7 @@
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:f8ee45e0eec7c5b71b81383a8ebbdf49:c34a4ebf3374a5bcc128ba9e0bedef7b:c98a59ba94116da4e4471fa02806fa51$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:4b613ad4a1c2647aaca14734fac24f4e:c34a4ebf3374a5bcc128ba9e0bedef7b:c98a59ba94116da4e4471fa02806fa51$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

@@ -1,7 +1,7 @@
 import { PLAYER_JUMPSPEED, ANCHOR } from "../Constants/Constants_General";
 import AssetManager from "../Miscs/AssetManager";
 import Character from "./Entity";
-import Tile from "./Tile";
+import Tile from "./Tiles/Tile";
 
 export default class NPC extends Character {
 

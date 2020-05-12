@@ -1,5 +1,5 @@
 import { STAGE_WIDTH, STAGE_HEIGHT } from "../Constants/Constants_General";
-import Tile from "./Tile";
+import Tile from "./Tiles/Tile";
 
 export default class ProceduralGenerator {
 
@@ -24,24 +24,6 @@ export default class ProceduralGenerator {
         return randomCoords;
     }
 
-    public RandomGameObjectsInsideStage(tileset:Tile[]):void {
-
-        // randomize first
-        for (let i:number = 0; i < tileset.length; i++) {
-            tileset[i].X = this.RandomBetween(0, STAGE_WIDTH);
-            tileset[i].Y = this.RandomBetween(0, STAGE_HEIGHT - tileset[i].Height * 6);
-        }
-
-        // // check and adjust any tile that too close
-        // for (let i:number = 0; i < tileset.length; i++) {
-        //     if ( tileset[i].X) {
-
-        //     }
-        //     tileset[i].X = this.RandomBetween(0, STAGE_WIDTH);
-        //     tileset[i].Y = this.RandomBetween(0, STAGE_HEIGHT);
-        // }
-    }
-
     public GenerateTiles(tileset:Tile[], tileStart:Tile):void {
         // the 1st generated tile should stay close to the starting tile
         tileset[0].X = this.RandomBetween(0, tileStart.X + tileStart.Width * 2);
@@ -56,31 +38,41 @@ export default class ProceduralGenerator {
                                               tileset[i - 1].Y - tileset[i - 1].Height * 4);
         }
     }
+    
+    public GenerateTFollowTiles(tileset:Tile[], tile_Core:Tile[]):void {
+        // get a random ID and stay close to it
+        for (let i:number = 0; i < tileset.length; i++) {
 
-    // generate the next tile that avoid being to close to the main character
-    public GenerateNextTile(playerX:number, playerW:number):number {
-        let leftOrRight:number = this.RandomBetween(0,1);
+            let n:number = this.RandomBetween(0, tile_Core.length - 1);
+            // put X on the wider part of the screen
+            if (tile_Core[n].X < STAGE_WIDTH - tile_Core[n].X) {
+                
+                tileset[i].X = this.RandomBetween(tile_Core[n].X + tile_Core[n].Width,
+                                                  STAGE_WIDTH - tile_Core[n].Width);
+            }
 
-        // if left but the space is not wide enough, then generate on the right
-        if (leftOrRight == 0 && playerX < playerW) {
-            leftOrRight = this.RandomBetween(playerX + playerW * 2, playerX + playerW * 3);
+            else {
+                tileset[i].X = this.RandomBetween(0, tile_Core[n].X - tile_Core[n].Width);
+            }
+            tileset[i].Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 2,
+                                           tile_Core[n].Y + tile_Core[n].Height * 2);
+        }        
+    }
+
+    public GenerateTAFollowTile(tileset:Tile, tile_Core:Tile[]):void {
+        // get a random ID and stay close to it
+        let n:number = this.RandomBetween(0, tile_Core.length - 1);
+        // put X on the wider part of the screen
+        if (tile_Core[n].X < STAGE_WIDTH - tile_Core[n].X) {            
+            tileset.X = this.RandomBetween(tile_Core[n].X + tile_Core[n].Width,
+                                           STAGE_WIDTH - tile_Core[n].Width);
         }
 
-        // if right but the space is not wide enough, then generate on the left
-        else if (leftOrRight == 1 && playerX > playerW) {
-            leftOrRight = this.RandomBetween(playerX - playerW * 3, playerX - playerW * 2);
+        else {
+            tileset.X = this.RandomBetween(0, tile_Core[n].X - tile_Core[n].Width);
         }
 
-        // if left and the space is wide enough
-        else if (leftOrRight == 0 && playerX > playerW) {
-            leftOrRight = this.RandomBetween(playerX - playerW * 3, playerX - playerW * 2);
-        }
-
-        // if right and the space is wide enough
-        else if (leftOrRight == 1 && playerX < playerW) {
-            leftOrRight = this.RandomBetween(playerX + playerW * 2, playerX + playerW * 3);
-        }
-
-        return leftOrRight;
+        tileset.Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 2,
+                                       tile_Core[n].Y + tile_Core[n].Height * 2);
     }
 }

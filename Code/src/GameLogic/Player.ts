@@ -1,8 +1,9 @@
 import { PLAYER_JUMPSPEED, ANCHOR } from "../Constants/Constants_General";
 import AssetManager from "../Miscs/AssetManager";
 import Character from "./Entity";
-import Tile from "./Tile";
-import Trampoline from "./Trampoline";
+import Tile from "./Tiles/Tile";
+import Trampoline from "./Tiles/Trampoline";
+import Breakable from "./Tiles/Breakable";
 
 export default class Player extends Character {
 
@@ -38,7 +39,7 @@ export default class Player extends Character {
                 }
 
                 if (this._jumpVelocity < PLAYER_JUMPSPEED * 0.3) {
-                    this._jumpVelocityModifer = 0.4;
+                    this._jumpVelocityModifer = 0.5;
                 }
 
                 else  {
@@ -58,7 +59,7 @@ export default class Player extends Character {
         }
 
         // if player is in mid-air and falling
-        if (!this._isGrounded && !this.Jump){            
+        if (!this._isGrounded && !this.Jump){
             //player is constantly falling when not colliding with any tile
             this._jumpVelocityModifer = 0.1;
             this._jumpVelocity += this._jumpVelocityModifer;
@@ -77,6 +78,10 @@ export default class Player extends Character {
             if (this.X >= tile[i].X - 16 && this.X <= tile[i].X + tile[i].Width + 16) {
                 if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
                     console.log(`landed on a ${tile[i].Name} tile`);
+
+                    if (tile[i].Lethal) {
+                        this.Alive = false;
+                    }
 
                     this._isGrounded = true;
                     this.Jump = true;
@@ -114,6 +119,36 @@ export default class Player extends Character {
                 this._isGrounded = false;
             }
         }        
+    }
+
+    // collision check with a trampoline
+    public CollisionCheckWithBreakable(tileset:Breakable[]):void {
+        for (let i:number = 0; i < tileset.length; i++) {
+            if (tileset[i].CollisionPermission) {
+                //if player collides with a tile while falling down
+                if (this.X >= tileset[i].X - 16 && this.X <= tileset[i].X + tileset[i].Width + 16) {
+                    if (this.Y >= tileset[i].Y && this.Y < tileset[i].Y + tileset[i].Height) {
+
+                        console.log(`landed on a ${tileset[i].Name}`);
+    
+                        this._isGrounded = true;
+                        this.Jump = true;
+                        this.Y = this.CurrentY = tileset[i].Y;
+                        this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
+                        
+                        if (tileset[i].Once) tileset[i].BreakMeNow();
+                        else tileset[i].BreakMe();
+
+                        this._jumpVelocity = tileset[i].JumpVelocityBoost;
+                        this._jumpVelocityModifer = 1;
+                    }
+                }
+                else {
+                    this._isGrounded = false;
+                }
+            }        
+                
+        }
     }
 
     // flip player sprite

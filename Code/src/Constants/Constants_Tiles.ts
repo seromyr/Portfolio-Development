@@ -1,10 +1,10 @@
 // tile manifest for AssetManager
-
-export const TILE_NORMAL:string = "tileNormal";
-export const TILE_BIG:string    = "tileBig";
+export const TILE_NORMAL:string     = "tileNormal";
+export const TILE_BIG:string        = "tileBig";
 export const TILE_TRAMPOLINE:string = "tileTrampoline";
-export const TILE_HOLLOW:string = "tileHollow";
-
+export const TILE_HOLLOW:string     = "tileHollow";
+export const TILE_SPIKED:string     = "tileSpiked";
+export const TILE_BREAKABLE:string  = "tileBreakable";
 
 export const TILE_MANIFEST = [
     // - Normal with different skins -
@@ -70,6 +70,19 @@ export const TILE_MANIFEST = [
         type:"image",
         src:"./lib/Sprites/Tiles_Hollow.png",
         id:"tileHollow",
+        data:0
+    },
+    // - Spiked -
+    {
+        type:"json",
+        src:"./lib/Sprites/Tiles_Spiked.json",
+        id:"tileSpiked",
+        data:0
+    },
+    {
+        type:"image",
+        src:"./lib/Sprites/Tiles_Spiked.png",
+        id:"tileSpiked",
         data:0
     },
 ];
