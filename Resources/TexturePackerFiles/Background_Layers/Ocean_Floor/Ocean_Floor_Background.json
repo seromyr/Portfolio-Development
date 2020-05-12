@@ -1,0 +1,24 @@
+{
+
+"images": [
+    "Ocean_Floor_Background.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 600, 800, 0, 0, 0],
+    [603, 1, 600, 551, 0, 0, -249],
+    [1205, 1, 600, 645, 0, 0, -155],
+    [1, 803, 600, 800, 0, 0, 0]
+],
+
+"animations": {
+    "Ocean Floor (first background)/Ocean_Floor_Layer": { "frames": [0, 1, 2, 3] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:fb3d72ea6aaff4e28a792e74df1ec527:2f98c11b61063dc83aede4e5d8451c0c:05d4d399a486b4c613bb376b969c93e7$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

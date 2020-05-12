@@ -1,0 +1,23 @@
+{
+
+"images": [
+    "Space_Background.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 487, 451, 0, -53, -218],
+    [1, 454, 585, 296, 0, 0, -298],
+    [1, 752, 600, 800, 0, 0, 0]
+],
+
+"animations": {
+    "Space (third background)/Space_Layer": { "frames": [0, 1, 2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:b4c4c72abcd44542a3617b39961d7e99:ba20ce1220a51664630f050835c3ffa1:27f445d2accb5e559774e3d76cdde1d6$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
