@@ -17,7 +17,6 @@ export const PLAYER_DEFAULT_X:number = 350;
 export const PLAYER_DEFAULT_Y:number = STAGE_HEIGHT * 0.6;
 export const ANCHOR:number = STAGE_HEIGHT / 2
 
-
 // manifest for AssetManager
 export const ASSET_MANIFEST = [
     // - Background -
@@ -36,51 +35,38 @@ export const ASSET_MANIFEST = [
     // - Playable character -
     {
         type:"json",
-        src:"./lib/Sprites/VirtualGuy.json",
+        src:"./lib/Sprites/Actors/VirtualGuy.json",
         id:"npc01",
         data:0
     },
     {
         type:"image",
-        src:"./lib/Sprites/VirtualGuy.png",
+        src:"./lib/Sprites/Actors/VirtualGuy.png",
         id:"npc01",
         data:0
     },
     {
         type:"json",
-        src:"./lib/Sprites/Dazzle.json",
+        src:"./lib/Sprites/Actors/Dazzle.json",
         id:"mainChar",
         data:0
     },
     {
         type:"image",
-        src:"./lib/Sprites/Dazzle.png",
+        src:"./lib/Sprites/Actors/Dazzle.png",
         id:"mainChar",
-        data:0
-    },
-    // - Foregrounds
-    {
-        type:"json",
-        src:"./lib/Sprites/Environment.json",
-        id:"environment",
-        data:0
-    },
-    {
-        type:"image",
-        src:"./lib/Sprites/Environment.png",
-        id:"environment",
         data:0
     },
     // - Fonts
     {
         type:"json",
-        src:"./lib/Sprites/glyphs_Pixeled.json",
+        src:"./lib/Sprites/Fonts/glyphs_Pixeled.json",
         id:"pixeled",
         data:0
     },
     {
         type:"image",
-        src:"./lib/Sprites/glyphs_Pixeled.png",
+        src:"./lib/Sprites/Fonts/glyphs_Pixeled.png",
         id:"pixeled",
         data:0
     },

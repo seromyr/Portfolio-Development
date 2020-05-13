@@ -48,7 +48,6 @@ export default class ScreenManager {
         this.eventMainMenu = new createjs.Event( SCREEN_TITLE[0], true, false);
         this.eventGameplay = new createjs.Event( SCREEN_TITLE[1], true, false);
         this.eventShopping = new createjs.Event( SCREEN_TITLE[2], true, false);
-
     }
     
     // show screen

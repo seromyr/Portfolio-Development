@@ -6,9 +6,6 @@ export default class Breakable extends Tile {
 
     private _hit:number;
     set Hit(value:number) {this._hit = value;}
-
-    private _allowCollision:boolean;
-    get CollisionPermission():boolean {return this._allowCollision;}
     
     private _once:boolean;
     get Once():boolean {return this._once;}
@@ -49,5 +46,9 @@ export default class Breakable extends Tile {
             this._allowCollision = false;
             this.HideMe();
         }, this, true);
+    }
+
+    public ReActivateMe():void {
+        this._allowCollision = true;
     }
 }

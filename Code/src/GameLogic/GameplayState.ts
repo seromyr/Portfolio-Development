@@ -1,14 +1,14 @@
 import { PLAYER_MOVESPEED, STAGE_HEIGHT, SCREEN_TITLE, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y, STAGE_WIDTH } from "../Constants/Constants_General";
-import { TILE_BIG, TILE_NORMAL, TILE_HOLLOW } from "../Constants/Constants_Tiles";
+import { TILE_BIG, TILE_NORMAL, TILE_HOLLOW, TILE_CLOUD } from "../Constants/Constants_Tiles";
 import ProceduralGenerator from "./ProceduralGenerator";
 import AssetManager from "../Miscs/AssetManager";
-import Player from "../GameLogic/Player";
-import Environment from "./Environment";
+import Player from "./Actors/Player";
 import Tile from "./Tiles/Tile";
 import Trampoline from "./Tiles/Trampoline";
 import Spiked from "./Tiles/Spiked";
-import NPC from "./NPC";
+import NPC from "./Actors/NPC";
 import Breakable from "./Tiles/Breakable";
+import Cloud from "./Tiles/Cloud";
 
 export default class GameplayState {
 
@@ -27,18 +27,12 @@ export default class GameplayState {
     private tile_Spiked:Spiked[];
     private tile_Breakable:Breakable[];
     private tile_Bubble:Breakable[];
-    
-    // parallax background layers
-    private water:Environment;
-    private land:Environment;
-    private air:Environment;
-    private space:Environment;
-    private land_bg_00:Environment;
+    private tile_Cloud:Cloud[];
 
     // game state variable
     private _gameStart:boolean;
-    get GameStart():boolean        {return this._gameStart;}
-    set GameStart(value:boolean)   {this._gameStart = value;}
+    get GameStart():boolean      {return this._gameStart;}
+    set GameStart(value:boolean) {this._gameStart = value;}
 
     // custom event
     private _playerHasDied:createjs.Event;
@@ -47,8 +41,15 @@ export default class GameplayState {
     private rng:ProceduralGenerator;
     private _score:number;
     get Score():number {return this._score;}
+
     // prevent duplicating tile generation
     private occupiedID:boolean[];
+
+    // camera scrolling speed
+    private _cameraSpeed:number;
+    get CameraSpeed():number {return this._cameraSpeed;}
+    private _cameraUpdateSignal:boolean;
+    get CameraUpdateSignal():boolean {return this._cameraUpdateSignal}
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         // get current stage and asset manager
@@ -62,13 +63,6 @@ export default class GameplayState {
         this.mainChar = new Player(assetManager, stage);
         this.npc_01 = new NPC(assetManager, stage);
         this.npc_02 = new NPC(assetManager, stage); 
-
-        // construct props
-        this.water = new Environment(assetManager, stage);
-        this.land = new Environment(assetManager, stage);
-        this.air = new Environment(assetManager, stage);
-        this.space = new Environment(assetManager, stage);
-        this.land_bg_00 = new Environment(assetManager, stage);
         
         // activate player controller
         this.PlayerController();
@@ -81,10 +75,6 @@ export default class GameplayState {
     public StartNewGame():void {
         // allow the game to start updating
         this._gameStart = true;
-
-        // spawn props
-        this.CreateProps();
-        this.land_bg_00.ShowMe("land_bg_00");
 
         this.CreateActors();
         
@@ -104,18 +94,14 @@ export default class GameplayState {
         this.SpawnSpikes(4);
         this.SpawnBreakables("Breakable", this.tile_Breakable, 2, false);
         this.SpawnBreakables("Bubble", this.tile_Bubble, 5, true);
+        this.SpawnClouds(4);
         
         this.npc_01.ShowMeJumping();
         this.npc_02.ShowMeIdling();
         this.mainChar.ShowMe("Dazzle/Dazzle Jump/Dazzle_Fall");
-        
-        this.water.ShowMe("water");
-        this.land.ShowMe("land");
-        this.air.ShowMe("air");
-        this.space.ShowMe("space");
 
         // starting score
-        this._score = -25;        
+        this._score = -25;
     }
 
     private CreateActors():void {
@@ -143,6 +129,8 @@ export default class GameplayState {
         this.tile_Spiked     = [];
         this.tile_Breakable  = [];
         this.tile_Bubble     = [];
+        this.tile_Cloud      = [];
+
 
         // starting tile is the base to construct other tileset
         this.tile_Start      = [];
@@ -152,34 +140,7 @@ export default class GameplayState {
         this.tile_Start[0].Y = STAGE_HEIGHT - 96;
         this.tile_Start[0].ShowMe("Clay");
     }
-
-    private CreateProps():void {
-        // water
-        this.water.Name = "Water";
-        this.water.X = 0;
-        this.water.Y = 168;
-
-        // land
-        this.land.Name = "Land";
-        this.land.X = 0;
-        this.land.Y =  - STAGE_HEIGHT / 2;
-        
-        // air
-        this.air.Name = "Air";
-        this.air.X = 0;
-        this.air.Y =  this.land.Y - STAGE_HEIGHT;
-
-        // space
-        this.space.Name = "Space";
-        this.space.X = 0;
-        this.space.Y =  this.air.Y - STAGE_HEIGHT;
-
-        // underwater bg
-        this.land_bg_00.Name = "UnderwaterBG";
-        this.land_bg_00.X = 0;
-        this.land_bg_00.Y = 128;
-    }
-
+    
     private PlayerController():void {
         // wire up eventListener for keyboard keys only on gameplay screen
         document.onkeydown = (e:KeyboardEvent) => {
@@ -202,7 +163,7 @@ export default class GameplayState {
     }
 
     // gameplay updater
-    public Update():void {       
+    public Update():void {
 
         // only update when player is alive
         if (this.mainChar.Alive) {
@@ -218,12 +179,13 @@ export default class GameplayState {
                 this.mainChar.CollisionCheckWithTiles(this.tile_Start);
                 this.mainChar.CollisionCheckWithTrampolines(this.tile_Trampoline);
                 this.mainChar.CollisionCheckWithTiles(this.tile_Spiked);
-                this.mainChar.CollisionCheckWithBreakable(this.tile_Breakable);
-                this.mainChar.CollisionCheckWithBreakable(this.tile_Bubble);
+                this.mainChar.CollisionCheckWithBreakables(this.tile_Breakable);
+                this.mainChar.CollisionCheckWithBreakables(this.tile_Bubble);
+                this.mainChar.CollisionCheckWithTiles(this.tile_Cloud);
             }
 
             // one of conditions where player has to die
-            if ((this.mainChar.Y) >= STAGE_HEIGHT) {                
+            if ((this.mainChar.Y) >= STAGE_HEIGHT) {
                 this.mainChar.Alive = false;
             }
         }
@@ -259,7 +221,6 @@ export default class GameplayState {
 
         // Generate tiles based on the starting tile
         this.rng.GenerateTiles(this.tile_Core, this.tile_Start[0]);
-
     }
 
     // spawn hollow tiles on the screen
@@ -356,57 +317,84 @@ export default class GameplayState {
         this.rng.GenerateTFollowTiles(tileset, this.tile_Core);
     }
 
+    // spawn cloud on the screen
+    private SpawnClouds(quantity:number):void {
+        for (let i:number = 0; i < quantity; i++) {
+            this.tile_Cloud[i] = new Cloud(this.assetManager, this.stage, this.rng.RandomBetween(1000, 5000));
+            this.tile_Cloud[i].Name = "Cloud";
+
+            let n:number;            
+            do {
+                // make sure n does not get inside an occupied ID
+                n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
+            } while (this.occupiedID[n] != false);
+
+            this.tile_Cloud[i].X = this.tile_Core[n].X;
+            this.tile_Cloud[i].Y = this.tile_Core[n].Y - 32;
+            //this.tile_Core[n].ShowMe("Stone");
+            this.tile_Cloud[i].ShowMe("Idle/Cloud_Idle");
+            this.tile_Cloud[i].ActivateMe();
+            //this.tile_Cloud[i]._counter = 0;
+
+            // register occupiedID
+            this.occupiedID[n] = true;
+        }
+    }
+
+
     // Objects mover
     private Camera():void {
+
         // if player is on the upper half  of the camera, try to catch up with him
         if (this.mainChar.Y < STAGE_HEIGHT * .5 && this.mainChar.Jump) {
+
+            // send update signal to other places
+            this._cameraUpdateSignal = true;
+
             // update score
             this._score++;
 
             // set camera speed
-            let h:number = this.mainChar.JumpSpeed;
+            this._cameraSpeed = this.mainChar.JumpSpeed;
 
             // as player crossed the line, move all objects down with different speed
-            // to create parallax effect
-            this.water.Y         += h;
-            this.land.Y          += h / 3;
-            this.air.Y           += h / 3;
-            this.space.Y         += h / 3;
-            this.land_bg_00.Y    += h / 1.3;
-
-            this.tile_Start[0].Y += h;
-            this.npc_01.Y        += h;
-            this.npc_02.Y        += h;
+            this.tile_Start[0].Y += this._cameraSpeed;
+            this.npc_01.Y        += this._cameraSpeed;
+            this.npc_02.Y        += this._cameraSpeed;
 
             // shift tiles
             for (let i:number = 0; i < this.tile_Core.length; i++) {
-                this.tile_Core[i].Y +=h;
+                this.tile_Core[i].Y +=this._cameraSpeed;
             }
             
             for (let i:number = 0; i < this.tile_OceanFloor.length; i++) {
-                this.tile_OceanFloor[i].Y += h;
+                this.tile_OceanFloor[i].Y += this._cameraSpeed;
             }
             
             for (let i:number = 0; i < this.tile_Trampoline.length; i++) {
-                this.tile_Trampoline[i].Y += h;
+                this.tile_Trampoline[i].Y += this._cameraSpeed;
             }
 
             for (let i:number = 0; i < this.tile_Hollow.length; i++) {
-                this.tile_Hollow[i].Y += h;
+                this.tile_Hollow[i].Y += this._cameraSpeed;
             }
 
             for (let i:number = 0; i < this.tile_Spiked.length; i++) {
-                this.tile_Spiked[i].Y += h;
+                this.tile_Spiked[i].Y += this._cameraSpeed;
             }
 
             for (let i:number = 0; i < this.tile_Breakable.length; i++) {
-                this.tile_Breakable[i].Y += h;
+                this.tile_Breakable[i].Y += this._cameraSpeed;
             }
 
             for (let i:number = 0; i < this.tile_Bubble.length; i++) {
-                this.tile_Bubble[i].Y += h;
+                this.tile_Bubble[i].Y += this._cameraSpeed;
             }
-            
+
+            for (let i:number = 0; i < this.tile_Cloud.length; i++) {
+                this.tile_Cloud[i].Y += this._cameraSpeed;
+            }
+
             // move any tile that falls out of the screen to the top
             // core tiles first
             for (let i:number = 0; i < this.tile_Core.length; i++) {
@@ -480,6 +468,7 @@ export default class GameplayState {
                     this.rng.GenerateTAFollowTile(this.tile_Breakable[i], this.tile_Core);
                     this.tile_Breakable[i].ShowMe("Stone/Stone_Idle 01");
                     this.tile_Breakable[i].Hit = 3;
+                    this.tile_Breakable[i].ReActivateMe();
                 }
             }
 
@@ -488,8 +477,11 @@ export default class GameplayState {
                 if (this.tile_Bubble[i].Y > STAGE_HEIGHT) {                    
                     this.rng.GenerateTAFollowTile(this.tile_Bubble[i], this.tile_Core);
                     this.tile_Bubble[i].ShowMe("Bubble/Idle/Bubble_Idle");
+                    this.tile_Bubble[i].ReActivateMe();
                 }
             }
         }
+
+        else this._cameraUpdateSignal = false;
     }
 }

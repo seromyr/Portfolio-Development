@@ -4,6 +4,9 @@ import { PLAYER_JUMPSPEED } from "../../Constants/Constants_General";
 
 export default class Tile extends Entity {
 
+    protected _allowCollision:boolean;
+    get CollisionPermission():boolean {return this._allowCollision;}
+
     protected _width:number;
     get Width():number {return this._width;}
     
@@ -21,6 +24,7 @@ export default class Tile extends Entity {
         super(assetManager, stage, type);
         this._width = this._sprite.getBounds().width;
         this._height = this._sprite.getBounds().height;
+        this._allowCollision = true;
         this._lethal = false;
         this._jumpVelocityBoost = PLAYER_JUMPSPEED;
     }
