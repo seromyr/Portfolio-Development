@@ -16,6 +16,8 @@ export default class Entity {
     private _jump:boolean;
     private _alive:boolean;
     private _name:string;
+    private _width:number;
+    private _height:number;
     
     //encapsulation of important variables
     get X():number             {return this._x;}
@@ -35,6 +37,10 @@ export default class Entity {
 
     get Name():string          {return this._name;}
     set Name(value:string)     {this._name = value;}
+
+    get Width():number         {return this._width;}
+    
+    get Height():number        {return this._height;}
     // end of capsulation
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL, spriteID:string) {
@@ -44,7 +50,10 @@ export default class Entity {
         this.screen = new createjs.Container();
 
         //construct Sprite object for screen background
-        this._sprite = assetManager.getSprite(spriteID);        
+        this._sprite = assetManager.getSprite(spriteID);  
+        
+        this._width = this._sprite.getBounds().width;
+        this._height = this._sprite.getBounds().height;
     }
     
     public ShowMe(animID:string, loop:boolean = true):void {

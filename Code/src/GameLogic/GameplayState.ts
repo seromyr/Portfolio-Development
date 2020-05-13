@@ -9,16 +9,19 @@ import Spiked from "./Tiles/Spiked";
 import NPC from "./Actors/NPC";
 import Breakable from "./Tiles/Breakable";
 import Cloud from "./Tiles/Cloud";
+import PlayerController from "./Actors/PlayerController";
+import JetPack from "./Collectibles/Jetpack";
 
 export default class GameplayState {
 
     private assetManager:AssetManager;
     private stage:createjs.StageGL;
 
-    // game characters & objects
+    // game characters , tiles, collectibles
     private mainChar:Player;
     private npc_01:NPC;
     private npc_02:NPC;
+    // ----------------------
     private tile_Start:Tile[];
     private tile_OceanFloor:Tile[];
     private tile_Core:Tile[];
@@ -28,6 +31,8 @@ export default class GameplayState {
     private tile_Breakable:Breakable[];
     private tile_Bubble:Breakable[];
     private tile_Cloud:Cloud[];
+    // ----------------------
+    private item_Jetpack:JetPack[];
 
     // game state variable
     private _gameStart:boolean;
@@ -51,6 +56,9 @@ export default class GameplayState {
     private _cameraUpdateSignal:boolean;
     get CameraUpdateSignal():boolean {return this._cameraUpdateSignal}
 
+    // player controller
+    private _playerController:PlayerController;
+
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         // get current stage and asset manager
         this.stage = stage;
@@ -65,8 +73,8 @@ export default class GameplayState {
         this.npc_02 = new NPC(assetManager, stage); 
         
         // activate player controller
-        this.PlayerController();
-        
+        // this.PlayerController();
+        this._playerController = new PlayerController(this.mainChar);
         // wire up events
         this._playerHasDied = new createjs.Event(SCREEN_TITLE[3], true, false);
     }
@@ -95,6 +103,9 @@ export default class GameplayState {
         this.SpawnBreakables("Breakable", this.tile_Breakable, 2, false);
         this.SpawnBreakables("Bubble", this.tile_Bubble, 5, true);
         this.SpawnClouds(4);
+
+        // spawn collectibles
+        this.SpawnJetpacks(1);
         
         this.npc_01.ShowMeJumping();
         this.npc_02.ShowMeIdling();
@@ -131,6 +142,9 @@ export default class GameplayState {
         this.tile_Bubble     = [];
         this.tile_Cloud      = [];
 
+        //construct collectibles
+        this.item_Jetpack    = [];
+
 
         // starting tile is the base to construct other tileset
         this.tile_Start      = [];
@@ -139,27 +153,6 @@ export default class GameplayState {
         this.tile_Start[0].X = 128;
         this.tile_Start[0].Y = STAGE_HEIGHT - 96;
         this.tile_Start[0].ShowMe("Clay");
-    }
-    
-    private PlayerController():void {
-        // wire up eventListener for keyboard keys only on gameplay screen
-        document.onkeydown = (e:KeyboardEvent) => {
-            if (e.keyCode == 37 || e.keyCode == 65) {
-                this.mainChar.X -= PLAYER_MOVESPEED;
-                this.mainChar.FlipMeOver("left");
-            }
-            
-            else if (e.keyCode == 39 || e.keyCode == 68) {
-                this.mainChar.X += PLAYER_MOVESPEED;
-                this.mainChar.FlipMeOver("right");
-            }
-        }
-
-        document.onkeyup = (e:KeyboardEvent) => {
-            if (e.keyCode == 37 || e.keyCode == 65) {}
-
-            else if (e.keyCode == 39 || e.keyCode == 68) {}
-        }
     }
 
     // gameplay updater
@@ -187,6 +180,8 @@ export default class GameplayState {
                 this.mainChar.CollisionCheckWithBreakables(this.tile_Breakable);
                 this.mainChar.CollisionCheckWithBreakables(this.tile_Bubble);
                 this.mainChar.CollisionCheckWithTiles(this.tile_Cloud);
+
+                this.mainChar.CollisionCheckWithCollectibles(this.item_Jetpack);
             }
 
             // one of conditions where player has to die
@@ -340,21 +335,48 @@ export default class GameplayState {
             this.tile_Cloud[i] = new Cloud(this.assetManager, this.stage, this.rng.RandomBetween(1000, 5000));
             this.tile_Cloud[i].Name = "Cloud";
 
-            let n:number;            
-            do {
-                // make sure n does not get inside an occupied ID
-                n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
-            } while (this.occupiedID[n] != false);
+            // let n:number;            
+            // do {
+            //     // make sure n does not get inside an occupied ID
+            //     n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
+            // } while (this.occupiedID[n] != false);
 
-            this.tile_Cloud[i].X = this.tile_Core[n].X;
-            this.tile_Cloud[i].Y = this.tile_Core[n].Y - 32;
+            // this.tile_Cloud[i].X = this.tile_Core[n].X;
+            // this.tile_Cloud[i].Y = this.tile_Core[n].Y - 32;
             //this.tile_Core[n].ShowMe("Stone");
             this.tile_Cloud[i].ShowMe("Idle/Cloud_Idle");
             this.tile_Cloud[i].ActivateMe();
             //this.tile_Cloud[i]._counter = 0;
 
             // register occupiedID
+            //this.occupiedID[n] = true;
+        }
+
+        this.rng.GenerateTFollowTiles(this.tile_Cloud, this.tile_Core);
+    }
+
+    // spawn jetpacks on the screen, attached to some core tiles
+    private SpawnJetpacks(quantity:number):void {
+        for (let i:number = 0; i < quantity; i++) {
+            this.item_Jetpack[i] = new JetPack(this.assetManager, this.stage);
+            this.item_Jetpack[i].Name = "Trampoline";
+
+            let n:number;
+            do {
+                // make sure n does not get inside an occupied ID
+                n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
+            } while (this.occupiedID[n] != false);
+
+
+            this.item_Jetpack[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
+            this.item_Jetpack[i].Y = this.tile_Core[n].Y;
+            this.item_Jetpack[i].ShowMe("Jetpack_Idle");
+
+            // register occupiedID
             this.occupiedID[n] = true;
+
+            // immobile this core tile
+            this.tile_Core[n].IsMoving = false;
         }
     }
 
@@ -410,6 +432,12 @@ export default class GameplayState {
 
             for (let i:number = 0; i < this.tile_Cloud.length; i++) {
                 this.tile_Cloud[i].Y += this._cameraSpeed;
+            }
+
+
+            // - items
+            for (let i:number = 0; i < this.item_Jetpack.length; i++) {
+                this.item_Jetpack[i].Y += this._cameraSpeed;
             }
 
             // move any tile that falls out of the screen to the top
@@ -507,6 +535,28 @@ export default class GameplayState {
                     this.rng.GenerateTAFollowTile(this.tile_Bubble[i], this.tile_Core);
                     this.tile_Bubble[i].ShowMe("Bubble/Idle/Bubble_Idle");
                     this.tile_Bubble[i].ReActivateMe();
+                }
+            }
+
+            // attached the fell out jetpack to a new core tile
+            for (let i:number = 0; i < this.item_Jetpack.length; i++) {
+                if (this.item_Jetpack[i].Y > STAGE_HEIGHT) {                   
+
+                    let n:number;                    
+                    do {
+                        // make sure n does not get inside an occupied ID
+                        n = this.rng.RandomBetween(this.tile_Core.length - 17, this.tile_Core.length - 1);
+                    } while (this.occupiedID[n] != false);
+
+                    this.item_Jetpack[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
+                    this.item_Jetpack[i].Y = this.tile_Core[n].Y;
+                    this.item_Jetpack[i].ReEnableMe();
+
+                    // register occupiedID
+                    this.occupiedID[n] = true;
+
+                    // immobile its base tile
+                    this.tile_Core[n].IsMoving = false;
                 }
             }
         }

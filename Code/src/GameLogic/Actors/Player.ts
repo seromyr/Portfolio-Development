@@ -1,11 +1,12 @@
 import { PLAYER_JUMPSPEED, ANCHOR } from "../../Constants/Constants_General";
 import AssetManager from "../../Miscs/AssetManager";
-import Character from "../Entity";
+import Entity from "../Entity";
 import Tile from "../Tiles/Tile";
 import Trampoline from "../Tiles/Trampoline";
 import Breakable from "../Tiles/Breakable";
+import JetPack from "../Collectibles/Jetpack";
 
-export default class Player extends Character {
+export default class Player extends Entity {
 
     // player variables    
     private _isGrounded:boolean;
@@ -24,17 +25,28 @@ export default class Player extends Character {
     }
 
     public Update():void {
+        console.log(this.Y);
+        console.log("velocity: " + this._jumpVelocity);
+        console.log("velo mod: " + this._jumpVelocityModifer);
+        this._jumpVelocity -= this._jumpVelocityModifer;
+        //this.Y -= this._jumpVelocity;
+        this.Y--;
         //if player touches the ground
         if (this._isGrounded && this.Jump) {
             this._isGrounded = false;
+
+        }
+
+        else if (this._isGrounded && !this.Jump) {
+
         }
 
         // if player is in mid-air and jumping
-        if (!this._isGrounded && this.Jump) {
+        else if (!this._isGrounded && this.Jump) {
             if (this.Y <= this.CurrentY) {
 
                 if (this.Y < ANCHOR) {
-                    this.Y = ANCHOR + 1;
+                    this.Y = ANCHOR;
                     //console.log(this._jumpVelocity);
                 }
 
@@ -44,29 +56,34 @@ export default class Player extends Character {
 
                 else  {
                     this._jumpVelocityModifer = 1;
-                } 
-                this._jumpVelocity -= this._jumpVelocityModifer;
+                }
+
+                //this._jumpVelocity -= this._jumpVelocityModifer;
                 this.Y -= this._jumpVelocity;
 
+                
                 // when jump velocity reaches minimum, player starts falling down
                 if (this._jumpVelocity <= 0) {
                     //slowly fall down
                     this._jumpVelocity = PLAYER_JUMPSPEED * 0.5;
                     this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Fall");
                     this.Jump = false;
+
                 }
             }
         }
 
         // if player is in mid-air and falling
-        if (!this._isGrounded && !this.Jump){
+        else if (!this._isGrounded && !this.Jump){
+
             //player is constantly falling when not colliding with any tile
-            this._jumpVelocityModifer = 0.1;
+            this._jumpVelocityModifer = 0.5;
             this._jumpVelocity += this._jumpVelocityModifer;
             // increase jump velocity acceleration 
-            if (this._jumpVelocity > PLAYER_JUMPSPEED * 0.5) {
-                this._jumpVelocity += 0.2;
-            }
+            // if (this._jumpVelocity > PLAYER_JUMPSPEED * 0.5) {
+            //     this._jumpVelocity += 0.5;
+            //     //this._jumpVelocityModifer = 0.5;
+            // }
             
             this.Y += this._jumpVelocity;
         }
@@ -149,6 +166,29 @@ export default class Player extends Character {
                 else {
                     this._isGrounded = false;
                 }
+            }
+        }
+    }
+
+    // collision check with a trampoline
+    public CollisionCheckWithCollectibles(collectible:JetPack[]):void {
+        for (let i:number = 0; i < collectible.length; i++) {
+            //if player collides with a tile while falling down
+            if (this.X >= collectible[i].X - 52 && this.X <= collectible[i].X + 52) {
+                if (this.Y >= collectible[i].Y && this.Y < collectible[i].Y + collectible[i].Height) {
+
+                    this._isGrounded = true;
+                    this.Jump = true;
+                    this.Y = this.CurrentY = collectible[i].Y;
+                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Up");
+                    
+                    collectible[i].FlyMe();
+                    this._jumpVelocity = collectible[i].JumpVelocityBoost;
+                    this._jumpVelocityModifer = 1;
+                }
+            }
+            else {
+                this._isGrounded = false;
             }
         }
     }

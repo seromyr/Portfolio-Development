@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Jetpack.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 32, 34, 0, 16, 34]
+],
+
+"animations": {
+    "Jetpack_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:cb4993fb725f260733e1ee539e76faaf:8a08d4a43f2352d5f9f6b659425b654f:7046cdd8dbd8ee7d54f7cd2185a0b151$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

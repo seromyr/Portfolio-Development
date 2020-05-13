@@ -5,13 +5,7 @@ import { PLAYER_JUMPSPEED, STAGE_WIDTH } from "../../Constants/Constants_General
 export default class Tile extends Entity {
 
     protected _allowCollision:boolean;
-    get CollisionPermission():boolean {return this._allowCollision;}
-
-    protected _width:number;
-    get Width():number {return this._width;}
-    
-    protected _height:number;
-    get Height():number {return this._height;}
+    get CollisionPermission():boolean {return this._allowCollision;}    
 
     // gameplay variables
     protected _lethal:boolean;
@@ -29,8 +23,7 @@ export default class Tile extends Entity {
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL, type:string) {
         super(assetManager, stage, type);
-        this._width = this._sprite.getBounds().width;
-        this._height = this._sprite.getBounds().height;
+ 
         this._allowCollision = true;
         this._lethal = false;
         this._jumpVelocityBoost = PLAYER_JUMPSPEED;

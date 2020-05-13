@@ -16,6 +16,7 @@ import ShopScreen from "./Screens/ShopScreen";
 import Endcreen from "./Screens/EndScreen";
 import { TILE_MANIFEST } from "./Constants/Constants_Tiles";
 import { ENV_MANIFEST } from "./Constants/Constants_Environment";
+import { ITEM_MANIFEST } from "./Constants/Constants_Collectibles";
 
 // game variables
 let stage:createjs.StageGL;
@@ -129,6 +130,7 @@ function main():void {
     assetManager.loadAssets(ASSET_MANIFEST);
     assetManager.loadAssets(TILE_MANIFEST);
     assetManager.loadAssets(ENV_MANIFEST);
+    assetManager.loadAssets(ITEM_MANIFEST);
 }
 
 main();
