@@ -75,4 +75,12 @@ export default class ProceduralGenerator {
         tileset.Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 2,
                                        tile_Core[n].Y + tile_Core[n].Height * 2);
     }
+
+    public RandomizeTrueFalse():boolean {
+        let value:boolean;
+        let i:number = this.RandomBetween(0,1);
+        if (i == 0) value = false;
+        else value = true;
+        return value;
+    }
 }

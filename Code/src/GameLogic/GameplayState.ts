@@ -168,6 +168,11 @@ export default class GameplayState {
         // only update when player is alive
         if (this.mainChar.Alive) {
             this.Camera();
+
+            // update tile motion
+            for (let i:number = 0; i < this.tile_Core.length; i++) {
+                this.tile_Core[i].MoveMe();
+            }
             
             // update sprite and animation
             this.mainChar.Update();
@@ -217,6 +222,12 @@ export default class GameplayState {
             this.tile_Core[i] = new Tile(this.assetManager, this.stage, TILE_NORMAL);
             this.tile_Core[i].Name = "Core";
             this.tile_Core[i].ShowMe("Clay");
+
+            // Randomize patrol mode
+            this.tile_Core[i].IsMoving = this.rng.RandomizeTrueFalse();
+            if (this.tile_Core[i].IsMoving) {
+                this.tile_Core[i].SetMotion(this.rng.RandomBetween(1, 5));
+            }            
         }
 
         // Generate tiles based on the starting tile
@@ -254,6 +265,9 @@ export default class GameplayState {
 
             // register occupiedID
             this.occupiedID[n] = true;
+
+            // immobile this core tile
+            this.tile_Core[n].IsMoving = false;
         }
     }
 
@@ -276,6 +290,9 @@ export default class GameplayState {
 
             // register occupiedID
             this.occupiedID[n] = true;
+
+            // immobile its base tile
+            this.tile_Core[n].IsMoving = false;
         }
     }
 
@@ -412,6 +429,12 @@ export default class GameplayState {
                     this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * 3,
                     this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * 4);
 
+                    // Randomize patrol mode
+                    this.tile_Core[this.tile_Core.length - 1].IsMoving = this.rng.RandomizeTrueFalse();
+                        if (this.tile_Core[this.tile_Core.length - 1].IsMoving) {
+                        this.tile_Core[this.tile_Core.length - 1].SetMotion(this.rng.RandomBetween(1, 5));
+                    }    
+
                     // release this occupied ID
                     this.occupiedID[this.occupiedID.length - 1] = false;
                 }
@@ -432,6 +455,9 @@ export default class GameplayState {
 
                     // register occupiedID
                     this.occupiedID[n] = true;
+
+                    // immobile its base tile
+                    this.tile_Core[n].IsMoving = false;
                 }
             }
 
@@ -459,6 +485,9 @@ export default class GameplayState {
 
                     // register occupiedID
                     this.occupiedID[n] = true;
+
+                    // immobile its base tile
+                    this.tile_Core[n].IsMoving = false;
                 }
             }
 
