@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Retry_Button_States.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 382, 91, 0, 0, 0],
+    [1, 94, 382, 91, 0, 0, 0],
+    [1, 187, 382, 91, 0, 0, 0]
+],
+
+"animations": {
+    "Retry Button/Normal": { "frames": [0] },
+    "Retry Button/Selected": { "frames": [1] },
+    "Retry Button/Top": { "frames": [2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:64c9a99f9b314e79833b949c789767a8:792ff1f522be529daa57bcc07074c8cf:5da27674dd59efefdf64d668f9a84847$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

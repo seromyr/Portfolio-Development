@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Menu_Button_States.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 382, 91, 0, 0, 0],
+    [1, 94, 382, 91, 0, 0, 0],
+    [1, 187, 382, 91, 0, 0, 0]
+],
+
+"animations": {
+    "Main menu Button/Darker": { "frames": [0] },
+    "Main menu Button/Highlighted": { "frames": [1] },
+    "Main menu Button/Regular": { "frames": [2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:29425de875363d0374aa2d6b92b1674e:d20cae2e3a95b65e115563caf6805961:946b5a87bc21ddfc01ad4c4183545fef$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

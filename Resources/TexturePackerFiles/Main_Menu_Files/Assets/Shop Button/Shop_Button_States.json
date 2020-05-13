@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Shop_Button_States.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 382, 91, 0, 0, 0],
+    [1, 94, 382, 91, 0, 0, 0],
+    [1, 187, 382, 91, 0, 0, 0]
+],
+
+"animations": {
+    "Shop Button/Idle": { "frames": [0] },
+    "Shop Button/Over": { "frames": [1] },
+    "Shop Button/Selected": { "frames": [2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:09b8c7aa128b184c0e1667a0bebc2482:9373fd6d904f31d56ed6b5e8b185dbfd:d31eec01081cf1067f0c8e9f4c30e5a8$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Play_Again.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 600, 800, 0, 0, 0]
+],
+
+"animations": {
+    "Death_Background": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:1ab4a4e1bcfc76182c5d2f3dd39d58ed:2cf95ad0e07a7f798b65f09d08486ee4:8eaf98f61652f37db889424072e98348$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Button_States.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 382, 91, 0, 0, 0],
+    [1, 94, 382, 91, 0, 0, 0],
+    [1, 187, 382, 91, 0, 0, 0]
+],
+
+"animations": {
+    "Play Button/Click": { "frames": [0] },
+    "Play Button/Hovered": { "frames": [1] },
+    "Play Button/Static": { "frames": [2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:d1afff8d25469762b25aa5d00b56b8dc:bc8ef717d743b908cf0981299ab27d80:33068fa017f03ab61c9b5532a361db2e$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

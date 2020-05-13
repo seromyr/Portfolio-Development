@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Title_Screen.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 600, 800, 0, 0, 0]
+],
+
+"animations": {
+    "Title_Background": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:cbb2d439ef71fcebe76e854d9f531ecf:064aca62748071d0bc58f8aec47ef885:5fcc268959ce5ff088b567ebab8ff8d9$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
