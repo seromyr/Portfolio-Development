@@ -1,0 +1,34 @@
+TO DO:
+
+Normal platforms - standard (80w x 28h) (different colored shells)
+
+spiked platforms - platform with spikes (cluster of stars for space)
+
+cracked (3) - can be jumped on 3 times; breaks after 3rd (multiple states showing gradual degrading) (weak force field) 
+
+hollow - can be seen but not jumped on (need other for surface)
+
+Trampoline platforms - bounces player up high (needs an animation) (palm fronds for surface, squishy alien for space)
+
+
+NEEDS ANIMATION/MORE FRAMES:
+-
+-
+-
+
+
+FINISHED:
+
+Big platforms - starting ground (64x64) DONE
+
+cloud - fade in and out (needs an animation) DONE
+
+cracked (1) - disappears after jumping on it once (cluster of bubbles) DONE
+
+hollow - can be seen but not jumped on (ink spray for ocean, green electrofield for space) DONE
+
+spiked platforms - platform with spikes (sea urchin for ocean + surface) DONE
+
+Trampoline platforms - bounces player up high (needs an animation) (jellyfish for ocean) DONE
+
+cracked (3) - can be jumped on 3 times; breaks after 3rd (multiple states showing gradual degrading) (coral for ocean + surface) DONE
