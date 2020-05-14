@@ -7,16 +7,18 @@
 "framerate": 30,
 "frames": [
     [1, 1, 80, 28, 0, 0, 0],
-    [1, 31, 80, 28, 0, 0, 0]
+    [83, 1, 80, 28, 0, 0, 0],
+    [165, 1, 80, 28, 0, 0, 0]
 ],
 
 "animations": {
     "Hollow/Electrofield": { "frames": [0] },
-    "Hollow/Hollow_Ink": { "frames": [1] }
+    "Hollow/Fog": { "frames": [1] },
+    "Hollow/Hollow_Ink": { "frames": [2] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:ae4067a041726614fb551898345c4c98:2d42c6358e1c9d1bbd556fc1fe88a1e0:d8fbf0a9222a6e4aabeab7b6b7ff66fc$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:aa8528557deaee38b840a778fc20fdcc:cd9f169a180a0e00004e79e059e6a357:d8fbf0a9222a6e4aabeab7b6b7ff66fc$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

@@ -1,0 +1,31 @@
+{
+
+"images": [
+    "3_Jump_Breakable.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 27, 0, 0, 0],
+    [83, 1, 80, 27, 0, 0, 0],
+    [165, 1, 80, 27, 0, 0, 0],
+    [1, 30, 80, 28, 0, 0, 0],
+    [83, 30, 80, 28, 0, 0, 0],
+    [165, 30, 80, 28, 0, 0, 0]
+],
+
+"animations": {
+    "3_Jump_Breakable/Coral_Break": { "frames": [0] },
+    "3_Jump_Breakable/Coral_Gone": { "frames": [1] },
+    "3_Jump_Breakable/Coral_Safe": { "frames": [2] },
+    "3_Jump_Breakable/Forcefield_First": { "frames": [3] },
+    "3_Jump_Breakable/Forcefield_Second": { "frames": [4] },
+    "3_Jump_Breakable/Forcefirld_Third": { "frames": [5] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:0f9ba47ec044a7f797907981e67d1fd2:56b5348669a993522f59c1ba85a0bd5b:4d10afea1978ec3cc65fbc3b855ea897$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

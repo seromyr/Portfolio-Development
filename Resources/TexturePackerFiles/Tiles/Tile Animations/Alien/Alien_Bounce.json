@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Alien_Bounce.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 29, 0, -4, -21],
+    [1, 32, 83, 40, 0, -4, -10],
+    [1, 74, 88, 40, 0, -2, -10],
+    [1, 116, 88, 40, 0, -2, -10],
+    [1, 158, 88, 40, 0, -2, -10]
+],
+
+"animations": {
+    "Bounce/Alien_Bounce": { "frames": [0, 1, 2, 3, 4] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:88f39ddbfa2d45f3ba3907dfa2884b1b:d073fbbaed1c971e9e16b7e0f602f5d3:a8523e5e78bb005e31f3453c417e9727$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

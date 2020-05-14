@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Leaves_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 29, 0, -4, -21]
+],
+
+"animations": {
+    "Leaves_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:5a9903d0c9194ec1d4c08b4a66ac39ee:a222f76146ff6ebf06b781cb5bc53c43:267e77bc62bdd32c31f85015715728b5$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

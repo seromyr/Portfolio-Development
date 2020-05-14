@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Leaves_Bounce.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 29, 0, -4, -21],
+    [1, 32, 82, 29, 0, -4, -21],
+    [1, 63, 82, 29, 0, -4, -21],
+    [1, 94, 82, 29, 0, -4, -21],
+    [1, 125, 82, 36, 0, -4, -14]
+],
+
+"animations": {
+    "Bounce/Leaves_Bounce": { "frames": [0, 1, 2, 3, 4] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:fdaf29dc9d0f1a0f9eef6937b08edc39:9e55cff90698566aa2b5c44137a032a4:df2ee806cb64cfd6d7f31d9593bf1f84$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

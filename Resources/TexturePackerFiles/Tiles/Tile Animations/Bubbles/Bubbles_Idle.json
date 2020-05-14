@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Bubbles_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 28, 0, 0, 0]
+],
+
+"animations": {
+    "Bubbles_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:6755478fd0d97ca34e5533d20908892a:8ae4063f56faad5e26efdd79e58f599c:dd8cd6f83d3b974df4542d217827eb92$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
