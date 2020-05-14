@@ -1,0 +1,27 @@
+{
+
+"images": [
+    "Breakable.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 28, 0, 0, 0],
+    [1, 31, 80, 27, 0, 0, 0],
+    [1, 60, 80, 27, 0, 0, 0],
+    [1, 89, 80, 27, 0, 0, 0]
+],
+
+"animations": {
+    "Breakable/Breakable_One_Jump": { "frames": [0] },
+    "Breakable/Coral_Break": { "frames": [1] },
+    "Breakable/Coral_Gone": { "frames": [2] },
+    "Breakable/Coral_Safe": { "frames": [3] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:4700bc4725f72c950dcf88d01c28f572:d45bdd51eb8f153d5a826730188a30ed:ef47fb7b575025563ea57b8206e04300$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

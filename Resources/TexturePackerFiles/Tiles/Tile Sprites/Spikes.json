@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Sea_Urchin.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 28, 0, 0, 0]
+],
+
+"animations": {
+    "Sea_Urchin": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:9e33dd1ede582c9f74038d6b5547ef4f:f45428cfa0ab2b76fb1559fbabfc0d05:b209878acfbc1d286a84b3059b33a18a$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

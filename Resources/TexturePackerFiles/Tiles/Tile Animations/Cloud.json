@@ -1,0 +1,28 @@
+{
+
+"images": [
+    "Cloud.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 28, 0, 0, 0],
+    [1, 31, 80, 28, 0, 0, 0],
+    [1, 61, 80, 28, 0, 0, 0],
+    [1, 91, 80, 28, 0, 0, 0],
+    [1, 121, 80, 28, 0, 0, 0],
+    [1, 151, 80, 28, 0, 0, 0],
+    [1, 181, 80, 28, 0, 0, 0],
+    [1, 211, 80, 28, 0, 0, 0]
+],
+
+"animations": {
+    "Cloud/Cloud_Disappear": { "frames": [0, 1, 2, 3, 4, 5, 6, 7] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:39cc4c464a7290c7e5170c80731503f9:4bb2f4102a60f20bc68d0b3db21bc412:b595deadf98b8183b6ec4475accc2b54$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
