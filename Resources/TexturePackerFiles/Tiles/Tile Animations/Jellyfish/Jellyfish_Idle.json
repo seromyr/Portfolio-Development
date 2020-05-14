@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Jellyfish_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 29, 0, -4, -21]
+],
+
+"animations": {
+    "Jellyfish_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:31bc1862ad41c00136b5aad2167157d1:b7d31060e85f57340a6f7512374ba05d:73e2dbce8c8d96fc9a8295bc7dd28691$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

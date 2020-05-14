@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Jellyfish.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 29, 0, -4, -21],
+    [1, 32, 84, 29, 0, -3, -21],
+    [1, 63, 90, 29, 0, 0, -21],
+    [1, 94, 90, 29, 0, 0, -21],
+    [1, 125, 90, 40, 0, 0, -10]
+],
+
+"animations": {
+    "Jellyfish/Jellyfish_Bounce": { "frames": [0, 1, 2, 3, 4] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:94e1b7aea8bafdd69e805eb63f992fa6:bb65715d3d5a51c1a0f7ed8bf7124560:945c931da103060f96ff29810ce2ccad$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

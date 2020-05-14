@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Cloud_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 28, 0, 0, 0]
+],
+
+"animations": {
+    "Cloud_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:72a3f591d7b3777317537e3f0337122f:744506ee0fb02371be0e245c7c5dcb05:5c9206c9431972ed1738faafff8663f2$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
