@@ -34,7 +34,7 @@ export default class ProceduralGenerator {
             tileset[i].X = this.RandomBetween(0,
                                               tileset[i - 1].X + tileset[i - 1].Width * 3);
 
-            tileset[i].Y = this.RandomBetween(tileset[i - 1].Y - tileset[i - 1].Height * 4,
+            tileset[i].Y = this.RandomBetween(tileset[i - 1].Y - tileset[i - 1].Height * 2,
                                               tileset[i - 1].Y - tileset[i - 1].Height * 4);
         }
     }
@@ -54,8 +54,8 @@ export default class ProceduralGenerator {
             else {
                 tileset[i].X = this.RandomBetween(0, tile_Core[n].X - tile_Core[n].Width);
             }
-            tileset[i].Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 2,
-                                           tile_Core[n].Y + tile_Core[n].Height * 2);
+            tileset[i].Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 1,
+                                           tile_Core[n].Y + tile_Core[n].Height * 3);
         }        
     }
 
@@ -72,8 +72,8 @@ export default class ProceduralGenerator {
             tileset.X = this.RandomBetween(0, tile_Core[n].X - tile_Core[n].Width);
         }
 
-        tileset.Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 2,
-                                       tile_Core[n].Y + tile_Core[n].Height * 2);
+        tileset.Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 1,
+                                       tile_Core[n].Y + tile_Core[n].Height * 3);
     }
 
     public RandomizeTrueFalse():boolean {

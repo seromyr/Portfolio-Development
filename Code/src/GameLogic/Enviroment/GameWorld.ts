@@ -84,10 +84,10 @@ export default class GameWorld {
     public UpdateMe(speed:number):void {
         // create a parallax effect
 
-        this.bgOcean.Y          += speed *  0.5; //0.05;
-        this.bgOceanLeft.Y      += speed *  1;   //0.2;
-        this.bgOceanRight.Y     += speed *  1.2; //0.3;
-        this.bgOceanFloor.Y     += speed *  1.5  //0.4;
+        this.bgOcean.Y          += speed *  0.05; //0.05;
+        this.bgOceanLeft.Y      += speed *  0.2;   //0.2;
+        this.bgOceanRight.Y     += speed *  0.3; //0.3;
+        this.bgOceanFloor.Y     += speed *  0.4  //0.4;
 
         // wait until ocean group moved of the screen
         if (this.bgOcean.Y == STAGE_HEIGHT) {
@@ -97,15 +97,15 @@ export default class GameWorld {
             this.bgOceanRight.HideMe();
             this.bgOceanFloor.HideMe();
 
-            this.bgSurfaceSky.Y     += speed * 0.5;
-            this.bgSurfaceClouds.Y  += speed * 1;
-            this.bgSurface.Y        += speed * 1.5;
+            this.bgSurfaceSky.Y     += speed * 0.05;
+            this.bgSurfaceClouds.Y  += speed * 0.3;
+            this.bgSurface.Y        += speed * 0.4;
 
         } else {
 
-            this.bgSurfaceSky.Y     += speed * 0.5;
-            this.bgSurfaceClouds.Y  += speed * 0.5;
-            this.bgSurface.Y        += speed * 0.5;
+            this.bgSurfaceSky.Y     += speed * 0.05;
+            this.bgSurfaceClouds.Y  += speed * 0.05;
+            this.bgSurface.Y        += speed * 0.05;
         }
 
         // wait until surface group moved out of the screen
@@ -115,14 +115,14 @@ export default class GameWorld {
             this.bgSurfaceClouds.HideMe();
             this.bgSurfaceSky.HideMe();
 
-            this.bgMoon.Y           += speed * 0.5;
-            this.bgPlanets.Y        += speed * 1;  
-            this.bgAsteroids.Y      += speed * 1.5;
+            this.bgMoon.Y           += speed * 0.05;
+            this.bgPlanets.Y        += speed * 0.3;  
+            this.bgAsteroids.Y      += speed * 0.4;
         } else {
 
-            this.bgMoon.Y           += speed * 0.5;
-            this.bgPlanets.Y        += speed * 0.5;  
-            this.bgAsteroids.Y      += speed * 0.5;
+            this.bgMoon.Y           += speed * 0.05;
+            this.bgPlanets.Y        += speed * 0.05;  
+            this.bgAsteroids.Y      += speed * 0.05;
         }
 
         // space group never goes out screen

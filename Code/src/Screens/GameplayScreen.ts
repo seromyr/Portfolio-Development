@@ -17,6 +17,10 @@ export default class GameplayScreen extends ScreenManager {
     private _topribbon:createjs.Sprite;
     private _score:BitmapText;
 
+    // score placeholer
+    private hiscore:number;
+    get HiScore():number {return this.hiscore;}
+
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         super(assetManager, stage, "Gameplay", SCREEN_TITLE[1]);
         super.HideShopButton();
@@ -40,7 +44,7 @@ export default class GameplayScreen extends ScreenManager {
         this._gameWorld.ShowMe();
         this._gameplayState.StartNewGame();
         this._gameplayIsRunning = true;
-        this._score.WriteMessage(14, 50, this._gameplayState.Score.toString() + " m");
+        this._score.WriteMessageLeft(14, 50, this._gameplayState.Score.toString() + " m");
         this.stage.addChild(this._topribbon);
     }
 
@@ -57,7 +61,8 @@ export default class GameplayScreen extends ScreenManager {
         // update score
         if (this.GameplayIsRunning) {
             this.stage.removeChild(this._score.DisplayData);
-            this._score.WriteMessage(14, 50, this._gameplayState.Score.toString() + " m");
+            this.hiscore = this._gameplayState.Score;
+            this._score.WriteMessageLeft(14, 50, this._gameplayState.Score.toString() + " m");
             this.stage.addChild(this._score.DisplayData);
         }
 

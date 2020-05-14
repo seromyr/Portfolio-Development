@@ -24,7 +24,7 @@ export default class Cloud extends Tile {
             switch (this._counter) {
                 case 0:
                     
-                    this._sprite.gotoAndPlay("FadeOut/Cloud_FadeOut");
+                    this._sprite.gotoAndPlay("Cloud Disappear/Cloud_Disappear");
                     this._sprite.on("animationend", () => {
                         this._allowCollision = false;
                         this._sprite.alpha = 0;
@@ -33,7 +33,7 @@ export default class Cloud extends Tile {
                 case 1:
                     this._allowCollision = true;
                     this._sprite.alpha = 1;
-                    this._sprite.gotoAndPlay("FadeIn/Cloud_FadeIn");
+                    this._sprite.gotoAndPlay("Cloud Reappear/Cloud_Reappear");
                     this._sprite.on("animationend", () => {
                         this._sprite.gotoAndStop("Idle/Cloud_Idle");
                     }, this, true);

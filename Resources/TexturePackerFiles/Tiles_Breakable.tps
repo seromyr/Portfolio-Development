@@ -181,15 +181,17 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeA/Bubble_Explode_a_000.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeA/Bubble_Explode_a_001.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeA/Bubble_Explode_a_002.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeB/Bubble_Explode_b_000.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Bubble/ExplodeB/Bubble_Explode_b_001.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Bubble/Idle/Bubble_Idle.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Stone/Stone_Idle 01.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Stone/Stone_Idle 02.png</key>
-            <key type="filename">../Concepts/Tiles/Breakables/Stone/Stone_Idle 03.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubbles/Bubbles_Idle.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubbles/Disappear/Bubbles_Disappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubbles/Disappear/Bubbles_Disappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubbles/Disappear/Bubbles_Disappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubbles/Disappear/Bubbles_Disappear_003.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubbles/Disappear/Bubbles_Disappear_004.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubbles/Disappear/Bubbles_Disappear_005.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Bubbles/Disappear/Bubbles_Disappear_006.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Coral/Coral_Idle 01.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Coral/Coral_Idle 02.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Coral/Coral_Idle 03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -198,17 +200,17 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>12,4,24,8</rect>
+                <rect>20,7,40,14</rect>
                 <key>scale9Paddings</key>
-                <rect>12,4,24,8</rect>
+                <rect>20,7,40,14</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Concepts/Tiles/Breakables/Stone</filename>
-            <filename>../Concepts/Tiles/Breakables/Bubble</filename>
+            <filename>../Concepts/Tiles/Breakables/Bubbles</filename>
+            <filename>../Concepts/Tiles/Breakables/Coral</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

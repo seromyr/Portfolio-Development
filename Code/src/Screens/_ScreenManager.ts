@@ -29,14 +29,14 @@ export default class ScreenManager {
         this.screen.addChild(background);
 
         // set up Main Menu buttons
-        this.btnPlay = assetManager.getSprite("gameUI", "play", STAGE_WIDTH/2, STAGE_HEIGHT/2);
+        this.btnPlay = assetManager.getSprite("gameUI", "play", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 96);
         let btnPlayEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnPlay, "play", "play highlight", "play confirm", false);
         
-        this.btnShop = assetManager.getSprite("gameUI", "shop", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 128);
+        this.btnShop = assetManager.getSprite("gameUI", "shop", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 252);
         let btnShopEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnShop, "shop", "shop highlight", "shop confirm", false);
         
         // set up Return to Main Menu button
-        this.btnMainMenu = assetManager.getSprite("gameUI", "return", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 128);
+        this.btnMainMenu = assetManager.getSprite("gameUI", "return", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 252);
         let btnMainMenuEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnMainMenu, "return", "return highlight", "return confirm", false);
 
         // set up event listener for each button

@@ -23,13 +23,13 @@ export default class Breakable extends Tile {
         
         switch (this._hit) {
             case 3:
-                this._sprite.gotoAndStop("Stone/Stone_Idle 01");
+                this._sprite.gotoAndStop("Coral/Coral_Idle 01");
                 break;
                     case 2:
-                        this._sprite.gotoAndStop("Stone/Stone_Idle 02");
+                        this._sprite.gotoAndStop("Coral/Coral_Idle 02");
                         break;
                         case 1:
-                            this._sprite.gotoAndStop("Stone/Stone_Idle 03");
+                            this._sprite.gotoAndStop("Coral/Coral_Idle 03");
                             break;
                             case 0:
                                 this._allowCollision = false;
@@ -40,7 +40,7 @@ export default class Breakable extends Tile {
 
     public BreakMeNow():void {
 
-        this._sprite.gotoAndPlay("Bubble/ExplodeB/Bubble_Explode_b");
+        this._sprite.gotoAndPlay("Bubbles/Disappear/Bubbles_Disappear");
 
         this._sprite.on("animationend", function() {
             this._allowCollision = false;

@@ -1,11 +1,11 @@
-import { SCREEN_TITLE, STAGE_HEIGHT } from "../Constants/Constants_General";
+import { SCREEN_TITLE, STAGE_HEIGHT, STAGE_WIDTH } from "../Constants/Constants_General";
 import AssetManager from "../Miscs/AssetManager";
 import ScreenManager from "./_ScreenManager";
 import Bitmap_Text from "./Bitmap_Text";
 
 export default class MainMenuScreen extends ScreenManager {   
     
-    private version:Bitmap_Text;
+    private _version:Bitmap_Text;
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
 
@@ -13,12 +13,12 @@ export default class MainMenuScreen extends ScreenManager {
         super.ShowPlayButton();
         //super.ShowShopButton();
 
-        this.version = new Bitmap_Text(assetManager, stage);
+        this._version = new Bitmap_Text(assetManager, stage);
     }
 
     public ShowMe():void {
         super.ShowMe();
-        this.version.WriteMessage(256, STAGE_HEIGHT - 48, "v0.7a");
-        this.stage.addChild(this.version.DisplayData);
+        this._version.WriteMessageCenter(STAGE_WIDTH / 2, STAGE_HEIGHT - 48, "v0.8");
+        this.stage.addChild(this._version.DisplayData);
     }
 }

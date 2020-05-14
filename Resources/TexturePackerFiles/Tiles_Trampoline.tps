@@ -181,47 +181,44 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_000.png</key>
-            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_001.png</key>
-            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_002.png</key>
-            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_003.png</key>
-            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_004.png</key>
-            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_005.png</key>
-            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_006.png</key>
-            <key type="filename">../Concepts/Trampoline/Active/Trampoline_Active_007.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Alien/Alien_Idle.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Alien/Bounce/Alien_Bounce_000.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Alien/Bounce/Alien_Bounce_001.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Alien/Bounce/Alien_Bounce_002.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Alien/Bounce/Alien_Bounce_003.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Alien/Bounce/Alien_Bounce_004.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Jellyfish/Bounce/Jellyfish_Bounce_000.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Jellyfish/Bounce/Jellyfish_Bounce_001.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Jellyfish/Bounce/Jellyfish_Bounce_002.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Jellyfish/Bounce/Jellyfish_Bounce_003.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Jellyfish/Bounce/Jellyfish_Bounce_004.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Jellyfish/Jellyfish_Idle.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Leaves/Bounce/Leaves_Bounce_000.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Leaves/Bounce/Leaves_Bounce_001.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Leaves/Bounce/Leaves_Bounce_002.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Leaves/Bounce/Leaves_Bounce_003.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Leaves/Bounce/Leaves_Bounce_004.png</key>
+            <key type="filename">../Concepts/Tiles/Trampoline/Leaves/Leaves_Idle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,1</point_f>
+                <point_f>0,0</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>7,7,14,14</rect>
+                <rect>23,13,45,25</rect>
                 <key>scale9Paddings</key>
-                <rect>7,7,14,14</rect>
-                <key>scale9FromFile</key>
-                <false/>
-            </struct>
-            <key type="filename">../Concepts/Trampoline/Idle/Trampoline_Idle.png</key>
-            <struct type="IndividualSpriteSettings">
-                <key>pivotPoint</key>
-                <point_f>0.5,1</point_f>
-                <key>spriteScale</key>
-                <double>1</double>
-                <key>scale9Enabled</key>
-                <false/>
-                <key>scale9Borders</key>
-                <rect>6,3,11,5</rect>
-                <key>scale9Paddings</key>
-                <rect>6,3,11,5</rect>
+                <rect>23,13,45,25</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Concepts/Trampoline</filename>
+            <filename>../Concepts/Tiles/Trampoline/Alien</filename>
+            <filename>../Concepts/Tiles/Trampoline/Jellyfish</filename>
+            <filename>../Concepts/Tiles/Trampoline/Leaves</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Tile_Big.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 64, 64, 0, 0, 0]
+],
+
+"animations": {
+    "Tile_Big": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:d95585f1e7587106869cfaf349465b7a:e30f44b33a1179000f22347ee48c62e7:152fb76f345a70ac0fe77650554fc23b$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

@@ -181,26 +181,36 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_000.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_001.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_002.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_003.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_004.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_005.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_006.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_007.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_008.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeIn/Cloud_FadeIn_009.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_000.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_001.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_002.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_003.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_004.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_005.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_006.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_007.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_008.png</key>
-            <key type="filename">../Concepts/Tiles/Cloud/FadeOut/Cloud_FadeOut_009.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Disappear/Cloud_Disappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Disappear/Cloud_Disappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Disappear/Cloud_Disappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Disappear/Cloud_Disappear_003.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Disappear/Cloud_Disappear_004.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Disappear/Cloud_Disappear_005.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Disappear/Cloud_Disappear_006.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Disappear/Cloud_Disappear_007.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Reappear/Cloud_Reappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Reappear/Cloud_Reappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Reappear/Cloud_Reappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Reappear/Cloud_Reappear_003.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Reappear/Cloud_Reappear_004.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Reappear/Cloud_Reappear_005.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Reappear/Cloud_Reappear_006.png</key>
+            <key type="filename">../Concepts/Tiles/Cloud/Cloud Reappear/Cloud_Reappear_007.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>20,7,40,14</rect>
+                <key>scale9Paddings</key>
+                <rect>20,7,40,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Concepts/Tiles/Cloud/Idle/Cloud_Idle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -219,9 +229,9 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Concepts/Tiles/Cloud/FadeIn</filename>
-            <filename>../Concepts/Tiles/Cloud/FadeOut</filename>
             <filename>../Concepts/Tiles/Cloud/Idle</filename>
+            <filename>../Concepts/Tiles/Cloud/Cloud Disappear</filename>
+            <filename>../Concepts/Tiles/Cloud/Cloud Reappear</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

@@ -99,20 +99,20 @@ export default class GameplayState {
         this.SpawnOceanFloorTiles();
         this.SpawnTrampolines(2);
         this.SpawnHollowTiles(4);
-        this.SpawnSpikes(4);
+        this.SpawnSpikes(3);
         this.SpawnBreakables("Breakable", this.tile_Breakable, 2, false);
         this.SpawnBreakables("Bubble", this.tile_Bubble, 5, true);
         this.SpawnClouds(4);
 
         // spawn collectibles
-        this.SpawnJetpacks(1);
+        this.SpawnJetpacks(2);
         
         this.npc_01.ShowMeJumping();
         this.npc_02.ShowMeIdling();
-        this.mainChar.ShowMe("Dazzle/Dazzle Jump/Dazzle_Fall");
+        this.mainChar.ShowMe("Dazzle/Dazzle_Fall");
 
         // starting score
-        this._score = -25;
+        this._score = -500;
     }
 
     private CreateActors():void {
@@ -130,7 +130,7 @@ export default class GameplayState {
 
         this.npc_02.Alive = true;
         this.npc_02.X = 54;
-        this.npc_02.Y = STAGE_HEIGHT - 48;
+        this.npc_02.Y = STAGE_HEIGHT - 64;
 
         // construct tiles
         this.tile_Core       = [];
@@ -150,9 +150,9 @@ export default class GameplayState {
         this.tile_Start      = [];
         this.tile_Start[0]   = new Tile(this.assetManager, this.stage, TILE_NORMAL);
         this.tile_Start[0].Name = "Start";
-        this.tile_Start[0].X = 128;
-        this.tile_Start[0].Y = STAGE_HEIGHT - 96;
-        this.tile_Start[0].ShowMe("Clay");
+        this.tile_Start[0].X = this.rng.RandomBetween(this.tile_Start[0].Width, STAGE_WIDTH - this.tile_Start[0].Width);
+        this.tile_Start[0].Y = STAGE_HEIGHT - 256;
+        this.tile_Start[0].ShowMe("Normal/Shells");
     }
 
     // gameplay updater
@@ -179,7 +179,11 @@ export default class GameplayState {
                 this.mainChar.CollisionCheckWithTiles(this.tile_Spiked);
                 this.mainChar.CollisionCheckWithBreakables(this.tile_Breakable);
                 this.mainChar.CollisionCheckWithBreakables(this.tile_Bubble);
-                this.mainChar.CollisionCheckWithTiles(this.tile_Cloud);
+
+                if (this._score > 100) {
+
+                    this.mainChar.CollisionCheckWithTiles(this.tile_Cloud);
+                }
 
                 this.mainChar.CollisionCheckWithCollectibles(this.item_Jetpack);
             }
@@ -189,8 +193,13 @@ export default class GameplayState {
                 this.mainChar.Alive = false;
             }
         }
-
-        else this.stage.dispatchEvent(this._playerHasDied);
+        
+        if (!this.mainChar.Alive) 
+        {
+            
+            //this.mainChar.Dead();
+            this.stage.dispatchEvent(this._playerHasDied);
+        }
 
         // only update when this NPC is alive
         if (this.npc_01.Alive) {
@@ -216,7 +225,7 @@ export default class GameplayState {
         for (let i:number = 0; i < quantity; i++) {
             this.tile_Core[i] = new Tile(this.assetManager, this.stage, TILE_NORMAL);
             this.tile_Core[i].Name = "Core";
-            this.tile_Core[i].ShowMe("Clay");
+            this.tile_Core[i].ShowMe("Normal/Shells");
 
             // Randomize patrol mode
             this.tile_Core[i].IsMoving = this.rng.RandomizeTrueFalse();
@@ -233,8 +242,8 @@ export default class GameplayState {
     private SpawnHollowTiles(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
             this.tile_Hollow[i] = new Tile(this.assetManager, this.stage, TILE_HOLLOW);
-            this.tile_Hollow[i].Name = "Hollow";
-            this.tile_Hollow[i].ShowMe("Hollow");
+            this.tile_Hollow[i].Name = "Hollow Ink";
+            this.tile_Hollow[i].ShowMe("Hollow/Hollow_Ink");
         }
 
         // Generate tiles based on the core tiles
@@ -245,7 +254,7 @@ export default class GameplayState {
     private SpawnTrampolines(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
             this.tile_Trampoline[i] = new Trampoline(this.assetManager, this.stage);
-            this.tile_Trampoline[i].Name = "Trampoline";
+            this.tile_Trampoline[i].Name = "Jelly Fish";
 
             let n:number;
             do {
@@ -256,7 +265,8 @@ export default class GameplayState {
 
             this.tile_Trampoline[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
             this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
-            this.tile_Trampoline[i].ShowMe("Trampoline/Idle/Trampoline_Idle");
+            this.tile_Core[n].HideMe();
+            this.tile_Trampoline[i].ShowMe("Jellyfish/Jellyfish_Idle");
 
             // register occupiedID
             this.occupiedID[n] = true;
@@ -270,7 +280,7 @@ export default class GameplayState {
     private SpawnSpikes(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
             this.tile_Spiked[i] = new Spiked(this.assetManager, this.stage);
-            this.tile_Spiked[i].Name = "Spike";
+            this.tile_Spiked[i].Name = "Sea Urchin";
 
             let n:number;            
             do {
@@ -280,8 +290,8 @@ export default class GameplayState {
 
             this.tile_Spiked[i].X = this.tile_Core[n].X;
             this.tile_Spiked[i].Y = this.tile_Core[n].Y;
-            this.tile_Core[n].ShowMe("Stone");
-            this.tile_Spiked[i].ShowMe("Spikes");
+            this.tile_Core[n].HideMe();
+            this.tile_Spiked[i].ShowMe("Spiked/Sea_Urchin");
 
             // register occupiedID
             this.occupiedID[n] = true;
@@ -293,8 +303,8 @@ export default class GameplayState {
 
     // spawn ocean floor tiles on the screen
     private SpawnOceanFloorTiles():void {
-        let x:number = 48;
-        for (let i:number = 0; i < 8; i++) {
+        let x:number = 0;
+        for (let i:number = 0; i < 10; i++) {
             
             this.tile_OceanFloor[i] = new Tile(this.assetManager, this.stage, TILE_BIG);
             this.tile_OceanFloor[i].Name = "OceanFloor";
@@ -319,8 +329,8 @@ export default class GameplayState {
 
             // this.tile_Breakable[i].X = this.tile_Core[n].X;
             // this.tile_Breakable[i].Y = this.tile_Core[n].Y;
-            if (type == "Bubble") tileset[i].ShowMe("Bubble/Idle/Bubble_Idle");
-            else tileset[i].ShowMe("Stone/Stone_Idle 01");
+            if (type == "Bubble") tileset[i].ShowMe("Bubbles/Bubbles_Idle");
+            else tileset[i].ShowMe("Coral/Coral_Idle 01");
             
             // // register occupiedID
             // this.occupiedID[n] = true;
@@ -344,8 +354,8 @@ export default class GameplayState {
             // this.tile_Cloud[i].X = this.tile_Core[n].X;
             // this.tile_Cloud[i].Y = this.tile_Core[n].Y - 32;
             //this.tile_Core[n].ShowMe("Stone");
-            this.tile_Cloud[i].ShowMe("Idle/Cloud_Idle");
-            this.tile_Cloud[i].ActivateMe();
+            //this.tile_Cloud[i].ShowMe("Idle/Cloud_Idle");
+            //this.tile_Cloud[i].ActivateMe();
             //this.tile_Cloud[i]._counter = 0;
 
             // register occupiedID
@@ -359,7 +369,7 @@ export default class GameplayState {
     private SpawnJetpacks(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
             this.item_Jetpack[i] = new JetPack(this.assetManager, this.stage);
-            this.item_Jetpack[i].Name = "Trampoline";
+            this.item_Jetpack[i].Name = "Jetpack";
 
             let n:number;
             do {
@@ -445,7 +455,20 @@ export default class GameplayState {
             for (let i:number = 0; i < this.tile_Core.length; i++) {
                 if (this.tile_Core[i].Y > STAGE_HEIGHT) {
 
-                    this.tile_Core[i].ShowMe("Clay");
+                    if (this._score < 0) {
+                        this.tile_Core[i].ShowMe("Normal/Shells");
+                    }
+                    
+                    else if (this._score < 500 && this._score >= 0) {
+                        
+                        this.tile_Core[i].ShowMe("Normal/Clams");
+                    }
+                    
+                    else {
+                        
+                        this.tile_Core[i].ShowMe("Normal/Starfish");
+                    }
+
                     this.tile_Core[i].X = this.rng.RandomBetween(0, STAGE_WIDTH - this.tile_Core[i].Width);
 
                     // shift this tile and move it to last index 
@@ -470,7 +493,7 @@ export default class GameplayState {
 
             // attached the fell out trampoline to a new core tile
             for (let i:number = 0; i < this.tile_Trampoline.length; i++) {
-                if (this.tile_Trampoline[i].Y > STAGE_HEIGHT) {                   
+                if (this.tile_Trampoline[i].Y > STAGE_HEIGHT) {
 
                     let n:number;                    
                     do {
@@ -480,6 +503,22 @@ export default class GameplayState {
 
                     this.tile_Trampoline[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
                     this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
+                    this.tile_Core[n].HideMe();
+
+                    if (this._score < 0) {
+                        this.tile_Trampoline[i].ShowMe("Jellyfish/Jellyfish_Idle");
+                        this.tile_Trampoline[i].Type = 1;
+                    }
+                    
+                    else if (this._score < 500 && this._score >= 0) {
+                        this.tile_Trampoline[i].ShowMe("Leaves/Leaves_Idle");
+                        this.tile_Trampoline[i].Type = 2;
+                    }
+                    
+                    else {
+                        this.tile_Trampoline[i].ShowMe("Alien/Alien_Idle");
+                        this.tile_Trampoline[i].Type = 3;
+                    }
 
                     // register occupiedID
                     this.occupiedID[n] = true;
@@ -493,12 +532,28 @@ export default class GameplayState {
             for (let i:number = 0; i < this.tile_Hollow.length; i++) {
                 if (this.tile_Hollow[i].Y > STAGE_HEIGHT) {                    
                     this.rng.GenerateTAFollowTile(this.tile_Hollow[i], this.tile_Core);
+                    if (this._score < 0) {
+                        this.tile_Hollow[i].ShowMe("Hollow/Hollow_Ink");
+                        
+                    }
+
+                    else if (this._score < 500 && this._score >= 0) {
+                        this.tile_Hollow[i].ShowMe("Hollow/Fog");
+                    }
+
+                    else {
+                        this.tile_Hollow[i].ShowMe("Hollow/Electrofield");
+                    }
                 }
             }
 
             // attached the fell out spiked tile to a new core tile
             for (let i:number = 0; i < this.tile_Spiked.length; i++) {
                 if (this.tile_Spiked[i].Y > STAGE_HEIGHT) {
+
+                    if (this._score >= 0) {
+                        this.tile_Spiked[i].ShowMe("Spiked/Star_Cluster");
+                    }
 
                     let n:number;                    
                     do {
@@ -509,7 +564,8 @@ export default class GameplayState {
                     
                     this.tile_Spiked[i].X = this.tile_Core[n].X;
                     this.tile_Spiked[i].Y = this.tile_Core[n].Y;
-                    this.tile_Core[n].ShowMe("Stone");
+                    this.tile_Core[n].HideMe();
+                    
 
                     // register occupiedID
                     this.occupiedID[n] = true;
@@ -523,7 +579,7 @@ export default class GameplayState {
             for (let i:number = 0; i < this.tile_Breakable.length; i++) {
                 if (this.tile_Breakable[i].Y > STAGE_HEIGHT) {                    
                     this.rng.GenerateTAFollowTile(this.tile_Breakable[i], this.tile_Core);
-                    this.tile_Breakable[i].ShowMe("Stone/Stone_Idle 01");
+                    this.tile_Breakable[i].ShowMe("Coral/Coral_Idle 01");
                     this.tile_Breakable[i].Hit = 3;
                     this.tile_Breakable[i].ReActivateMe();
                 }
@@ -533,8 +589,20 @@ export default class GameplayState {
             for (let i:number = 0; i < this.tile_Bubble.length; i++) {
                 if (this.tile_Bubble[i].Y > STAGE_HEIGHT) {                    
                     this.rng.GenerateTAFollowTile(this.tile_Bubble[i], this.tile_Core);
-                    this.tile_Bubble[i].ShowMe("Bubble/Idle/Bubble_Idle");
+                    this.tile_Bubble[i].ShowMe("Bubbles/Bubbles_Idle");
                     this.tile_Bubble[i].ReActivateMe();
+                }
+            }
+
+            // attached the fell out cloud tile to a new core tile
+            for (let i:number = 0; i < this.tile_Cloud.length; i++) {
+                if (this.tile_Cloud[i].Y > STAGE_HEIGHT) {                    
+                    this.rng.GenerateTAFollowTile(this.tile_Cloud[i], this.tile_Core);
+                    
+                    if (this._score > 100) {
+                        this.tile_Cloud[i].ShowMe("Idle/Cloud_Idle");
+                        this.tile_Cloud[i].ActivateMe();
+                    }
                 }
             }
 

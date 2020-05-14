@@ -80,6 +80,7 @@ function ShowShop():void {
 }
 
 function ShowGameOver(e:Event):void {        
+    endScreen.GetHighScore(gameplayScreen.HiScore);
     console.log("player has died");
     gameplayScreen.HideMe();
     mainMenu.HideMe();
