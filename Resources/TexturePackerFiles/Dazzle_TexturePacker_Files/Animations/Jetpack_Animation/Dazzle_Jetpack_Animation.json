@@ -1,0 +1,26 @@
+{
+
+"images": [
+    "Dazzle_Jetpack_Animation.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 90, 126, 0, 45, 126],
+    [93, 1, 90, 126, 0, 45, 126],
+    [1, 129, 89, 126, 0, 44, 126],
+    [92, 129, 89, 126, 0, 44, 126],
+    [1, 257, 89, 126, 0, 44, 126],
+    [92, 257, 89, 126, 0, 44, 126]
+],
+
+"animations": {
+    "Dazzle_Jetpack/Dazzle_Jetpack": { "frames": [0, 1, 2, 3, 4, 5] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:c3277f9b2828eb5081c30c7341d74277:2db7dcc872070fb9dd8baa32dcfae892:4b9ae573d2efddef8912449b8b3ebd9d$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
