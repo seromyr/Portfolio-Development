@@ -1,0 +1,29 @@
+{
+
+"images": [
+    "Dazzle_Death_Animation.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 101, 128, 0, 50, 134],
+    [104, 1, 121, 125, 0, 55, 131],
+    [227, 1, 120, 117, 0, 60, 124],
+    [349, 1, 124, 125, 0, 59, 125],
+    [1, 131, 101, 128, 0, 50, 134],
+    [104, 131, 124, 125, 0, 65, 125],
+    [230, 131, 120, 117, 0, 60, 124],
+    [352, 131, 117, 125, 0, 51, 125],
+    [1, 261, 101, 128, 0, 50, 134]
+],
+
+"animations": {
+    "Dazzle Death/Dazzle_Death": { "frames": [0, 1, 2, 3, 4, 5, 6, 7, 8] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:3911bf78d5f074365a34b4dfa59dab1d:ff7f9e5a22c174d71d4196898a29d3c6:4e828877d0a904a582fb5d3e1b11fa15$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
