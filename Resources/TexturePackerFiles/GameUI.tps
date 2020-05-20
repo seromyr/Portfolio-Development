@@ -181,6 +181,21 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../Concepts/GameUI/CreditsScreen.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>151,201,301,401</rect>
+                <key>scale9Paddings</key>
+                <rect>151,201,301,401</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Concepts/GameUI/GameOver.png</key>
             <key type="filename">../Concepts/GameUI/Gameplay.png</key>
             <key type="filename">../Concepts/GameUI/MainMenu.png</key>
@@ -211,6 +226,23 @@
                 <rect>150,16,300,32</rect>
                 <key>scale9Paddings</key>
                 <rect>150,16,300,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Concepts/GameUI/credits confirm.png</key>
+            <key type="filename">../Concepts/GameUI/credits highlight.png</key>
+            <key type="filename">../Concepts/GameUI/credits.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>60,15,121,29</rect>
+                <key>scale9Paddings</key>
+                <rect>60,15,121,29</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -254,6 +286,10 @@
             <filename>../Concepts/GameUI/shop.png</filename>
             <filename>../Concepts/GameUI/GameOver.png</filename>
             <filename>../Concepts/GameUI/TopRibbon.png</filename>
+            <filename>../Concepts/GameUI/CreditsScreen.png</filename>
+            <filename>../Concepts/GameUI/credits confirm.png</filename>
+            <filename>../Concepts/GameUI/credits highlight.png</filename>
+            <filename>../Concepts/GameUI/credits.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

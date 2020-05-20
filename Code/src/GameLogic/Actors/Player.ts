@@ -1,4 +1,4 @@
-import { PLAYER_JUMPSPEED, ANCHOR, STAGE_HEIGHT, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y } from "../../Constants/Constants_General";
+import { PLAYER_JUMPSPEED, ANCHOR, STAGE_HEIGHT, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y, PLAYER_MOVESPEED } from "../../Constants/Constants_General";
 import AssetManager from "../../Miscs/AssetManager";
 import Entity from "../Entity";
 import Tile from "../Tiles/Tile";
@@ -9,8 +9,19 @@ import ShapeFactory from "../../Miscs/ShapeFactory";
 
 export default class Player extends Entity {
 
-    // player variables    
+    // PLAYER PROPERTIES
     private _isGrounded:boolean;
+
+    // keyboard input variables
+    private _onKeyPressed:boolean;
+    get OnKeyPressed():boolean {return this._onKeyPressed;}
+    set OnKeyPressed(value:boolean) {this._onKeyPressed = value;}
+
+    // player X axis speed parameter
+    private _drag:number;
+    get DragSpeed():number {return this._drag;}
+    set DragSpeed(value:number) {this._drag = value;}
+    get FacingDirection():number {return this._sprite.scaleX;}
 
     // jump mechanism variables
     private _jumpVelocity: number;
@@ -18,6 +29,7 @@ export default class Player extends Entity {
     set JumpSpeed(value:number)  {this._jumpVelocity = value;}
     private _jumpVelocityModifer:number;
 
+    // white screen appears when player dead
     private fader:ShapeFactory;
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
@@ -26,7 +38,8 @@ export default class Player extends Entity {
         this._jumpVelocity = PLAYER_JUMPSPEED;
         this._jumpVelocityModifer = 1;
         this.fader = new ShapeFactory(stage);
-        this.fader.Color = "White";        
+        this.fader.Color = "White";
+        this._drag = 0;
     }
     
     // reset character attributes after dead
@@ -39,7 +52,7 @@ export default class Player extends Entity {
 
         this._sprite.on("animationend", () => {
             this.ShowMe("Dazzle/Dazzle Jump/Dazzle_Jump");
-        }, this, true);        
+        }, this, true);
 
         this.Alive = true;
 
@@ -47,6 +60,8 @@ export default class Player extends Entity {
         this.Y = PLAYER_DEFAULT_Y;
         this._sprite.scaleX = 1;
         this.CurrentY = this.Y;
+
+        this._onKeyPressed = false;
     }
 
     public Update():void {
@@ -90,7 +105,7 @@ export default class Player extends Entity {
         if (!this._isGrounded && !this.Jump){
             //player is constantly falling when not colliding with any tile
             // increase fall velocity acceleration 
-            if (this._jumpVelocity > PLAYER_JUMPSPEED * 0.3) {                
+            if (this._jumpVelocity > PLAYER_JUMPSPEED * 0.3) {
                 this._jumpVelocityModifer += 0.5;
             } else this._jumpVelocityModifer += 0.3;
 
@@ -121,8 +136,6 @@ export default class Player extends Entity {
         // when player is dead, wait for this sequence to end before switching screen
         this._sprite.on("animationend", () => {
             this._sprite.gotoAndPlay("Dazzle/Dazzle Die/Dazzle_Die");
-            console.log ("ma");
-            
         }, this, true);
         
         // fade screen out
@@ -137,8 +150,8 @@ export default class Player extends Entity {
 
         // bounce character towards facing direction
         if (this._sprite.scaleX == 1) {
-            this._sprite.x += 5;
-        } else { this._sprite.x -= 5;}
+            this._sprite.x += 2;
+        } else { this._sprite.x -= 2;}
 
         // if player is in mid-air and jumping
         if (!this._isGrounded && this.Jump) {
@@ -146,7 +159,6 @@ export default class Player extends Entity {
                 if (this._jumpVelocity < PLAYER_JUMPSPEED * 0.3) {
                     this._jumpVelocityModifer = 0.5;
                 } else this._jumpVelocityModifer = 1;
-                
                 this.Y -= this._jumpVelocity;
             }
             
@@ -162,7 +174,7 @@ export default class Player extends Entity {
         // if player is in mid-air and falling
         if (!this._isGrounded && !this.Jump){
             // increase fall velocity acceleration 
-            if (this._jumpVelocity > PLAYER_JUMPSPEED * 0.3) {                
+            if (this._jumpVelocity > PLAYER_JUMPSPEED * 0.3) {
                 this._jumpVelocityModifer += 0.5;
             } else this._jumpVelocityModifer += 0.3;
 
@@ -175,7 +187,7 @@ export default class Player extends Entity {
         }
     }
 
-    public CollisionCheckWithTiles(tile:Tile[]):void {        
+    public CollisionCheckWithTiles(tile:Tile[]):void {
         for (let i:number = 0; i < tile.length; i++) {
            if (tile[i].CollisionPermission) {
                 //if player collides with a tile
@@ -185,7 +197,7 @@ export default class Player extends Entity {
                         //console.log(`landed on a ${tile[i].Name} tile`);
                         if (tile[i].Lethal) {
                             this.Alive = false;
-                            console.log("dead by trap");
+                            // console.log("dead by trap");
                             this.Y -= 64;
                         }
                         
@@ -193,7 +205,6 @@ export default class Player extends Entity {
                             
                             this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
                             this._sprite.on("animationend", () => {
-                                console.log("2");
                                 this._sprite.gotoAndPlay("Dazzle/Dazzle_Up");
                             }, this, true);
                         }
@@ -301,5 +312,5 @@ export default class Player extends Entity {
                 this._sprite.scaleX = 1;
                 break;
         }
-    }    
+    }
 }

@@ -6,6 +6,9 @@ import "createjs";
 
 // import game constants
 import { STAGE_WIDTH, STAGE_HEIGHT, BACKGROUND_COLOR, FRAME_RATE, ASSET_MANIFEST, SCREEN_TITLE } from "./Constants/Constants_General";
+import { TILE_MANIFEST } from "./Constants/Constants_Tiles";
+import { ENV_MANIFEST } from "./Constants/Constants_Environment";
+import { ITEM_MANIFEST } from "./Constants/Constants_Collectibles";
 
 // import custom classes
 import AssetManager from "./Miscs/AssetManager";
@@ -14,9 +17,7 @@ import MainMenuScreen from "./Screens/MainMenuScreen";
 import GameplayScreen from "./Screens/GameplayScreen";
 import ShopScreen from "./Screens/ShopScreen";
 import Endcreen from "./Screens/EndScreen";
-import { TILE_MANIFEST } from "./Constants/Constants_Tiles";
-import { ENV_MANIFEST } from "./Constants/Constants_Environment";
-import { ITEM_MANIFEST } from "./Constants/Constants_Collectibles";
+import CreditsScreen from "./Screens/Credits";
 
 // game variables
 let stage:createjs.StageGL;
@@ -28,6 +29,7 @@ let mainMenu:MainMenuScreen;
 let gameplayScreen:GameplayScreen;
 let shopScreen:ShopScreen;
 let endScreen:Endcreen;
+let creditsScreen:CreditsScreen;
 
 // BOOT UP GAME
 function onReady(e:createjs.Event):void {
@@ -46,12 +48,16 @@ function onReady(e:createjs.Event):void {
     // instantiate end screen
     endScreen = new Endcreen(assetManager, stage);
 
+    // instantiate credits screen
+    creditsScreen = new CreditsScreen(assetManager, stage);
+
     // listen to any dispatched event
     stage.on(SCREEN_TITLE[0], ShowMainMenu);
     stage.on(SCREEN_TITLE[1], ShowGameplay);
     stage.on(SCREEN_TITLE[2], ShowShop);
     stage.on(SCREEN_TITLE[3], ShowGameOver);
-    
+    stage.on(SCREEN_TITLE[4], ShowScredits);
+
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
     createjs.Ticker.on("tick", onTick);        
@@ -81,11 +87,19 @@ function ShowShop():void {
 
 function ShowGameOver(e:Event):void {        
     endScreen.GetHighScore(gameplayScreen.HiScore);
-    console.log("player has died");
+    //console.log("player has died");
     gameplayScreen.HideMe();
     mainMenu.HideMe();
     shopScreen.HideMe();
     endScreen.ShowMe();
+}
+
+function ShowScredits(e:Event):void {
+    mainMenu.HideMe();
+    shopScreen.HideMe();
+    gameplayScreen.HideMe();
+    endScreen.HideMe();
+    creditsScreen.ShowMe();
 }
 
 // GAME UPDATER

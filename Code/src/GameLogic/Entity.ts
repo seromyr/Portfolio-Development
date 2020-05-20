@@ -68,4 +68,9 @@ export default class Entity {
         this.screen.removeChild(this._sprite);
         this.stage.removeChild(this.screen);
     }
+
+    public BringMeToFrontDrawOrder():void {
+        this.screen.addChild(this._sprite);
+        this.stage.addChild(this.screen);
+    }
 }

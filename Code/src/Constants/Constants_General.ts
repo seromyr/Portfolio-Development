@@ -9,7 +9,7 @@ export const SCREEN_TITLE:string[] =
         "Gameplay",
         "Shop",
         "GameOver",
-        "Leaderboard"
+        "Credits"
     ];
 export const PLAYER_MOVESPEED:number = 10;
 export const PLAYER_JUMPSPEED:number = 22;

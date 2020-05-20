@@ -11,12 +11,14 @@ export default class ScreenManager {
     protected eventShopping:createjs.Event;
     protected eventMainMenu:createjs.Event;
     protected eventRestart:createjs.Event;
+    protected eventCredits:createjs.Event;
 
     // screen objects
     protected background:createjs.Sprite;
     protected btnPlay:createjs.Sprite;
     protected btnShop:createjs.Sprite;
     protected btnMainMenu:createjs.Sprite;
+    protected btnCredits:createjs.Sprite;
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL, bkgImage:string, screenType:string) {
         this.stage = stage;
@@ -36,18 +38,24 @@ export default class ScreenManager {
         let btnShopEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnShop, "shop", "shop highlight", "shop confirm", false);
         
         // set up Return to Main Menu button
-        this.btnMainMenu = assetManager.getSprite("gameUI", "return", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 252);
+        this.btnMainMenu = assetManager.getSprite("gameUI", "return", STAGE_WIDTH - 127, STAGE_HEIGHT - 35);
         let btnMainMenuEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnMainMenu, "return", "return highlight", "return confirm", false);
+        
+        // set up Credits button
+        this.btnCredits = assetManager.getSprite("gameUI", "credits", STAGE_WIDTH - 127, STAGE_HEIGHT - 35);
+        let btnCreditsEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnCredits, "credits", "credits highlight", "credits confirm", false);
 
         // set up event listener for each button
         this.btnPlay.on("click", this.GotoPlay, this);
         this.btnShop.on("click", this.GotoShop, this);
         this.btnMainMenu.on("click", this.GotoMainMenu, this);
+        this.btnCredits.on("click", this.GotoCredits, this);
 
         // set up event for each button
         this.eventMainMenu = new createjs.Event( SCREEN_TITLE[0], true, false);
         this.eventGameplay = new createjs.Event( SCREEN_TITLE[1], true, false);
         this.eventShopping = new createjs.Event( SCREEN_TITLE[2], true, false);
+        this.eventCredits  = new createjs.Event( SCREEN_TITLE[4], true, false); 
     }
     
     // show screen
@@ -62,18 +70,22 @@ export default class ScreenManager {
 
     // dispatch custom events when button clicked
     private GotoPlay(e:createjs.Event):void {
-        console.log("Play button clicked");
+        // console.log("Play button clicked");
         this.screen.dispatchEvent(this.eventGameplay);
     }
     
     private GotoShop(e:createjs.Event):void {
-        console.log("Shop button clicked");
+        // console.log("Shop button clicked");
         this.screen.dispatchEvent(this.eventShopping);
     }
     
     private GotoMainMenu(e:createjs.Event): void {
-        console.log("Return to Main Menu clicked");
+        // console.log("Return to Main Menu clicked");
         this.screen.dispatchEvent(this.eventMainMenu);
+    }
+
+    private GotoCredits(e:createjs.Event):void {
+        this.screen.dispatchEvent(this.eventCredits);
     }
 
     // display Play button on the screen
@@ -104,5 +116,15 @@ export default class ScreenManager {
     // hide Return button from the screen
     protected HideReturnButton():void  {
         this.screen.removeChild(this.btnMainMenu);
+    }
+
+    // display Show Credits button on the screen
+    protected ShowCreditsButton():void {
+        this.screen.addChild(this.btnCredits);
+    }
+
+    // hide Show Credits button from the screen
+    protected HideCreditsButton():void {
+        this.screen.removeChild(this.btnCredits);
     }
 }
