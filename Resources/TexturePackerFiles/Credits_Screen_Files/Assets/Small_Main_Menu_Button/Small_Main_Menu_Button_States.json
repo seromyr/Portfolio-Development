@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Small_Main_Menu_Button_States.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 241, 58, 0, 0, -33],
+    [1, 61, 241, 58, 0, 0, -33],
+    [1, 121, 241, 58, 0, 0, -33]
+],
+
+"animations": {
+    "Small Main Menu Button/Oranged": { "frames": [0] },
+    "Small Main Menu Button/Regular": { "frames": [1] },
+    "Small Main Menu Button/Select": { "frames": [2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:54deafa2c31a5f75d8ee89dbea04cda0:cf9b6d0359d1cd0496469b160aac3add:ca58ee35aba0818d34ab47f5dc3150bf$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

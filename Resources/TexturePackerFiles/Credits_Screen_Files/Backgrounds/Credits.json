@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Credits.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 600, 800, 0, 0, 0]
+],
+
+"animations": {
+    "Credits_Background": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:3c79b083cb2cc03401ff2d081c7944d8:35c2becc9eaf05fdf65c3b26dc6398f7:134640216c395f961ac5468bd91492f5$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
