@@ -44,6 +44,5 @@ export default class Cloud extends Tile {
 
             if (this._counter > 1) this._counter = 0;
         }, this._delay);
-    }
-    
+    }    
 }

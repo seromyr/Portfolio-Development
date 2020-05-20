@@ -1,4 +1,4 @@
-import { PLAYER_MOVESPEED, STAGE_HEIGHT, SCREEN_TITLE, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y, STAGE_WIDTH } from "../Constants/Constants_General";
+import {STAGE_HEIGHT, SCREEN_TITLE, STAGE_WIDTH } from "../Constants/Constants_General";
 import { TILE_BIG, TILE_NORMAL, TILE_HOLLOW, TILE_CLOUD } from "../Constants/Constants_Tiles";
 import ProceduralGenerator from "./ProceduralGenerator";
 import AssetManager from "../Miscs/AssetManager";
@@ -54,7 +54,7 @@ export default class GameplayState {
     private _cameraSpeed:number;
     get CameraSpeed():number {return this._cameraSpeed;}
     private _cameraUpdateSignal:boolean;
-    get CameraUpdateSignal():boolean {return this._cameraUpdateSignal}
+    get GameplaySignal():boolean {return this._cameraUpdateSignal}
 
     // player controller
     private _playerController:PlayerController;
@@ -73,9 +73,9 @@ export default class GameplayState {
         this.npc_02 = new NPC(assetManager, stage); 
         
         // activate player controller
-        // this.PlayerController();
-        this._playerController = new PlayerController(this.mainChar);
-        // wire up events
+        this._playerController = new PlayerController();
+
+        // wire up event
         this._playerHasDied = new createjs.Event(SCREEN_TITLE[3], true, false);
     }
 
@@ -84,10 +84,13 @@ export default class GameplayState {
         // allow the game to start updating
         this._gameStart = true;
 
+        // enanble keyboard input
+        this._playerController.EnableInput(this.mainChar);
+
         this.CreateActors();
         
         // spawn core tiles
-        this.SpawnCoreTiles(30);
+        this.SpawnCoreTiles(40);
         
         // prepare the occupied ID range
         this.occupiedID = new Array(this.tile_Core.length);
@@ -100,7 +103,7 @@ export default class GameplayState {
         this.SpawnTrampolines(2);
         this.SpawnHollowTiles(4);
         this.SpawnSpikes(3);
-        this.SpawnBreakables("Breakable", this.tile_Breakable, 2, false);
+        this.SpawnBreakables("Breakable", this.tile_Breakable, 5, false);
         this.SpawnBreakables("Bubble", this.tile_Bubble, 5, true);
         this.SpawnClouds(4);
 
@@ -116,12 +119,8 @@ export default class GameplayState {
     }
 
     private CreateActors():void {
-        // primary player
-        this.mainChar.Alive = true;
-        this.mainChar.X = PLAYER_DEFAULT_X;
-        this.mainChar.Y = PLAYER_DEFAULT_Y;
-        this.mainChar.FlipMeOver("left");
-        this.mainChar.CurrentY = this.mainChar.Y;
+        // primary player        
+        this.mainChar.ResetCharacter();
         
         // construct NPCs
         this.npc_01.Alive = true;
@@ -157,9 +156,11 @@ export default class GameplayState {
 
     // gameplay updater
     public Update():void {
-
         // only update when player is alive
         if (this.mainChar.Alive) {
+
+            //this._playerController.EnableInput(this.mainChar);
+            
             this.Camera();
 
             // update tile motion
@@ -187,18 +188,17 @@ export default class GameplayState {
 
                 this.mainChar.CollisionCheckWithCollectibles(this.item_Jetpack);
             }
-
-            // one of conditions where player has to die
-            if ((this.mainChar.Y) >= STAGE_HEIGHT) {
-                this.mainChar.Alive = false;
-            }
         }
         
         if (!this.mainChar.Alive) 
         {
+            this._playerController.DisableInput();
+            this.mainChar.Dead();
             
-            //this.mainChar.Dead();
-            this.stage.dispatchEvent(this._playerHasDied);
+            if (this.mainChar.Y >= STAGE_HEIGHT + 32) {
+                this.stage.dispatchEvent(this._playerHasDied);
+                console.log("dead");
+            }
         }
 
         // only update when this NPC is alive
@@ -215,8 +215,6 @@ export default class GameplayState {
 
     public Terminate():void {
         this._gameStart = false;
-        //this.mainChar.JumpSpeed = PLAYER_JUMPSPEED;
-        //this.npc_01.JumpSpeed = PLAYER_JUMPSPEED;
         this.stage.removeAllChildren();
     }
 
@@ -320,20 +318,8 @@ export default class GameplayState {
         for (let i:number = 0; i < quantity; i++) {
             tileset[i] = new Breakable(this.assetManager, this.stage, once);
             tileset[i].Name = type;
-
-            // let n:number;            
-            // do {
-            //     // make sure n does not get inside an occupied ID
-            //     n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
-            // } while (this.occupiedID[n] != false);
-
-            // this.tile_Breakable[i].X = this.tile_Core[n].X;
-            // this.tile_Breakable[i].Y = this.tile_Core[n].Y;
             if (type == "Bubble") tileset[i].ShowMe("Bubbles/Bubbles_Idle");
             else tileset[i].ShowMe("Coral/Coral_Idle 01");
-            
-            // // register occupiedID
-            // this.occupiedID[n] = true;
         }
 
         this.rng.GenerateTFollowTiles(tileset, this.tile_Core);
@@ -344,22 +330,6 @@ export default class GameplayState {
         for (let i:number = 0; i < quantity; i++) {
             this.tile_Cloud[i] = new Cloud(this.assetManager, this.stage, this.rng.RandomBetween(1000, 5000));
             this.tile_Cloud[i].Name = "Cloud";
-
-            // let n:number;            
-            // do {
-            //     // make sure n does not get inside an occupied ID
-            //     n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
-            // } while (this.occupiedID[n] != false);
-
-            // this.tile_Cloud[i].X = this.tile_Core[n].X;
-            // this.tile_Cloud[i].Y = this.tile_Core[n].Y - 32;
-            //this.tile_Core[n].ShowMe("Stone");
-            //this.tile_Cloud[i].ShowMe("Idle/Cloud_Idle");
-            //this.tile_Cloud[i].ActivateMe();
-            //this.tile_Cloud[i]._counter = 0;
-
-            // register occupiedID
-            //this.occupiedID[n] = true;
         }
 
         this.rng.GenerateTFollowTiles(this.tile_Cloud, this.tile_Core);

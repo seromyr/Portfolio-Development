@@ -120,7 +120,7 @@ function main():void {
 
     // color the stage
     let shapeFactory:ShapeFactory = new ShapeFactory(stage);
-    shapeFactory.color = BACKGROUND_COLOR;
+    shapeFactory.Color = BACKGROUND_COLOR;
     shapeFactory.rectangle(0, 0, STAGE_WIDTH, STAGE_HEIGHT);
 
     // construct AssetManager object to load spritesheet and sound assets

@@ -12,7 +12,7 @@ export const SCREEN_TITLE:string[] =
         "Leaderboard"
     ];
 export const PLAYER_MOVESPEED:number = 10;
-export const PLAYER_JUMPSPEED:number = 20;
+export const PLAYER_JUMPSPEED:number = 22;
 export const PLAYER_DEFAULT_X:number = 350;
 export const PLAYER_DEFAULT_Y:number = STAGE_HEIGHT * 0.6;
 export const ANCHOR:number = STAGE_HEIGHT / 2

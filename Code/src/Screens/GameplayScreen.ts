@@ -67,7 +67,7 @@ export default class GameplayScreen extends ScreenManager {
         }
 
         // update camera
-        if (this._gameplayState.CameraUpdateSignal) {
+        if (this._gameplayState.GameplaySignal) {
             this._gameWorld.UpdateMe(this._gameplayState.CameraSpeed);
         }
     }

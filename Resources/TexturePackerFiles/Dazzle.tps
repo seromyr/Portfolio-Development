@@ -231,6 +231,102 @@
             <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_047.png</key>
             <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_048.png</key>
             <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_049.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_050.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_051.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_052.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_053.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_054.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_055.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_056.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_057.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_058.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_059.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_060.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_061.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_062.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_063.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_064.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_065.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_066.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_067.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_068.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_069.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_070.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_071.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_072.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_073.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_074.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_075.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_076.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_077.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_078.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_079.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_080.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_081.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_082.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_083.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_084.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_085.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_086.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_087.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_088.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_089.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_090.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_091.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_092.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_093.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_094.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_095.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_096.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_097.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_098.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_099.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_100.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_101.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_102.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_103.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_104.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_105.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_106.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_107.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_108.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_109.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_110.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_111.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_112.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_113.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_114.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_115.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_116.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_117.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_118.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_119.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_120.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_121.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_122.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_123.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_124.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_125.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_126.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_127.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_128.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_129.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_130.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle Die/Dazzle_Die_131.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,1</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,32,49,63</rect>
+                <key>scale9Paddings</key>
+                <rect>25,32,49,63</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Concepts/Dazzle/Dazzle Jump/Dazzle_Jump_000.png</key>
             <key type="filename">../Concepts/Dazzle/Dazzle Jump/Dazzle_Jump_001.png</key>
             <key type="filename">../Concepts/Dazzle/Dazzle Jump/Dazzle_Jump_002.png</key>
@@ -256,10 +352,29 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">../Concepts/Dazzle/Dazzle_Jetpack.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle_Jetpack/Dazzle_Jetpack_000.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle_Jetpack/Dazzle_Jetpack_002.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle_Jetpack/Dazzle_Jetpack_004.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,0.984375</point_f>
+                <point_f>0.60989,1</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>23,32,45,64</rect>
+                <key>scale9Paddings</key>
+                <rect>23,32,45,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Concepts/Dazzle/Dazzle_Jetpack/Dazzle_Jetpack_001.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle_Jetpack/Dazzle_Jetpack_003.png</key>
+            <key type="filename">../Concepts/Dazzle/Dazzle_Jetpack/Dazzle_Jetpack_005.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.598901,1</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>

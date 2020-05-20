@@ -72,7 +72,7 @@ export default class ProceduralGenerator {
             tileset.X = this.RandomBetween(0, tile_Core[n].X - tile_Core[n].Width);
         }
 
-        tileset.Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 1,
+        tileset.Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * 1.5,
                                        tile_Core[n].Y + tile_Core[n].Height * 3);
     }
 
