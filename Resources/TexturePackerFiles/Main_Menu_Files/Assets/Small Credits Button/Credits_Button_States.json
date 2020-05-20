@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Credits_Button_States.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 241, 58, 0, 0, -33],
+    [1, 61, 241, 58, 0, 0, -33],
+    [1, 121, 241, 58, 0, 0, -33]
+],
+
+"animations": {
+    "Small Credits Button/Natural": { "frames": [0] },
+    "Small Credits Button/Overtop": { "frames": [1] },
+    "Small Credits Button/Shadowed": { "frames": [2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:b28e33cb012a59983aa3ba6663c8d5cb:66694136df17ef5bc0c29386b3dfe712:5974c213830e6ea84b45c86220dc7e06$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
