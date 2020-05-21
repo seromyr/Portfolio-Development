@@ -1,5 +1,6 @@
 import AssetManager from "../Miscs/AssetManager";
 import { SCREEN_TITLE, STAGE_WIDTH, STAGE_HEIGHT } from "../Constants/Constants_General";
+import { SFX_MANIFEST } from "../Constants/Constants_Sounds";
 
 export default class ScreenManager { 
     
@@ -55,7 +56,12 @@ export default class ScreenManager {
         this.eventMainMenu = new createjs.Event( SCREEN_TITLE[0], true, false);
         this.eventGameplay = new createjs.Event( SCREEN_TITLE[1], true, false);
         this.eventShopping = new createjs.Event( SCREEN_TITLE[2], true, false);
-        this.eventCredits  = new createjs.Event( SCREEN_TITLE[4], true, false); 
+        this.eventCredits  = new createjs.Event( SCREEN_TITLE[4], true, false);
+
+        // sound effect events
+        this.btnPlay.on    ("mouseover", () => {createjs.Sound.play("btnHover");}, false);
+        this.btnMainMenu.on("mouseover", () => {createjs.Sound.play("btnHover");}, false);
+        this.btnCredits.on ("mouseover", () => {createjs.Sound.play("btnHover");}, false);
     }
     
     // show screen
@@ -71,21 +77,34 @@ export default class ScreenManager {
     // dispatch custom events when button clicked
     private GotoPlay(e:createjs.Event):void {
         // console.log("Play button clicked");
-        this.screen.dispatchEvent(this.eventGameplay);
+        createjs.Sound.play("btnClick");
+
+        window.setTimeout(() => {
+            this.screen.dispatchEvent(this.eventGameplay);
+        }, 200);
     }
     
     private GotoShop(e:createjs.Event):void {
         // console.log("Shop button clicked");
-        this.screen.dispatchEvent(this.eventShopping);
+        createjs.Sound.play("btnClick");
+        window.setTimeout(() => {
+            this.screen.dispatchEvent(this.eventShopping);
+        }, 200);
     }
     
     private GotoMainMenu(e:createjs.Event): void {
         // console.log("Return to Main Menu clicked");
-        this.screen.dispatchEvent(this.eventMainMenu);
+        createjs.Sound.play("btnClick");
+        window.setTimeout(() => {
+            this.screen.dispatchEvent(this.eventMainMenu);
+        }, 200);
     }
 
     private GotoCredits(e:createjs.Event):void {
-        this.screen.dispatchEvent(this.eventCredits);
+        createjs.Sound.play("btnClick");
+        window.setTimeout(() => {
+            this.screen.dispatchEvent(this.eventCredits);
+        }, 200);
     }
 
     // display Play button on the screen

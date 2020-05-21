@@ -18,25 +18,33 @@
     [85, 63, 82, 29, 0, -4, -21],
     [169, 63, 82, 29, 0, -4, -21],
     [1, 94, 82, 29, 0, -4, -21],
-    [85, 94, 82, 36, 0, -4, -14],
-    [169, 94, 83, 40, 0, -4, -10],
-    [1, 136, 88, 40, 0, -2, -10],
-    [91, 136, 88, 40, 0, -2, -10],
-    [1, 178, 88, 40, 0, -2, -10],
-    [91, 178, 90, 40, 0, 0, -10]
+    [85, 94, 82, 30, 0, -4, -20],
+    [85, 94, 82, 30, 0, -4, -20],
+    [169, 94, 82, 30, 0, -4, -20],
+    [1, 126, 88, 30, 0, -1, -20],
+    [91, 126, 87, 30, 0, -2, -20],
+    [1, 158, 87, 35, 0, -2, -15],
+    [90, 158, 82, 36, 0, -4, -14],
+    [1, 196, 83, 40, 0, -4, -10],
+    [86, 196, 88, 40, 0, -2, -10],
+    [1, 238, 88, 40, 0, -2, -10],
+    [91, 238, 88, 40, 0, -2, -10],
+    [1, 280, 90, 40, 0, 0, -10]
 ],
 
 "animations": {
     "Alien/Alien_Idle": { "frames": [0] },
-    "Alien/Bounce/Alien_Bounce": { "frames": [1, 13, 14, 15, 16] },
-    "Jellyfish/Bounce/Jellyfish_Bounce": { "frames": [2, 4, 5, 6, 17] },
+    "Alien/Bounce/Alien_Bounce": { "frames": [1, 19, 20, 21, 22] },
+    "Jellyfish/Bounce/Jellyfish_Bounce": { "frames": [2, 4, 5, 6, 23] },
     "Jellyfish/Jellyfish_Idle": { "frames": [3] },
-    "Leaves/Bounce/Leaves_Bounce": { "frames": [7, 9, 10, 11, 12] },
-    "Leaves/Leaves_Idle": { "frames": [8] }
+    "Leaves/Bounce/Leaves_Bounce": { "frames": [7, 9, 10, 11, 18] },
+    "Leaves/Leaves_Idle": { "frames": [8] },
+    "Balloon/Balloon_Idle": { "frames": [12] },
+    "Balloon/Bounce/Balloon_Bounce": { "frames": [13, 14, 15, 16, 17] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:39a6e27eb5a09912a3c855d68551fe5c:f23d36bcac48b5636d9268ab34d08cf1:c8469208a91154ad7a47695827d32b38$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:a4e673feec7aa4971e4ef284e4e6bd9b:142540eca4ab6bfbd8817c369059c7d5:c8469208a91154ad7a47695827d32b38$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

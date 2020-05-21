@@ -18,6 +18,7 @@ import GameplayScreen from "./Screens/GameplayScreen";
 import ShopScreen from "./Screens/ShopScreen";
 import Endcreen from "./Screens/EndScreen";
 import CreditsScreen from "./Screens/Credits";
+import { SFX_MANIFEST } from "./Constants/Constants_Sounds";
 
 // game variables
 let stage:createjs.StageGL;
@@ -146,6 +147,7 @@ function main():void {
     assetManager.loadAssets(TILE_MANIFEST);
     assetManager.loadAssets(ENV_MANIFEST);
     assetManager.loadAssets(ITEM_MANIFEST);
+    assetManager.loadAssets(SFX_MANIFEST);
 }
 
 main();

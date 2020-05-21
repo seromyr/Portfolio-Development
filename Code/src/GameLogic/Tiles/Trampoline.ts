@@ -25,9 +25,9 @@ export default class Trampoline extends Tile {
         }
 
         else if (this._type == 2) {
-            this._sprite.gotoAndPlay("Leaves/Bounce/Leaves_Bounce");
+            this._sprite.gotoAndPlay("Balloon/Bounce/Balloon_Bounce");
             this._sprite.on("animationend", function() {
-                this._sprite.gotoAndPlay("Leaves/Leaves_Idle");
+                this._sprite.gotoAndPlay("Balloon/Balloon_Idle");
             }, this, true);
         }
 

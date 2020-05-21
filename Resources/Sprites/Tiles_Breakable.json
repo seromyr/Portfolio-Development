@@ -6,29 +6,35 @@
 
 "framerate": 30,
 "frames": [
-    [1, 1, 80, 28, 0, 0, 0],
-    [1, 1, 80, 28, 0, 0, 0],
-    [83, 1, 80, 28, 0, 0, 0],
-    [165, 1, 80, 28, 0, 0, 0],
-    [1, 31, 80, 28, 0, 0, 0],
-    [83, 31, 80, 28, 0, 0, 0],
-    [165, 31, 80, 28, 0, 0, 0],
-    [1, 61, 80, 28, 0, 0, 0],
-    [83, 61, 80, 27, 0, 0, 0],
-    [165, 61, 80, 27, 0, 0, 0],
-    [1, 91, 80, 27, 0, 0, 0]
+    [1, 1, 80, 27, 0, 0, 0],
+    [83, 1, 80, 27, 0, 0, 0],
+    [165, 1, 80, 27, 0, 0, 0],
+    [1, 30, 80, 28, 0, 0, 0],
+    [1, 30, 80, 28, 0, 0, 0],
+    [83, 30, 80, 28, 0, 0, 0],
+    [165, 30, 80, 28, 0, 0, 0],
+    [1, 60, 80, 28, 0, 0, 0],
+    [83, 60, 80, 28, 0, 0, 0],
+    [165, 60, 80, 28, 0, 0, 0],
+    [1, 90, 80, 28, 0, 0, 0],
+    [83, 90, 80, 28, 0, 0, 0],
+    [165, 90, 80, 28, 0, 0, 0],
+    [1, 120, 80, 28, 0, 0, 0]
 ],
 
 "animations": {
-    "Bubbles/Bubbles_Idle": { "frames": [0] },
-    "Bubbles/Disappear/Bubbles_Disappear": { "frames": [1, 2, 3, 4, 5, 6, 7] },
-    "Coral/Coral_Idle 01": { "frames": [8] },
-    "Coral/Coral_Idle 02": { "frames": [9] },
-    "Coral/Coral_Idle 03": { "frames": [10] }
+    "Coral/Coral_Idle 01": { "frames": [0] },
+    "Coral/Coral_Idle 02": { "frames": [1] },
+    "Coral/Coral_Idle 03": { "frames": [2] },
+    "Bubbles/Bubbles_Idle": { "frames": [3] },
+    "Bubbles/Disappear/Bubbles_Disappear": { "frames": [4, 5, 6, 7, 8, 9, 10] },
+    "Forcefield/Forcefield_Idle 01": { "frames": [11] },
+    "Forcefield/Forcefield_Idle 02": { "frames": [12] },
+    "Forcefield/Forcefield_Idle 03": { "frames": [13] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:f80c263ebda4a738f12bf0924bacaa91:ab1d9b3417f0a5ef3dfac622cda4b522:78ffde1f12886b5df75075795af01d61$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:5b5988389b15b6ea5eb69ac871051301:9fb6001863c9292a2655850049fbfa6e:78ffde1f12886b5df75075795af01d61$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

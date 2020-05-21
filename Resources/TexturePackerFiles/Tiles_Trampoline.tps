@@ -181,6 +181,12 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../../Design Docs/GAME ART/Assets/Tiles/Platform Animations/Trampolines/Balloon/Balloon_Idle.png</key>
+            <key type="filename">../../Design Docs/GAME ART/Assets/Tiles/Platform Animations/Trampolines/Balloon/Bounce/Balloon_Bounce_000.png</key>
+            <key type="filename">../../Design Docs/GAME ART/Assets/Tiles/Platform Animations/Trampolines/Balloon/Bounce/Balloon_Bounce_001.png</key>
+            <key type="filename">../../Design Docs/GAME ART/Assets/Tiles/Platform Animations/Trampolines/Balloon/Bounce/Balloon_Bounce_002.png</key>
+            <key type="filename">../../Design Docs/GAME ART/Assets/Tiles/Platform Animations/Trampolines/Balloon/Bounce/Balloon_Bounce_003.png</key>
+            <key type="filename">../../Design Docs/GAME ART/Assets/Tiles/Platform Animations/Trampolines/Balloon/Bounce/Balloon_Bounce_004.png</key>
             <key type="filename">../Concepts/Tiles/Trampoline/Alien/Alien_Idle.png</key>
             <key type="filename">../Concepts/Tiles/Trampoline/Alien/Bounce/Alien_Bounce_000.png</key>
             <key type="filename">../Concepts/Tiles/Trampoline/Alien/Bounce/Alien_Bounce_001.png</key>
@@ -219,6 +225,7 @@
             <filename>../Concepts/Tiles/Trampoline/Alien</filename>
             <filename>../Concepts/Tiles/Trampoline/Jellyfish</filename>
             <filename>../Concepts/Tiles/Trampoline/Leaves</filename>
+            <filename>../../Design Docs/GAME ART/Assets/Tiles/Platform Animations/Trampolines/Balloon</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

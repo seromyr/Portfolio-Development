@@ -1,4 +1,5 @@
-import { PLAYER_JUMPSPEED, ANCHOR, STAGE_HEIGHT, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y, PLAYER_MOVESPEED } from "../../Constants/Constants_General";
+import { PLAYER_JUMPSPEED, ANCHOR, STAGE_HEIGHT, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y } from "../../Constants/Constants_General";
+import { SFX_MANIFEST } from "../../Constants/Constants_Sounds";
 import AssetManager from "../../Miscs/AssetManager";
 import Entity from "../Entity";
 import Tile from "../Tiles/Tile";
@@ -32,6 +33,10 @@ export default class Player extends Entity {
     // white screen appears when player dead
     private fader:ShapeFactory;
 
+    private soundCounter:number = 0;
+    private soundListener:createjs.Event;
+    private eventName:string;
+
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         super(assetManager, stage, "mainChar");
         this.Jump = false;
@@ -40,6 +45,39 @@ export default class Player extends Entity {
         this.fader = new ShapeFactory(stage);
         this.fader.Color = "White";
         this._drag = 0;
+
+        // use counter to avoid multiple sounds play at the same time
+        this.soundCounter = 0;
+        this.soundListener = new createjs.Event(this.eventName, true, false);
+        this.screen.on(this.eventName, () => {
+            switch (this.eventName) {
+                case "fall":
+                    createjs.Sound.play("fall");
+                    break;
+
+                        case "trampoline":
+                            createjs.Sound.play("touchTrampoline");
+                            break;
+                            
+                                case "spikes":
+                                    createjs.Sound.play("touchSpikes");
+                                    break;
+                                
+                                        case "collectPowerUp":
+                                            createjs.Sound.play("collectPowerUp");
+                                            break;
+
+                                                case "useJetpack":
+                                                    window.setTimeout(() => {createjs.Sound.play("useJetpack");}, 500);
+                                                    window.clearTimeout;
+                                                    break;
+                                
+                                                        default:
+                                                            createjs.Sound.play("jump");
+                                                            break;
+                        
+            }
+        }, this);
     }
     
     // reset character attributes after dead
@@ -62,6 +100,8 @@ export default class Player extends Entity {
         this.CurrentY = this.Y;
 
         this._onKeyPressed = false;
+
+        this.soundCounter = 0;
     }
 
     public Update():void {
@@ -137,22 +177,29 @@ export default class Player extends Entity {
         this._sprite.on("animationend", () => {
             this._sprite.gotoAndPlay("Dazzle/Dazzle Die/Dazzle_Die");
         }, this, true);
+
+        if (this.soundCounter == 0) {
+            this.eventName = "spikes";
+            this.screen.dispatchEvent(this.soundListener);
+            this.soundCounter = 1;
+        }
         
         // fade screen out
         this.fader.CustomeRect(0, 0, 600, 800, 0.05);
         // push character to the front of draw order
         this.stage.addChild(this._sprite);
 
+        
         // temporary change characger pivot
         this._sprite.regY = -this._sprite.getBounds().height / 2;
-
+        
         this._jumpVelocity -= this._jumpVelocityModifer;
-
+        
         // bounce character towards facing direction
         if (this._sprite.scaleX == 1) {
             this._sprite.x += 2;
         } else { this._sprite.x -= 2;}
-
+        
         // if player is in mid-air and jumping
         if (!this._isGrounded && this.Jump) {
             if (this.Y <= this.CurrentY) {
@@ -181,6 +228,13 @@ export default class Player extends Entity {
             this._jumpVelocity += this._jumpVelocityModifer;
             this.Y += this._jumpVelocity;
 
+            if (this.soundCounter == 1) {
+                this.eventName = "fall";
+                this.screen.dispatchEvent(this.soundListener);
+                this.soundCounter = 2;
+            }
+            
+
             if (this._sprite.scaleX == 1) {
                 this._sprite.rotation += 30;
             } else this._sprite.rotation -= 30;
@@ -195,6 +249,7 @@ export default class Player extends Entity {
                     if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
 
                         //console.log(`landed on a ${tile[i].Name} tile`);
+
                         if (tile[i].Lethal) {
                             this.Alive = false;
                             // console.log("dead by trap");
@@ -202,13 +257,19 @@ export default class Player extends Entity {
                         }
                         
                         else if (!tile[i].Lethal) {
-                            
                             this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
                             this._sprite.on("animationend", () => {
                                 this._sprite.gotoAndPlay("Dazzle/Dazzle_Up");
                             }, this, true);
                         }
                         
+                        this.soundCounter = 1;
+                        if (this.soundCounter == 1) {
+                            this.eventName = tile[i].Name;
+                            this.screen.dispatchEvent(this.soundListener);
+                        }
+                        this.soundCounter = 0;
+
                         this._isGrounded = true;
                         this.Jump = true;
                         this.Y = this.CurrentY = tile[i].Y;
@@ -230,6 +291,13 @@ export default class Player extends Entity {
             if (this.X >= trampoline[i].X - 16 && this.X <= trampoline[i].X + trampoline[i].Width + 16) {
                 if (this.Y >= trampoline[i].Y && this.Y < trampoline[i].Y + trampoline[i].Height) {
                     //console.log(`landed on a ${trampoline[i].Name}`);
+
+                    this.soundCounter = 1;
+                    if (this.soundCounter == 1) {
+                        this.eventName = trampoline[i].Name;
+                        this.screen.dispatchEvent(this.soundListener);
+                    }
+                    this.soundCounter = 0;
 
                     this._isGrounded = true;
                     this.Jump = true;
@@ -255,14 +323,21 @@ export default class Player extends Entity {
                 if (this.X >= tileset[i].X - 16 && this.X <= tileset[i].X + tileset[i].Width + 16) {
                     if (this.Y >= tileset[i].Y && this.Y < tileset[i].Y + tileset[i].Height) {
                         //console.log(`landed on a ${tileset[i].Name}`);
-    
+
+                        this.soundCounter = 1;
+                        if (this.soundCounter == 1) {
+                            this.eventName = tileset[i].Name;
+                            this.screen.dispatchEvent(this.soundListener);
+                        }
+                        this.soundCounter = 0;
+
                         this._isGrounded = true;
                         this.Jump = true;
                         this.Y = this.CurrentY = tileset[i].Y;
                         this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
                         
                         if (tileset[i].Once) tileset[i].BreakMeNow();
-                        else tileset[i].BreakMe();
+                        else tileset[i].BreakMe(tileset[i].Name);
 
                         this._jumpVelocity = tileset[i].JumpVelocityBoost;
                         this._jumpVelocityModifer = 1;
@@ -287,8 +362,23 @@ export default class Player extends Entity {
                     this.Y = this.CurrentY = collectible[i].Y;
                     this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
 
+                    this.soundCounter = 1;
+                    if (this.soundCounter == 1) {
+                        this.eventName = "collectPowerUp";
+                        this.screen.dispatchEvent(this.soundListener);
+                    }
+                    this.soundCounter = 0;
+
                     this._sprite.on("animationend", () => {
                         this._sprite.gotoAndPlay("Dazzle/Dazzle_Jetpack/Dazzle_Jetpack");
+
+                        this.soundCounter = 1;
+                        if (this.soundCounter == 1) {
+                            this.eventName = "useJetpack";
+                            this.screen.dispatchEvent(this.soundListener);
+                        }
+                        this.soundCounter = 0;
+
                     }, this, true);
                     
                     collectible[i].FlyMe();

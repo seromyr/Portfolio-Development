@@ -1,4 +1,4 @@
-import {STAGE_HEIGHT, SCREEN_TITLE, STAGE_WIDTH } from "../Constants/Constants_General";
+import { STAGE_HEIGHT, SCREEN_TITLE, STAGE_WIDTH } from "../Constants/Constants_General";
 import { TILE_BIG, TILE_NORMAL, TILE_HOLLOW} from "../Constants/Constants_Tiles";
 import ProceduralGenerator from "./ProceduralGenerator";
 import AssetManager from "../Miscs/AssetManager";
@@ -163,10 +163,10 @@ export default class GameplayState {
                 this.mainChar.CollisionCheckWithBreakables(this.tile_Breakable);
                 this.mainChar.CollisionCheckWithBreakables(this.tile_Bubble);
 
-                //if (this._score > 100) {
+                if (this._score > 100) {
                     // clouds only appear above 100 meters
                     this.mainChar.CollisionCheckWithTiles(this.tile_Cloud);
-                //}
+                }
 
                 this.mainChar.CollisionCheckWithCollectibles(this.item_Jetpack);
             }
@@ -226,7 +226,7 @@ export default class GameplayState {
     private SpawnTrampolines(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
             this.tile_Trampoline[i] = new Trampoline(this.assetManager, this.stage);
-            this.tile_Trampoline[i].Name = "Jelly Fish";
+            this.tile_Trampoline[i].Name = "trampoline";
 
             let n:number;
             do {
@@ -252,7 +252,7 @@ export default class GameplayState {
     private SpawnSpikes(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
             this.tile_Spiked[i] = new Spiked(this.assetManager, this.stage);
-            this.tile_Spiked[i].Name = "Sea Urchin";
+            this.tile_Spiked[i].Name = "spikes";
 
             let n:number;
             do {
@@ -451,7 +451,7 @@ export default class GameplayState {
                     }
                     // switch to surface theme
                     else if (this._score < 500 && this._score >= 0) {
-                        this.tile_Trampoline[i].ShowMe("Leaves/Leaves_Idle");
+                        this.tile_Trampoline[i].ShowMe("Balloon/Balloon_Idle");
                         this.tile_Trampoline[i].Type = 2;
                     }
                     // switch to space theme
@@ -518,7 +518,17 @@ export default class GameplayState {
             for (let i:number = 0; i < this.tile_Breakable.length; i++) {
                 if (this.tile_Breakable[i].Y > STAGE_HEIGHT) {
                     this.rng.GenerateTAFollowTile(this.tile_Breakable[i], this.tile_Core);
-                    this.tile_Breakable[i].ShowMe("Coral/Coral_Idle 01");
+                    // use underwater theme
+                    if (this._score < 0) {
+                        this.tile_Breakable[i].Name = "Coral/Coral_Idle" ;
+                        this.tile_Breakable[i].ShowMe("Coral/Coral_Idle 01");
+                    }
+                    
+                    else if (this._score >= 500) {
+                        this.tile_Breakable[i].Name = "Forcefield/Forcefield_Idle";
+                        this.tile_Breakable[i].ShowMe("Forcefield/Forcefield_Idle 01");
+                    }
+
                     this.tile_Breakable[i].Hit = 3;
                     this.tile_Breakable[i].ReActivateMe();
                 }
@@ -538,10 +548,10 @@ export default class GameplayState {
                 if (this.tile_Cloud[i].Y > STAGE_HEIGHT) {
                     this.rng.GenerateTAFollowTile(this.tile_Cloud[i], this.tile_Core);
                     
-                    //if (this._score > 100) {
+                    if (this._score > 100) {
                         this.tile_Cloud[i].ShowMe("Idle/Cloud_Idle");
                         this.tile_Cloud[i].ActivateMe();
-                    //}
+                    }
                 }
             }
 

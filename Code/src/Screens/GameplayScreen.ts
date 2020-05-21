@@ -4,6 +4,7 @@ import { SCREEN_TITLE } from "../Constants/Constants_General";
 import GameplayState from "../GameLogic/GameplayState";
 import BitmapText from "./Bitmap_Text";
 import GameWorld from "../GameLogic/Enviroment/GameWorld";
+import { SFX_MANIFEST } from "../Constants/Constants_Sounds";
 
 export default class GameplayScreen extends ScreenManager {
 
@@ -21,6 +22,8 @@ export default class GameplayScreen extends ScreenManager {
     private hiscore:number;
     get HiScore():number {return this.hiscore;}
 
+    private soundCounter:number;
+
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         super(assetManager, stage, "Gameplay", SCREEN_TITLE[1]);
         super.HideShopButton();
@@ -37,6 +40,8 @@ export default class GameplayScreen extends ScreenManager {
 
         // construct gameworld visual
         this._gameWorld = new GameWorld(assetManager, stage);
+
+
     }
 
     public ShowMe():void {
@@ -46,6 +51,7 @@ export default class GameplayScreen extends ScreenManager {
         this._gameplayIsRunning = true;
         this._score.WriteMessageLeft(14, 50, this._gameplayState.Score.toString() + " m");
         this.stage.addChild(this._topribbon);
+        this.soundCounter = 0;
     }
 
     public HideMe():void {
@@ -58,17 +64,32 @@ export default class GameplayScreen extends ScreenManager {
 
     public UpdateMe():void {
         this._gameplayState.Update();
-        // update score
-        if (this.GameplayIsRunning) {
-            this.stage.removeChild(this._score.DisplayData);
-            this.hiscore = this._gameplayState.Score;
-            this._score.WriteMessageLeft(14, 50, this._gameplayState.Score.toString() + " m");
-            this.stage.addChild(this._score.DisplayData);
-        }
-
         // update camera
         if (this._gameplayState.GameplaySignal) {
             this._gameWorld.UpdateMe(this._gameplayState.CameraSpeed);
+        }
+
+        // update score
+        if (this.GameplayIsRunning) {
+            if (this._gameplayState.Score > -100 && this._gameplayState.Score < 400) {
+                if (this.soundCounter == 0) {
+                    createjs.Sound.play("enterSurface");
+                    this.soundCounter = 1;
+                }
+            }
+
+            if (this._gameplayState.Score > 400) {
+                if (this.soundCounter == 1) {
+                    createjs.Sound.play("enterSpace");
+                    this.soundCounter = 2;
+                }
+            }
+
+            this.stage.removeChild(this._score.DisplayData);
+            this.hiscore = this._gameplayState.Score;
+            this._score.WriteMessageLeft(14, 50, this._gameplayState.Score.toString() + " m");
+            this.stage.addChild(this._topribbon);
+            this.stage.addChild(this._score.DisplayData);
         }
     }
 }

@@ -17,19 +17,19 @@ export default class Breakable extends Tile {
         this._once = once;
     }
     
-    public BreakMe():void {
+    public BreakMe(name:string):void {
 
         this._hit--; 
         
         switch (this._hit) {
             case 3:
-                this._sprite.gotoAndStop("Coral/Coral_Idle 01");
+                this._sprite.gotoAndStop(`${name} 01`);
                 break;
                     case 2:
-                        this._sprite.gotoAndStop("Coral/Coral_Idle 02");
+                        this._sprite.gotoAndStop(`${name} 02`);
                         break;
                         case 1:
-                            this._sprite.gotoAndStop("Coral/Coral_Idle 03");
+                            this._sprite.gotoAndStop(`${name} 03`);
                             break;
                             case 0:
                                 this._allowCollision = false;

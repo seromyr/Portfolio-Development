@@ -33,7 +33,7 @@ export default class PlayerController {
 
     // Update movement to avoid keyboard clipping
     public UpdateInput(player:Player):void {
-        console.log(player.DragSpeed);
+        //console.log(player.DragSpeed);
         player.X += player.DragSpeed;
 
         // avoid falling off the screen sides

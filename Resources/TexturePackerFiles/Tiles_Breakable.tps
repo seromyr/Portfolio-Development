@@ -192,6 +192,9 @@
             <key type="filename">../Concepts/Tiles/Breakables/Coral/Coral_Idle 01.png</key>
             <key type="filename">../Concepts/Tiles/Breakables/Coral/Coral_Idle 02.png</key>
             <key type="filename">../Concepts/Tiles/Breakables/Coral/Coral_Idle 03.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Forcefield/Forcefield_Idle 01.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Forcefield/Forcefield_Idle 02.png</key>
+            <key type="filename">../Concepts/Tiles/Breakables/Forcefield/Forcefield_Idle 03.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -211,6 +214,7 @@
         <array>
             <filename>../Concepts/Tiles/Breakables/Bubbles</filename>
             <filename>../Concepts/Tiles/Breakables/Coral</filename>
+            <filename>../Concepts/Tiles/Breakables/Forcefield</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
