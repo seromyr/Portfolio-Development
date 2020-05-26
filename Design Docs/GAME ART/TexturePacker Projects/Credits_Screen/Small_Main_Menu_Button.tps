@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../TexturePacker_Files/Dazzle_TexturePacker_Files/Sprites/New folder/Death_Sprite.json</filename>
+                <filename>../../../TexturePacker_Files/Credits_Screen_Files/Assets/Small_Main_Menu_Button/Small_Main_Menu_Button_States.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,25 +181,27 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../Sprite Animations/Dazzle/Dazzle_Death_Sprite.png</key>
+            <key type="filename">../../Assets/Menus/Credits Screen/Small Main Menu Button/Oranged.png</key>
+            <key type="filename">../../Assets/Menus/Credits Screen/Small Main Menu Button/Regular.png</key>
+            <key type="filename">../../Assets/Menus/Credits Screen/Small Main Menu Button/Select.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,1</point_f>
+                <point_f>0,0</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>35,35,70,70</rect>
+                <rect>96,23,191,45</rect>
                 <key>scale9Paddings</key>
-                <rect>35,35,70,70</rect>
+                <rect>96,23,191,45</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../Sprite Animations/Dazzle/Dazzle_Death_Sprite.png</filename>
+            <filename>../../Assets/Menus/Credits Screen/Small Main Menu Button</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

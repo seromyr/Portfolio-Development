@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../TexturePacker_Files/Dazzle_TexturePacker_Files/Sprites/New folder/Death_Sprite.json</filename>
+                <filename>../../../TexturePacker_Files/Dazzle_TexturePacker_Files/Animations/Death_Animation/Dazzle_Death_Animation.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,7 +181,15 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../Sprite Animations/Dazzle/Dazzle_Death_Sprite.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_000.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_001.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_002.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_003.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_004.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_005.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_006.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_007.png</key>
+            <key type="filename">../../Sprite Animations/Dazzle/Dazzle Death/Dazzle_Death_008.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,1</point_f>
@@ -199,7 +207,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../Sprite Animations/Dazzle/Dazzle_Death_Sprite.png</filename>
+            <filename>../../Sprite Animations/Dazzle/Dazzle Death</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

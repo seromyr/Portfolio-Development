@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../TexturePacker_Files/Dazzle_TexturePacker_Files/Sprites/New folder/Death_Sprite.json</filename>
+                <filename>../../../../../TexturePacker_Files/Tiles/Tile Animations/Hollow/Ink/Ink_Idle.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,25 +181,25 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../Sprite Animations/Dazzle/Dazzle_Death_Sprite.png</key>
+            <key type="filename">../../../../Assets/In-Game/Tiles/Platform Animations/Hollow/Ink/Ink_Idle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0.5,1</point_f>
+                <point_f>0,0</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>35,35,70,70</rect>
+                <rect>25,7,50,14</rect>
                 <key>scale9Paddings</key>
-                <rect>35,35,70,70</rect>
+                <rect>25,7,50,14</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../Sprite Animations/Dazzle/Dazzle_Death_Sprite.png</filename>
+            <filename>../../../../Assets/In-Game/Tiles/Platform Animations/Hollow/Ink/Ink_Idle.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
