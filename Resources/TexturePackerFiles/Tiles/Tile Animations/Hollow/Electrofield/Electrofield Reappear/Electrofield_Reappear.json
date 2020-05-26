@@ -1,0 +1,26 @@
+{
+
+"images": [
+    "Electrofield_Reappear.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 40, 9, 0, -9, -11],
+    [43, 1, 52, 9, 0, -9, -11],
+    [1, 12, 80, 9, 0, 0, -11],
+    [1, 23, 80, 14, 0, 0, -8],
+    [1, 39, 80, 21, 0, 0, -4],
+    [1, 62, 80, 28, 0, 0, 0]
+],
+
+"animations": {
+    "Electrofield_Reappear/Electrofield_Reappear": { "frames": [0, 1, 2, 3, 4, 5] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:d9cf0571548cb346b60e77543a642601:0f0bf2545ce7b41d1a7672bb178dd124:5206dc6a82d7117713555c788a06338d$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

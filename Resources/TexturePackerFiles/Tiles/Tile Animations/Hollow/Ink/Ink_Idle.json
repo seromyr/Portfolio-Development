@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Ink_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 28, 0, -9, 0]
+],
+
+"animations": {
+    "Ink_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:ce00e7cf4552eddae113c3e2248074b9:16b247f88187ba639888adba645d5287:3efdfb34391b8f2b81be0f6dfffc7170$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Alien_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 29, 0, -4, -21]
+],
+
+"animations": {
+    "Alien_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:9fe6ca5117c08a6be4b4c73920999622:6ebdfb969d54b02ce00a5d8fbd2b2611:67c06d025d850bf0ed32d01f480ac812$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

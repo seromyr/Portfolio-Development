@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Electrofield_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 28, 0, 0, 0]
+],
+
+"animations": {
+    "Electrofield_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:e18401284b702c5524c1c13dad613ba3:737319a027f215301bd02590515cae88:e389b51fb08129460ccffb7eea4e4a65$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

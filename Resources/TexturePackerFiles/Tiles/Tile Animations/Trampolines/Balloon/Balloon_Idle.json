@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Balloon_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 30, 0, -4, -20]
+],
+
+"animations": {
+    "Balloon_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:f3104c0b9120836e8524fafb0aa34ffb:539d0d1288046e38d883752438148733:a8e63fee79b6716e3548dd7cb2eec53c$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

@@ -1,0 +1,21 @@
+{
+
+"images": [
+    "Fog_Idle.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 26, 0, -9, 0]
+],
+
+"animations": {
+    "Fog_Idle": { "frames": [0] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:18399315781af999dfba1f2888c5be90:23b8ab91c94c8b691ef49372e1c68889:3ad997eaa0949cdfb07fef03efe197be$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

@@ -1,0 +1,24 @@
+{
+
+"images": [
+    "Fog_Disappear.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 82, 26, 0, -9, 0],
+    [1, 29, 87, 26, 0, -7, 0],
+    [1, 57, 93, 26, 0, -4, 0],
+    [1, 85, 97, 25, 0, -2, -1]
+],
+
+"animations": {
+    "Fog_Disappear/Fog_Disappear": { "frames": [0, 1, 2, 3] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:ae21d09a6231295a0dcf9b175c5ee831:f7015dcc3f31b367b5cf75fd83cb3680:de63e46f55d6a48d53c93a0b069d0c58$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

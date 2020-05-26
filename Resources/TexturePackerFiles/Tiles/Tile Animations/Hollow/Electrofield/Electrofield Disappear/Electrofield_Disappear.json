@@ -1,0 +1,26 @@
+{
+
+"images": [
+    "Electrofield_Disappear.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 28, 0, 0, 0],
+    [1, 31, 80, 21, 0, 0, -4],
+    [1, 54, 80, 14, 0, 0, -8],
+    [1, 70, 80, 9, 0, 0, -11],
+    [1, 81, 52, 9, 0, -9, -11],
+    [55, 81, 40, 9, 0, -9, -11]
+],
+
+"animations": {
+    "Electrofield_Disappear/Electrofield_Disappear": { "frames": [0, 1, 2, 3, 4, 5] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:006e31bf05561b1e1beede45619e6580:77df70d0b4c232b01e4f147fb32cace3:cd4ff8e733ae869355f5068d43573ec0$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}
