@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../TexturePacker_Files/Main_Menu_Files/Assets/Play Button/Button_States.json</filename>
+                <filename>../../../TexturePacker_Files/Main_Menu_Files/Assets/Play Button/Play_Button_States.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,9 +181,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Assets/Main Menu/Play Button/Click.png</key>
-            <key type="filename">../Assets/Main Menu/Play Button/Hovered.png</key>
-            <key type="filename">../Assets/Main Menu/Play Button/Static.png</key>
+            <key type="filename">../../Assets/Menus/Main Menu/Play Button/Click.png</key>
+            <key type="filename">../../Assets/Menus/Main Menu/Play Button/Hovered.png</key>
+            <key type="filename">../../Assets/Menus/Main Menu/Play Button/Static.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -201,7 +201,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Assets/Main Menu/Play Button</filename>
+            <filename>../../Assets/Menus/Main Menu/Play Button</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

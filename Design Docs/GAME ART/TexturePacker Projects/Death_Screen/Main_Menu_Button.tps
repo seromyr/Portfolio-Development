@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../TexturePacker_Files/Death_Screen_Files/Assets/Main Menu Button/Menu_Button_States.json</filename>
+                <filename>../../../TexturePacker_Files/Death_Screen_Files/Assets/Main Menu Button/Menu_Button_States.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,9 +181,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Assets/Death Screen/Main menu Button/Darker.png</key>
-            <key type="filename">../Assets/Death Screen/Main menu Button/Highlighted.png</key>
-            <key type="filename">../Assets/Death Screen/Main menu Button/Regular.png</key>
+            <key type="filename">../../Assets/Menus/Death Screen/Main menu Button/Darker.png</key>
+            <key type="filename">../../Assets/Menus/Death Screen/Main menu Button/Highlighted.png</key>
+            <key type="filename">../../Assets/Menus/Death Screen/Main menu Button/Regular.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -201,7 +201,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Assets/Death Screen/Main menu Button</filename>
+            <filename>../../Assets/Menus/Death Screen/Main menu Button</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

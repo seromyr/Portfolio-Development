@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../../TexturePacker_Files/Main_Menu_Files/Assets/Shop Button/Shop_Button_States.json</filename>
+                <filename>../../../TexturePacker_Files/Main_Menu_Files/Assets/Regular Credits Button/Reg_Credits_Button_States.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,9 +181,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../Assets/Menus/Main Menu/Shop Button/Idle.png</key>
-            <key type="filename">../../Assets/Menus/Main Menu/Shop Button/Over.png</key>
-            <key type="filename">../../Assets/Menus/Main Menu/Shop Button/Selected.png</key>
+            <key type="filename">../../Assets/Menus/Main Menu/Credits Button/Natural.png</key>
+            <key type="filename">../../Assets/Menus/Main Menu/Credits Button/Overtop.png</key>
+            <key type="filename">../../Assets/Menus/Main Menu/Credits Button/Shadowed.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -201,7 +201,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../../Assets/Menus/Main Menu/Shop Button</filename>
+            <filename>../../Assets/Menus/Main Menu/Credits Button</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

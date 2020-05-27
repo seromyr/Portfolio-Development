@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../Background_Layers_TexturePacker/Ocean_Surface/Ocean_Surface_Background.json</filename>
+                <filename>../../../TexturePacker_Files/Background_Layers/Ocean_Surface/Ocean_Surface_Background.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,9 +181,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Backgrounds/Ocean Surface (second background)/Clouds.png</key>
-            <key type="filename">../Backgrounds/Ocean Surface (second background)/Sky.png</key>
-            <key type="filename">../Backgrounds/Ocean Surface (second background)/Water.png</key>
+            <key type="filename">../../Backgrounds/Level Backgrounds/Ocean Surface (second background)/Clouds.png</key>
+            <key type="filename">../../Backgrounds/Level Backgrounds/Ocean Surface (second background)/Sky.png</key>
+            <key type="filename">../../Backgrounds/Level Backgrounds/Ocean Surface (second background)/Water.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -201,7 +201,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Backgrounds/Ocean Surface (second background)</filename>
+            <filename>../../Backgrounds/Level Backgrounds/Ocean Surface (second background)</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

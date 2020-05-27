@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../Background_Layers_TexturePacker/Ocean_Floor/Ocean_Floor_Backgrounds.json</filename>
+                <filename>../../../TexturePacker_Files/Background_Layers/Ocean_Floor/Ocean_Floor_Background.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,10 +181,10 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Backgrounds/Ocean Floor (first background)/Blue.png</key>
-            <key type="filename">../Backgrounds/Ocean Floor (first background)/Coral.png</key>
-            <key type="filename">../Backgrounds/Ocean Floor (first background)/Seaweed.png</key>
-            <key type="filename">../Backgrounds/Ocean Floor (first background)/Shells.png</key>
+            <key type="filename">../../Backgrounds/Level Backgrounds/Ocean Floor (first background)/Blue.png</key>
+            <key type="filename">../../Backgrounds/Level Backgrounds/Ocean Floor (first background)/Coral.png</key>
+            <key type="filename">../../Backgrounds/Level Backgrounds/Ocean Floor (first background)/Seaweed.png</key>
+            <key type="filename">../../Backgrounds/Level Backgrounds/Ocean Floor (first background)/Shells.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -202,7 +202,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Backgrounds/Ocean Floor (first background)</filename>
+            <filename>../../Backgrounds/Level Backgrounds/Ocean Floor (first background)</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

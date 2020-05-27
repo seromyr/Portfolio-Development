@@ -132,7 +132,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../TexturePacker_Files/Death_Screen_Files/Assets/Retry Button/Retry_Button_States.json</filename>
+                <filename>../../../TexturePacker_Files/Death_Screen_Files/Assets/Retry Button/Retry_Button_States.json</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -181,9 +181,9 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Assets/Death Screen/Retry Button/Normal.png</key>
-            <key type="filename">../Assets/Death Screen/Retry Button/Selected.png</key>
-            <key type="filename">../Assets/Death Screen/Retry Button/Top.png</key>
+            <key type="filename">../../Assets/Menus/Death Screen/Retry Button/Normal.png</key>
+            <key type="filename">../../Assets/Menus/Death Screen/Retry Button/Selected.png</key>
+            <key type="filename">../../Assets/Menus/Death Screen/Retry Button/Top.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -201,7 +201,7 @@
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Assets/Death Screen/Retry Button</filename>
+            <filename>../../Assets/Menus/Death Screen/Retry Button</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
