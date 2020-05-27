@@ -1,5 +1,4 @@
 import { PLAYER_JUMPSPEED, ANCHOR, STAGE_HEIGHT, PLAYER_DEFAULT_X, PLAYER_DEFAULT_Y } from "../../Constants/Constants_General";
-import { SFX_MANIFEST } from "../../Constants/Constants_Sounds";
 import AssetManager from "../../Miscs/AssetManager";
 import Entity from "../Entity";
 import Tile from "../Tiles/Tile";
@@ -7,13 +6,14 @@ import Trampoline from "../Tiles/Trampoline";
 import Breakable from "../Tiles/Breakable";
 import JetPack from "../Collectibles/Jetpack";
 import ShapeFactory from "../../Miscs/ShapeFactory";
+import Hollow from "../Tiles/Hollow";
 
 export default class Player extends Entity {
 
     // PLAYER PROPERTIES
     private _isGrounded:boolean;
 
-    // keyboard input variables
+    // keyboard input variablesaaaaaaaaaaaa
     private _onKeyPressed:boolean;
     get OnKeyPressed():boolean {return this._onKeyPressed;}
     set OnKeyPressed(value:boolean) {this._onKeyPressed = value;}
@@ -71,10 +71,22 @@ export default class Player extends Entity {
                                                     window.setTimeout(() => {createjs.Sound.play("useJetpack");}, 500);
                                                     window.clearTimeout;
                                                     break;
-                                
-                                                        default:
-                                                            createjs.Sound.play("jump");
+
+                                                        case "Bubble":
+                                                            createjs.Sound.play("bubble");
                                                             break;
+
+                                                                case "Coral/Coral_Idle":
+                                                                    createjs.Sound.play("break");
+                                                                    break;
+
+                                                                        case "Forcefield/Forcefield_Idle":
+                                                                            createjs.Sound.play("break");
+                                                                            break;
+
+                                                                                default:
+                                                                                    createjs.Sound.play("jump");
+                                                                                    break;
                         
             }
         }, this);
@@ -154,7 +166,7 @@ export default class Player extends Entity {
         }
 
         // dead condition
-        if (this.Y >= STAGE_HEIGHT) {
+        if (this.Y >= STAGE_HEIGHT + 32) {
             this.Alive = false;
             this._isGrounded = false;
             this.Jump = true;
@@ -189,7 +201,6 @@ export default class Player extends Entity {
         // push character to the front of draw order
         this.stage.addChild(this._sprite);
 
-        
         // temporary change characger pivot
         this._sprite.regY = -this._sprite.getBounds().height / 2;
         
@@ -233,7 +244,6 @@ export default class Player extends Entity {
                 this.screen.dispatchEvent(this.soundListener);
                 this.soundCounter = 2;
             }
-            
 
             if (this._sprite.scaleX == 1) {
                 this._sprite.rotation += 30;
@@ -248,7 +258,7 @@ export default class Player extends Entity {
                 if (this.X >= tile[i].X - 16 && this.X <= tile[i].X + tile[i].Width + 16) {
                     if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
 
-                        //console.log(`landed on a ${tile[i].Name} tile`);
+                        console.log(`landed on a ${tile[i].Name} tile`);
 
                         if (tile[i].Lethal) {
                             this.Alive = false;
@@ -287,30 +297,32 @@ export default class Player extends Entity {
     // collision check with a trampoline
     public CollisionCheckWithTrampolines(trampoline:Trampoline[]):void {
         for (let i:number = 0; i < trampoline.length; i++) {
-            //if player collides with a tile while falling down
-            if (this.X >= trampoline[i].X - 16 && this.X <= trampoline[i].X + trampoline[i].Width + 16) {
-                if (this.Y >= trampoline[i].Y && this.Y < trampoline[i].Y + trampoline[i].Height) {
-                    //console.log(`landed on a ${trampoline[i].Name}`);
+            if (trampoline[i].CollisionPermission) {
+                //if player collides with a tile while falling down
+                if (this.X >= trampoline[i].X - 16 && this.X <= trampoline[i].X + trampoline[i].Width + 16) {
+                    if (this.Y >= trampoline[i].Y && this.Y < trampoline[i].Y + trampoline[i].Height) {
+                        console.log(`landed on a ${trampoline[i].Name}`);
 
-                    this.soundCounter = 1;
-                    if (this.soundCounter == 1) {
-                        this.eventName = trampoline[i].Name;
-                        this.screen.dispatchEvent(this.soundListener);
+                        this.soundCounter = 1;
+                        if (this.soundCounter == 1) {
+                            this.eventName = trampoline[i].Name;
+                            this.screen.dispatchEvent(this.soundListener);
+                        }
+                        this.soundCounter = 0;
+
+                        this._isGrounded = true;
+                        this.Jump = true;
+                        this.Y = this.CurrentY = trampoline[i].Y;
+                        this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
+                        
+                        trampoline[i].ActivateMe();
+                        this._jumpVelocity = trampoline[i].JumpVelocityBoost;
+                        this._jumpVelocityModifer = 1;
                     }
-                    this.soundCounter = 0;
-
-                    this._isGrounded = true;
-                    this.Jump = true;
-                    this.Y = this.CurrentY = trampoline[i].Y;
-                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-                    
-                    trampoline[i].ActivateMe();
-                    this._jumpVelocity = trampoline[i].JumpVelocityBoost;
-                    this._jumpVelocityModifer = 1;
                 }
-            }
-            else {
-                this._isGrounded = false;
+                else {
+                    this._isGrounded = false;
+                }
             }
         }
     }
@@ -322,7 +334,7 @@ export default class Player extends Entity {
                 //if player collides with a tile while falling down
                 if (this.X >= tileset[i].X - 16 && this.X <= tileset[i].X + tileset[i].Width + 16) {
                     if (this.Y >= tileset[i].Y && this.Y < tileset[i].Y + tileset[i].Height) {
-                        //console.log(`landed on a ${tileset[i].Name}`);
+                        console.log(`landed on a ${tileset[i].Name}`);
 
                         this.soundCounter = 1;
                         if (this.soundCounter == 1) {
@@ -351,43 +363,62 @@ export default class Player extends Entity {
     }
 
     // collision check with a trampoline
+    public CollisionCheckWithHollows(tileset:Hollow[]):void {
+        for (let i:number = 0; i < tileset.length; i++) {
+            //if player collides with a hollow tile while falling down
+            if (this.X >= tileset[i].X - 32 && this.X <= tileset[i].X + tileset[i].Width + 32) {
+                if (this.Y >= tileset[i].Y - tileset[i].Height && this.Y < tileset[i].Y + tileset[i].Height * 6) {
+                    console.log(`fell through a ${tileset[i].Name}`);
+
+                    tileset[i].DissolveMe();
+
+                }
+            } else {
+                this._isGrounded = false;
+            }
+        }
+    }
+
+    // collision check with a trampoline
     public CollisionCheckWithCollectibles(collectible:JetPack[]):void {
         for (let i:number = 0; i < collectible.length; i++) {
-            //if player collides with a tile while falling down
-            if (this.X >= collectible[i].X - 52 && this.X <= collectible[i].X + 52) {
-                if (this.Y >= collectible[i].Y && this.Y < collectible[i].Y + collectible[i].Height) {
+            if (collectible[i].CollisionPermission) {
+                //if player collides with a tile while falling down
+                if (this.X >= collectible[i].X - 52 && this.X <= collectible[i].X + 52) {
+                    if (this.Y >= collectible[i].Y && this.Y < collectible[i].Y + collectible[i].Height) {
 
-                    this._isGrounded = true;
-                    this.Jump = true;
-                    this.Y = this.CurrentY = collectible[i].Y;
-                    this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
-
-                    this.soundCounter = 1;
-                    if (this.soundCounter == 1) {
-                        this.eventName = "collectPowerUp";
-                        this.screen.dispatchEvent(this.soundListener);
-                    }
-                    this.soundCounter = 0;
-
-                    this._sprite.on("animationend", () => {
-                        this._sprite.gotoAndPlay("Dazzle/Dazzle_Jetpack/Dazzle_Jetpack");
+                        this._isGrounded = true;
+                        this.Jump = true;
+                        this.Y = this.CurrentY = collectible[i].Y;
+                        this._sprite.gotoAndPlay("Dazzle/Dazzle Jump/Dazzle_Jump");
 
                         this.soundCounter = 1;
                         if (this.soundCounter == 1) {
-                            this.eventName = "useJetpack";
+                            this.eventName = "collectPowerUp";
                             this.screen.dispatchEvent(this.soundListener);
                         }
                         this.soundCounter = 0;
 
-                    }, this, true);
-                    
-                    collectible[i].FlyMe();
-                    this._jumpVelocity = collectible[i].JumpVelocityBoost;
-                    this._jumpVelocityModifer = 1;
+                        this._sprite.on("animationend", () => {
+                            this._sprite.gotoAndPlay("Dazzle/Dazzle_Jetpack/Dazzle_Jetpack");
+
+                            this.soundCounter = 1;
+                            if (this.soundCounter == 1) {
+                                this.eventName = "useJetpack";
+                                this.screen.dispatchEvent(this.soundListener);
+                            }
+                            this.soundCounter = 0;
+
+                        }, this, true);
+                        
+                        collectible[i].FlyMe();
+                        this._jumpVelocity = collectible[i].JumpVelocityBoost;
+                        this._jumpVelocityModifer = 1;
+                    }
                 }
-            }
-            else {
-                this._isGrounded = false;
+                else {
+                    this._isGrounded = false;
+                }
             }
         }
     }

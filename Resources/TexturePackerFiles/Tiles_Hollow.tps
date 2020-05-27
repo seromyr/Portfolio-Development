@@ -181,7 +181,19 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../Concepts/Tiles/Hollow/Hollow.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Disappear/Electrofield_Disappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Disappear/Electrofield_Disappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Disappear/Electrofield_Disappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Disappear/Electrofield_Disappear_003.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Disappear/Electrofield_Disappear_004.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Disappear/Electrofield_Disappear_005.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Idle.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Reappear/Electrofield_Reappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Reappear/Electrofield_Reappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Reappear/Electrofield_Reappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Reappear/Electrofield_Reappear_003.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Reappear/Electrofield_Reappear_004.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Electrofield/Electrofield_Reappear/Electrofield_Reappear_005.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0,0</point_f>
@@ -190,16 +202,67 @@
                 <key>scale9Enabled</key>
                 <false/>
                 <key>scale9Borders</key>
-                <rect>12,4,24,8</rect>
+                <rect>20,7,40,14</rect>
                 <key>scale9Paddings</key>
-                <rect>12,4,24,8</rect>
+                <rect>20,7,40,14</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Disappear/Fog_Disappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Disappear/Fog_Disappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Disappear/Fog_Disappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Disappear/Fog_Disappear_003.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Idle.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Reappear/Fog_Reappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Reappear/Fog_Reappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Reappear/Fog_Reappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Fog/Fog_Reappear/Fog_Reappear_003.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,7,50,13</rect>
+                <key>scale9Paddings</key>
+                <rect>25,7,50,13</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Disappear/Ink_Disappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Disappear/Ink_Disappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Disappear/Ink_Disappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Disappear/Ink_Disappear_003.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Disappear/Ink_Disappear_004.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Disappear/Ink_Disappear_005.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Idle.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Reappear/Ink_Reappear_000.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Reappear/Ink_Reappear_001.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Reappear/Ink_Reappear_002.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Reappear/Ink_Reappear_003.png</key>
+            <key type="filename">../Concepts/Tiles/Hollow/Ink/Ink_Reappear/Ink_Reappear_004.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0,0</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>25,7,50,14</rect>
+                <key>scale9Paddings</key>
+                <rect>25,7,50,14</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
         </map>
         <key>fileList</key>
         <array>
-            <filename>../Concepts/Tiles/Hollow/Hollow.png</filename>
+            <filename>../Concepts/Tiles/Hollow/Electrofield</filename>
+            <filename>../Concepts/Tiles/Hollow/Fog</filename>
+            <filename>../Concepts/Tiles/Hollow/Ink</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

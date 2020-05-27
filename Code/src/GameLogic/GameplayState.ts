@@ -10,6 +10,8 @@ import Breakable from "./Tiles/Breakable";
 import Cloud from "./Tiles/Cloud";
 import PlayerController from "./PlayerController";
 import JetPack from "./Collectibles/Jetpack";
+import Camera from "./Camera";
+import Hollow from "./Tiles/Hollow";
 
 export default class GameplayState {
 
@@ -23,7 +25,7 @@ export default class GameplayState {
     private tile_OceanFloor:Tile[];
     private tile_Core:Tile[];
     private tile_Trampoline:Trampoline[];
-    private tile_Hollow:Tile[];
+    private tile_Hollow:Hollow[];
     private tile_Spiked:Spiked[];
     private tile_Breakable:Breakable[];
     private tile_Bubble:Breakable[];
@@ -43,6 +45,12 @@ export default class GameplayState {
     private rng:ProceduralGenerator;
     private _score:number;
     get Score():number {return this._score;}
+
+    // variable used to expand array range of custom tiles which will gradually replace core tiles
+    private lastUpdatedScore:number;
+    private spikeLimit:number;
+    private bubbleLimit:number;
+    private breakableLimit:number;
 
     // prevent duplicating tile generation
     private occupiedID:boolean[];
@@ -72,11 +80,18 @@ export default class GameplayState {
         // wire up event
         this._playerHasDied = new createjs.Event(SCREEN_TITLE[3], true, false);
     }
-
+    
     // start new game method
     public StartNewGame():void {
         // allow the game to start updating
         this._gameStart = true;
+        
+        // height modifier
+        this.rng.MinAltitude = 1.5;
+        this.rng.MaxAltitude = this.rng.MinAltitude + 1;
+
+        // patrol speed
+        this.rng.MaxSpeed = 4;
 
         // enanble keyboard input
         this.playerController.EnableInput(this.mainChar);
@@ -84,7 +99,7 @@ export default class GameplayState {
         this.CreateActors();
         
         // spawn core tiles
-        this.SpawnCoreTiles(40);
+        this.SpawnCoreTiles(60);
         
         // prepare the occupied ID range
         this.occupiedID = new Array(this.tile_Core.length);
@@ -94,20 +109,30 @@ export default class GameplayState {
         
         // spawn gameplay tiles
         this.SpawnOceanFloorTiles();
-        this.SpawnTrampolines(2);
-        this.SpawnHollowTiles(4);
-        this.SpawnSpikes(3);
-        this.SpawnBreakables("Breakable", this.tile_Breakable, 5, false);
-        this.SpawnBreakables("Bubble", this.tile_Bubble, 5, true);
-        this.SpawnClouds(4);
 
-        // spawn collectibles
-        this.SpawnJetpacks(2);
+        // spawn collectibles first
+        this.SpawnJetpacks(1);
 
+        // spawn gameplay tile
+        {
+            this.SpawnTrampolines(3);
+            
+            this.SpawnHollowTiles(20);
+            
+            this.SpawnSpikes(6);
+            
+            this.SpawnBubbles(10);
+            
+            this.SpawnBreakables(10);
+            
+            this.SpawnClouds(4);
+        }
+
+        // show main character falling when spawned
         this.mainChar.ShowMe("Dazzle/Dazzle_Fall");
 
         // starting score
-        this._score = -500;
+        this.lastUpdatedScore = this._score = -600;
     }
 
     private CreateActors():void {
@@ -133,41 +158,96 @@ export default class GameplayState {
         this.tile_Start[0].Name = "Start";
         this.tile_Start[0].X = this.rng.RandomBetween(this.tile_Start[0].Width, STAGE_WIDTH - this.tile_Start[0].Width);
         this.tile_Start[0].Y = STAGE_HEIGHT - 256;
-        this.tile_Start[0].ShowMe("Normal/Shells");
+        this.tile_Start[0].ShowMe("Normal/Clams");
     }
 
     // gameplay updater
     public Update():void {
+
         // only update when player is alive
         if (this.mainChar.Alive) {
+
+            // increase distance modifer based on current score
+            if (this._score == this.lastUpdatedScore + 100) {
+                this.lastUpdatedScore = this._score;
+                this.rng.MinAltitude += 0.1;
+                this.rng.MaxAltitude = this.rng.MinAltitude + 0.5;
+                // console.log(this.rng.MaxAltitude);
+
+                this.rng.MaxSpeed += 1;
+
+                // slowly increase number of concurent spikes displayed on screen
+                if (!this.rng.RandomizeTrueFalse(1,4) && this.spikeLimit < this.tile_Spiked.length) {
+                    this.spikeLimit++;
+                }
+
+                // slowly increase number of concurent bubbles displayed on screen
+                if (!this.rng.RandomizeTrueFalse(2,1) && this.bubbleLimit < this.tile_Bubble.length) {
+                    this.bubbleLimit++;
+                }
+
+                // slowly increase number of concurent  breakables displayed on screen
+                if (!this.rng.RandomizeTrueFalse(2,1) && this.breakableLimit < this.tile_Breakable.length) {
+                    this.breakableLimit++;
+                }
+            }
 
             // update player movement based on inputs
             this.playerController.UpdateInput(this.mainChar);
 
-            // update tile motion
+            // update Camera
+            // this.camera.Update(
+            //     this._score,
+            //     this._cameraUpdateSignal,
+            //     this._cameraSpeed,
+            //     this.mainChar,
+            //     this.tile_Start,
+            //     this.tile_Core,
+            //     this.tile_OceanFloor,
+            //     this.tile_Trampoline,
+            //     this.tile_Hollow, this.tile_Spiked,
+            //     this.tile_Breakable,
+            //     this.tile_Bubble,
+            //     this.tile_Cloud,
+            //     this.item_Jetpack,
+            //     this.rng,
+            //     this.occupiedID,
+            //     this.rangeExpander);
             this.Camera();
-            for (let i:number = 0; i < this.tile_Core.length; i++) {
-                this.tile_Core[i].MoveMe();
+
+            // allow patrol mode on some tiles
+            {
+                for (let i:number = 0; i < this.tile_Core.length; i++) {
+                    this.tile_Core[i].MoveMe();
+                }
+                
+                for (let i:number = 0; i < this.tile_Trampoline.length; i++) {
+                    this.tile_Trampoline[i].MoveMe();
+                }
+                
+                for (let i:number = 0; i < this.tile_Bubble.length; i++) {
+                    this.tile_Bubble[i].MoveMe();
+                }
+                
+                for (let i:number = 0; i < this.tile_Cloud.length; i++) {
+                    this.tile_Cloud[i].MoveMe();
+                }
             }
-            
+
             // update sprite and animation
             this.mainChar.Update();
 
             // update collision check
             if (!this.mainChar.Jump) {
                 this.mainChar.CollisionCheckWithTiles(this.tile_OceanFloor);
-                this.mainChar.CollisionCheckWithTiles(this.tile_Core);
                 this.mainChar.CollisionCheckWithTiles(this.tile_Start);
+                this.mainChar.CollisionCheckWithHollows(this.tile_Hollow);
+                this.mainChar.CollisionCheckWithTiles(this.tile_Core);
                 this.mainChar.CollisionCheckWithTiles(this.tile_Spiked);
                 this.mainChar.CollisionCheckWithTrampolines(this.tile_Trampoline);
                 this.mainChar.CollisionCheckWithBreakables(this.tile_Breakable);
                 this.mainChar.CollisionCheckWithBreakables(this.tile_Bubble);
-
-                if (this._score > 100) {
-                    // clouds only appear above 100 meters
-                    this.mainChar.CollisionCheckWithTiles(this.tile_Cloud);
-                }
-
+                this.mainChar.CollisionCheckWithTiles(this.tile_Cloud);
                 this.mainChar.CollisionCheckWithCollectibles(this.item_Jetpack);
             }
 
@@ -175,6 +255,7 @@ export default class GameplayState {
             this.mainChar.BringMeToFrontDrawOrder();
         }
         
+        // when player is not alive
         if (!this.mainChar.Alive)
         {
             this.playerController.DisableInput();
@@ -187,90 +268,10 @@ export default class GameplayState {
         }
     }
 
+    // gameplay terminator
     public Terminate():void {
         this._gameStart = false;
         this.stage.removeAllChildren();
-    }
-
-    // spawn core tiles on the screen
-    private SpawnCoreTiles(quantity:number):void {
-        for (let i:number = 0; i < quantity; i++) {
-            this.tile_Core[i] = new Tile(this.assetManager, this.stage, TILE_NORMAL);
-            this.tile_Core[i].Name = "Core";
-            this.tile_Core[i].ShowMe("Normal/Shells");
-
-            // Randomize patrol mode
-            this.tile_Core[i].IsMoving = this.rng.RandomizeTrueFalse();
-            if (this.tile_Core[i].IsMoving) {
-                this.tile_Core[i].SetMotion(this.rng.RandomBetween(1, 5));
-            }
-        }
-
-        // Generate tiles based on the starting tile
-        this.rng.GenerateTiles(this.tile_Core, this.tile_Start[0]);
-    }
-
-    // spawn hollow tiles on the screen
-    private SpawnHollowTiles(quantity:number):void {
-        for (let i:number = 0; i < quantity; i++) {
-            this.tile_Hollow[i] = new Tile(this.assetManager, this.stage, TILE_HOLLOW);
-            this.tile_Hollow[i].Name = "Hollow Ink";
-            this.tile_Hollow[i].ShowMe("Hollow/Hollow_Ink");
-        }
-
-        // Generate tiles based on the core tiles
-        this.rng.GenerateTFollowTiles(this.tile_Hollow, this.tile_Core);
-    }
-
-    // spawn trampolines on the screen, attached to some core tiles
-    private SpawnTrampolines(quantity:number):void {
-        for (let i:number = 0; i < quantity; i++) {
-            this.tile_Trampoline[i] = new Trampoline(this.assetManager, this.stage);
-            this.tile_Trampoline[i].Name = "trampoline";
-
-            let n:number;
-            do {
-                // make sure n does not get inside an occupied ID
-                n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
-            } while (this.occupiedID[n] != false);
-
-
-            this.tile_Trampoline[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
-            this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
-            this.tile_Core[n].HideMe();
-            this.tile_Trampoline[i].ShowMe("Jellyfish/Jellyfish_Idle");
-
-            // register occupiedID
-            this.occupiedID[n] = true;
-
-            // immobile this core tile
-            this.tile_Core[n].IsMoving = false;
-        }
-    }
-
-    // spawn spikes on the screen, attached to some core tiles
-    private SpawnSpikes(quantity:number):void {
-        for (let i:number = 0; i < quantity; i++) {
-            this.tile_Spiked[i] = new Spiked(this.assetManager, this.stage);
-            this.tile_Spiked[i].Name = "spikes";
-
-            let n:number;
-            do {
-                // make sure n does not get inside an occupied ID
-                n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
-            } while (this.occupiedID[n] != false);
-
-            this.tile_Spiked[i].X = this.tile_Core[n].X;
-            this.tile_Spiked[i].Y = this.tile_Core[n].Y;
-            this.tile_Core[n].HideMe();
-            this.tile_Spiked[i].ShowMe("Spiked/Sea_Urchin");
-
-            // register occupiedID
-            this.occupiedID[n] = true;
-
-            // immobile its base tile
-            this.tile_Core[n].IsMoving = false;
-        }
     }
 
     // spawn ocean floor tiles on the screen
@@ -287,26 +288,189 @@ export default class GameplayState {
         }
     }
 
-    // spawn breakables on the screen
-    private SpawnBreakables(type:string, tileset:Breakable[], quantity:number, once:boolean):void {
+    // spawn core tiles on the screen
+    private SpawnCoreTiles(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
-            tileset[i] = new Breakable(this.assetManager, this.stage, once);
-            tileset[i].Name = type;
-            if (type == "Bubble") tileset[i].ShowMe("Bubbles/Bubbles_Idle");
-            else tileset[i].ShowMe("Coral/Coral_Idle 01");
+            this.tile_Core[i] = new Tile(this.assetManager, this.stage, TILE_NORMAL);
+            this.tile_Core[i].Name = "Core";
+            this.tile_Core[i].ShowMe("Normal/Clams");
         }
 
-        this.rng.GenerateTFollowTiles(tileset, this.tile_Core);
+        // Generate tiles based on the starting tile
+        this.rng.GenerateCoreTiles(this.tile_Core, this.tile_Start[0]);
     }
 
-    // spawn cloud on the screen
-    private SpawnClouds(quantity:number):void {
+    // spawn hollow tiles on the screen
+    private SpawnHollowTiles(quantity:number):void {
         for (let i:number = 0; i < quantity; i++) {
-            this.tile_Cloud[i] = new Cloud(this.assetManager, this.stage, this.rng.RandomBetween(3000, 5000));
-            this.tile_Cloud[i].Name = "Cloud";
+            this.tile_Hollow[i] = new Hollow(this.assetManager, this.stage);
+            this.tile_Hollow[i].Name = "Ink";
+            this.tile_Hollow[i].ShowMe("Ink/Ink_Idle");
         }
 
-        this.rng.GenerateTFollowTiles(this.tile_Cloud, this.tile_Core);
+        // Generate tiles based on the core tiles
+        this.rng.GenerateTLowImpactTiles(this.tile_Hollow, this.tile_Core);
+    }
+
+    // spawn trampolines on the screen, take some core tiles spaces
+    private SpawnTrampolines(quantity:number):void {
+        for (let i:number = 0; i < quantity; i++) {
+            this.tile_Trampoline[i] = new Trampoline(this.assetManager, this.stage);
+            this.tile_Trampoline[i].Name = "trampoline";
+
+            let n:number;
+            do {
+                // make sure n does not get inside an occupied ID
+                n = this.rng.RandomBetween(this.tile_Core.length - 45, this.tile_Core.length - 1);
+            } while (this.occupiedID[n] != false);
+
+            // console.log("trampoline spawn at start " + n + " " + this.occupiedID[n]);
+
+            this.tile_Trampoline[i].X = this.tile_Core[n].X;
+            this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
+            this.tile_Trampoline[i].ShowMe("Jellyfish/Jellyfish_Idle");
+            this.tile_Core[n].IsMoving = false;
+            this.tile_Core[n].CollisionPermission = false;
+            this.tile_Core[n].HideMe();
+
+            // register occupiedID
+            this.occupiedID[n] = true;
+
+            // immobile this core tile
+            this.tile_Core[n].IsMoving = false;
+        }
+    }
+
+    // spawn spikes on the screen, attached to some core tiles
+    private SpawnSpikes(quantity:number):void {
+        for (let i:number = 0; i < quantity; i++) {
+            this.tile_Spiked[i] = new Spiked(this.assetManager, this.stage);
+            this.tile_Spiked[i].Name = "spikes";
+            this.spikeLimit = 1;
+
+            let n:number;
+            do {
+                // make sure n does not get inside an occupied ID
+                // spikes spawned outside the screen at start
+                n = this.rng.RandomBetween(this.tile_Core.length - 45, this.tile_Core.length - 1);
+            } while (this.occupiedID[n] != false);
+
+            // console.log("spikes spawn at start " + n + " " + this.occupiedID[n]);
+
+            this.tile_Spiked[i].X = this.tile_Core[n].X;
+            this.tile_Spiked[i].Y = this.tile_Core[n].Y;
+            this.tile_Spiked[i].ShowMe("Spiked/Sea_Urchin");
+
+            // hide some spikes at start
+            if (i > 0) {
+                this.tile_Spiked[i].CollisionPermission = false;
+                this.tile_Spiked[i].HideMe();
+                this.tile_Core[n].ShowMe("Normal/Clams");
+                this.tile_Core[n].CollisionPermission = true;
+            } else {
+                this.tile_Spiked[0].ShowMe("Spiked/Sea_Urchin");
+                this.tile_Core[n].HideMe();
+                this.tile_Core[n].CollisionPermission = false;
+            }
+
+            // register occupiedID
+            this.occupiedID[n] = true;
+
+            // immobile its base tile
+            this.tile_Core[n].IsMoving = false;
+        }
+    }
+
+    // spawn breakables on the screen
+    private SpawnBubbles(quantity:number):void {
+        for (let i:number = 0; i < quantity; i++) {
+            this.tile_Bubble[i] = new Breakable(this.assetManager, this.stage, true);
+            this.tile_Bubble[i].Name = "Bubble";
+            this.bubbleLimit = 1;
+            
+            let n:number;
+            do {
+                // make sure n does not get inside an occupied ID
+                // bubbles spawned outside the screen at start
+                n = this.rng.RandomBetween(this.tile_Core.length - 45, this.tile_Core.length - 1);
+            } while (this.occupiedID[n] == true);
+            
+            // console.log("bubble spawn at start " + n + " " + this.occupiedID[n]);
+
+            this.tile_Bubble[i].X = this.tile_Core[n].X;
+            this.tile_Bubble[i].Y = this.tile_Core[n].Y;
+            this.tile_Bubble[i].ShowMe("Bubbles/Bubbles_Idle");
+
+            // hide some bubbles at start
+            if (i > 3) {
+                this.tile_Bubble[i].CollisionPermission = false;
+                this.tile_Bubble[i].HideMe();
+                this.tile_Core[n].ShowMe("Normal/Clams");
+                this.tile_Core[n].CollisionPermission = true;
+            } else {
+                this.tile_Bubble[0].ShowMe("Bubbles/Bubbles_Idle");
+                this.tile_Core[n].HideMe();
+                this.tile_Core[n].CollisionPermission = false;
+            }
+
+            // register occupiedID
+            this.occupiedID[n] = true;
+
+            // immobile its base tile
+            this.tile_Core[n].IsMoving = false;
+        }
+    }
+
+    private SpawnBreakables(quantity:number):void {
+        for (let i:number = 0; i < quantity; i++) {
+            this.tile_Breakable[i] = new Breakable(this.assetManager, this.stage, false);
+            this.tile_Breakable[i].Name = "Coral/Coral_Idle";
+            this.breakableLimit = 1;
+            
+            let n:number;
+            do {
+                // make sure n does not get inside an occupied ID
+                // bubbles spawned outside the screen at start
+                n = this.rng.RandomBetween(this.tile_Core.length - 45, this.tile_Core.length - 1);
+            } while (this.occupiedID[n] == true);
+            
+            // console.log("breakable spawn at start " + n + " " + this.occupiedID[n]);
+
+            this.tile_Breakable[i].X = this.tile_Core[n].X;
+            this.tile_Breakable[i].Y = this.tile_Core[n].Y;
+            this.tile_Breakable[i].ShowMe("Coral/Coral_Idle 01");
+
+            // hide some bubbles at start
+            if (i > 2) {
+                this.tile_Breakable[i].CollisionPermission = false;
+                this.tile_Breakable[i].HideMe();
+                this.tile_Core[n].ShowMe("Normal/Clams");
+                this.tile_Core[n].CollisionPermission = true;
+            } else {
+                this.tile_Breakable[0].ShowMe("Coral/Coral_Idle 01");
+                this.tile_Core[n].HideMe();
+                this.tile_Core[n].CollisionPermission = false;
+            }
+
+            // register occupiedID
+            this.occupiedID[n] = true;
+
+            // immobile its base tile
+            this.tile_Core[n].IsMoving = false;
+        }
+    }
+
+    // spawn cloud off the screen
+    private SpawnClouds(quantity:number):void {
+        for (let i:number = 0; i < quantity; i++) {
+            this.tile_Cloud[i] = new Cloud(this.assetManager, this.stage, this.rng.RandomBetween(4000, 6000));
+            this.tile_Cloud[i].Name = "Cloud";
+
+            // clouds spawn far below at the bottom
+            this.tile_Cloud[i].CollisionPermission = false;
+            this.tile_Cloud[i].X = 0;
+            this.tile_Cloud[i].Y = STAGE_HEIGHT * 1.2;
+        }
     }
 
     // spawn jetpacks on the screen, attached to some core tiles
@@ -318,9 +482,8 @@ export default class GameplayState {
             let n:number;
             do {
                 // make sure n does not get inside an occupied ID
-                n = this.rng.RandomBetween(2, this.tile_Core.length - 1);
-            } while (this.occupiedID[n] != false);
-
+                n = this.rng.RandomBetween(this.tile_Core.length - 10, this.tile_Core.length - 1);
+            } while (this.occupiedID[n] == true);
 
             this.item_Jetpack[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
             this.item_Jetpack[i].Y = this.tile_Core[n].Y;
@@ -333,7 +496,7 @@ export default class GameplayState {
             this.tile_Core[n].IsMoving = false;
         }
     }
-
+    
     // Objects mover
     private Camera():void {
         // if player is on the upper half  of the camera, try to catch up with him
@@ -352,41 +515,43 @@ export default class GameplayState {
             this.tile_Start[0].Y += this._cameraSpeed;
 
             // shift tiles
-            for (let i:number = 0; i < this.tile_Core.length; i++) {
-                this.tile_Core[i].Y +=this._cameraSpeed;
-            }
-            
-            for (let i:number = 0; i < this.tile_OceanFloor.length; i++) {
-                this.tile_OceanFloor[i].Y += this._cameraSpeed;
-            }
-            
-            for (let i:number = 0; i < this.tile_Trampoline.length; i++) {
-                this.tile_Trampoline[i].Y += this._cameraSpeed;
-            }
-
-            for (let i:number = 0; i < this.tile_Hollow.length; i++) {
-                this.tile_Hollow[i].Y += this._cameraSpeed;
-            }
-
-            for (let i:number = 0; i < this.tile_Spiked.length; i++) {
-                this.tile_Spiked[i].Y += this._cameraSpeed;
-            }
-
-            for (let i:number = 0; i < this.tile_Breakable.length; i++) {
-                this.tile_Breakable[i].Y += this._cameraSpeed;
-            }
-
-            for (let i:number = 0; i < this.tile_Bubble.length; i++) {
-                this.tile_Bubble[i].Y += this._cameraSpeed;
-            }
-
-            for (let i:number = 0; i < this.tile_Cloud.length; i++) {
-                this.tile_Cloud[i].Y += this._cameraSpeed;
-            }
-
-            // - items
-            for (let i:number = 0; i < this.item_Jetpack.length; i++) {
-                this.item_Jetpack[i].Y += this._cameraSpeed;
+            {
+                for (let i:number = 0; i < this.tile_Core.length; i++) {
+                    this.tile_Core[i].Y +=this._cameraSpeed;
+                }
+                
+                for (let i:number = 0; i < this.tile_OceanFloor.length; i++) {
+                    this.tile_OceanFloor[i].Y += this._cameraSpeed;
+                }
+                
+                for (let i:number = 0; i < this.tile_Trampoline.length; i++) {
+                    this.tile_Trampoline[i].Y += this._cameraSpeed;
+                }
+                
+                for (let i:number = 0; i < this.tile_Hollow.length; i++) {
+                    this.tile_Hollow[i].Y += this._cameraSpeed;
+                }
+                
+                for (let i:number = 0; i < this.tile_Spiked.length; i++) {
+                    this.tile_Spiked[i].Y += this._cameraSpeed;
+                }
+                
+                for (let i:number = 0; i < this.tile_Breakable.length; i++) {
+                    this.tile_Breakable[i].Y += this._cameraSpeed;
+                }
+                
+                for (let i:number = 0; i < this.tile_Bubble.length; i++) {
+                    this.tile_Bubble[i].Y += this._cameraSpeed;
+                }
+                
+                for (let i:number = 0; i < this.tile_Cloud.length; i++) {
+                    this.tile_Cloud[i].Y += this._cameraSpeed;
+                }
+                
+                // - items
+                for (let i:number = 0; i < this.item_Jetpack.length; i++) {
+                    this.item_Jetpack[i].Y += this._cameraSpeed;
+                }
             }
 
             // move any tile that falls out of the screen to the top
@@ -395,18 +560,19 @@ export default class GameplayState {
                 if (this.tile_Core[i].Y > STAGE_HEIGHT) {
                     // use underwater theme
                     if (this._score < 0) {
-                        this.tile_Core[i].ShowMe("Normal/Shells");
+                        this.tile_Core[i].ShowMe("Normal/Clams");
                     }
                     // switch to above water theme
-                    else if (this._score < 500 && this._score >= 0) {
-                        
-                        this.tile_Core[i].ShowMe("Normal/Clams");
+                    else if (this._score < 1500 && this._score >= 0) {
+                        this.tile_Core[i].ShowMe("Normal/Shells");
                     }
                     // switch to space theme
                     else {
-                        
                         this.tile_Core[i].ShowMe("Normal/Starfish");
                     }
+
+                    this.tile_Core[i].CollisionPermission = true;
+                    this.tile_Core[i].IsMoving = false;
 
                     this.tile_Core[i].X = this.rng.RandomBetween(0, STAGE_WIDTH - this.tile_Core[i].Width);
 
@@ -415,15 +581,18 @@ export default class GameplayState {
                     this.occupiedID.splice(this.tile_Core.length - 1, 0 ,  this.occupiedID.shift());
 
                     // this tile now become the highest tile
+                    // slowly increase height difference between tiles
                     this.tile_Core[this.tile_Core.length - 1].Y = this.rng.RandomBetween(
-                    this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * 3,
-                    this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * 4);
+                    this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * this.rng.MinAltitude,
+                    this.tile_Core[this.tile_Core.length - 2].Y - this.tile_Core[i].Height * this.rng.MaxAltitude);
 
                     // Randomize patrol mode
-                    this.tile_Core[this.tile_Core.length - 1].IsMoving = this.rng.RandomizeTrueFalse();
+                    this.tile_Core[this.tile_Core.length - 1].IsMoving = this.rng.RandomizeTrueFalse(20, 1);
                         if (this.tile_Core[this.tile_Core.length - 1].IsMoving) {
-                        this.tile_Core[this.tile_Core.length - 1].SetMotion(this.rng.RandomBetween(1, 5));
-                    }    
+                        this.tile_Core[this.tile_Core.length - 1].SetPatrolSpeed(this.rng.RandomBetween(this.rng.MaxSpeed - 2, this.rng.MaxSpeed));
+                    }
+
+                    this.tile_Core[this.tile_Core.length - 1].CollisionPermission = true;
 
                     // release this occupied ID
                     this.occupiedID[this.occupiedID.length - 1] = false;
@@ -434,15 +603,8 @@ export default class GameplayState {
             for (let i:number = 0; i < this.tile_Trampoline.length; i++) {
                 if (this.tile_Trampoline[i].Y > STAGE_HEIGHT) {
 
-                    let n:number;                    
-                    do {
-                        // make sure n does not get inside an occupied ID
-                        n = this.rng.RandomBetween(this.tile_Core.length - 17, this.tile_Core.length - 1);
-                    } while (this.occupiedID[n] != false);
-
-                    this.tile_Trampoline[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
-                    this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
-                    this.tile_Core[n].HideMe();
+                    // reset patrol mode
+                    this.tile_Trampoline[i].IsMoving = false;
 
                     // use underwater theme
                     if (this._score < 0) {
@@ -450,7 +612,7 @@ export default class GameplayState {
                         this.tile_Trampoline[i].Type = 1;
                     }
                     // switch to surface theme
-                    else if (this._score < 500 && this._score >= 0) {
+                    else if (this._score < 1500 && this._score >= 0) {
                         this.tile_Trampoline[i].ShowMe("Balloon/Balloon_Idle");
                         this.tile_Trampoline[i].Type = 2;
                     }
@@ -460,97 +622,190 @@ export default class GameplayState {
                         this.tile_Trampoline[i].Type = 3;
                     }
 
-                    // register occupiedID
-                    this.occupiedID[n] = true;
+                    let n:number;
+                    do {
+                        // make sure n does not get inside an occupied ID
+                        n = this.rng.RandomBetween(this.tile_Core.length - 35, this.tile_Core.length - 1);
+                    } while (this.occupiedID[n] == true);
 
-                    // immobile its base tile
-                    this.tile_Core[n].IsMoving = false;
+                    // console.log("trampoline spawn at " + n + " " + this.occupiedID[n]);
+
+                    if (!this.rng.RandomizeTrueFalse(1,99)) {
+                        this.tile_Trampoline[i].X = this.tile_Core[n].X;
+                        this.tile_Trampoline[i].Y = this.tile_Core[n].Y;
+                        this.tile_Core[n].HideMe();
+                        
+                        // register occupiedID
+                        this.occupiedID[n] = true;
+                        
+                        // immobile its base tile
+                        this.tile_Core[n].IsMoving = false;
+                        this.tile_Trampoline[i].IsMoving = this.rng.RandomizeTrueFalse(1,1);
+                        this.tile_Trampoline[i].SetPatrolSpeed(this.rng.RandomBetween(1, this.rng.MaxSpeed));
+                    }
                 }
             }
 
             // attached the fell out hollow to a new core tile
             for (let i:number = 0; i < this.tile_Hollow.length; i++) {
                 if (this.tile_Hollow[i].Y > STAGE_HEIGHT) {
-                    this.rng.GenerateTAFollowTile(this.tile_Hollow[i], this.tile_Core);
+
+                    this.rng.GenerateALowImpactTile(this.tile_Hollow[i], this.tile_Core);
+
                     // use underwater theme
                     if (this._score < 0) {
-                        this.tile_Hollow[i].ShowMe("Hollow/Hollow_Ink");
+                        this.tile_Hollow[i].ShowMe("Ink/Ink_Idle");
+                        this.tile_Hollow[i].Name = "Ink";
                     }
                     // switch to surface theme
-                    else if (this._score < 500 && this._score >= 0) {
-                        this.tile_Hollow[i].ShowMe("Hollow/Fog");
+                    else if (this._score < 1000 && this._score >= 0) {
+                        this.tile_Hollow[i].ShowMe("Fog/Fog_Idle");
+                        this.tile_Hollow[i].Name = "Fog";
                     }
                     // switch to space theme
                     else {
-                        this.tile_Hollow[i].ShowMe("Hollow/Electrofield");
+                        this.tile_Hollow[i].ShowMe("Electrofield/Electrofield_Idle");
+                        this.tile_Hollow[i].Name = "Electrofield";
                     }
+
+                    if (this.rng.RandomizeTrueFalse(9,1) ||
+                        this.tile_Core[this.tile_Core.length - 1].IsMoving) this.tile_Hollow[i].HideMe();
                 }
             }
 
             // attached the fell out spiked tile to a new core tile
-            for (let i:number = 0; i < this.tile_Spiked.length; i++) {
+            for (let i:number = 0; i < this.spikeLimit; i++) {
                 if (this.tile_Spiked[i].Y > STAGE_HEIGHT) {
-
-                    if (this._score >= 0) {
-                        this.tile_Spiked[i].ShowMe("Spiked/Star_Cluster");
-                    }
+                    // console.log("spike limit: " + this.spikeLimit);
+                    if (this._score > -250) this.tile_Spiked[i].ShowMe("Spiked/Sea_Urchin");
+                    if (this._score >= 100) this.tile_Spiked[i].ShowMe("Spiked/Star_Cluster");
 
                     let n:number;
                     do {
                         // make sure n does not get inside an occupied ID
-                        n = this.rng.RandomBetween(this.tile_Core.length - 17, this.tile_Core.length - 1);
-                    } while (this.occupiedID[n] != false);
-                    
-                    this.tile_Spiked[i].X = this.tile_Core[n].X;
-                    this.tile_Spiked[i].Y = this.tile_Core[n].Y;
-                    this.tile_Core[n].HideMe();
-                    
+                        n = this.rng.RandomBetween(this.tile_Core.length - 35, this.tile_Core.length - 1);
+                    } while (this.occupiedID[n] == true);
 
-                    // register occupiedID
-                    this.occupiedID[n] = true;
+                    // console.log("spikes spawn at " + n + " " + this.occupiedID[n]);
 
-                    // immobile its base tile
-                    this.tile_Core[n].IsMoving = false;
+                    if (!this.rng.RandomizeTrueFalse(1,8)) {
+                        this.tile_Spiked[i].X = this.tile_Core[n].X;
+                        this.tile_Spiked[i].Y = this.tile_Core[n].Y;
+                        this.tile_Spiked[i].CollisionPermission = true;
+                        this.tile_Core[n].HideMe();
+                        this.tile_Core[n].CollisionPermission = false;
+
+                        // register occupiedID
+                        this.occupiedID[n] = true;
+    
+                        // immobile its base tile
+                        this.tile_Core[n].IsMoving = false;
+                    }
                 }
             }
 
             // attached the fell out breakable tile to a new core tile
-            for (let i:number = 0; i < this.tile_Breakable.length; i++) {
+            for (let i:number = 0; i < this.breakableLimit; i++) {
                 if (this.tile_Breakable[i].Y > STAGE_HEIGHT) {
-                    this.rng.GenerateTAFollowTile(this.tile_Breakable[i], this.tile_Core);
-                    // use underwater theme
-                    if (this._score < 0) {
-                        this.tile_Breakable[i].Name = "Coral/Coral_Idle" ;
-                        this.tile_Breakable[i].ShowMe("Coral/Coral_Idle 01");
-                    }
-                    
-                    else if (this._score >= 500) {
-                        this.tile_Breakable[i].Name = "Forcefield/Forcefield_Idle";
-                        this.tile_Breakable[i].ShowMe("Forcefield/Forcefield_Idle 01");
-                    }
+                    // console.log("breakables limit: " + this.breakableLimit);
 
-                    this.tile_Breakable[i].Hit = 3;
-                    this.tile_Breakable[i].ReActivateMe();
+                    let n:number;
+                    do {
+                        // make sure n does not get inside an occupied ID
+                        n = this.rng.RandomBetween(this.tile_Core.length - 35, this.tile_Core.length - 1);
+                    } while (this.occupiedID[n] == true);
+
+                    // console.log("breakable spawn at " + n + " " + this.occupiedID[n]);
+
+                    if (!this.rng.RandomizeTrueFalse(1,8)) {
+                        this.tile_Breakable[i].X = this.tile_Core[n].X;
+                        this.tile_Breakable[i].Y = this.tile_Core[n].Y;
+
+                        if (this._score < 0) {
+                            this.tile_Breakable[i].Name = "Coral/Coral_Idle" ;
+                            this.tile_Breakable[i].ShowMe("Coral/Coral_Idle 01");
+                        }
+                        
+                        else if (this._score >= 1500) {
+                            this.tile_Breakable[i].Name = "Forcefield/Forcefield_Idle";
+                            this.tile_Breakable[i].ShowMe("Forcefield/Forcefield_Idle 01");
+                        }
+    
+                        this.tile_Breakable[i].Hit = 3;
+                        this.tile_Breakable[i].ReActivateMe();
+
+                        this.tile_Core[n].HideMe();
+                        this.tile_Core[n].CollisionPermission = false;
+
+                        // register occupiedID
+                        this.occupiedID[n] = true;
+    
+                        // immobile its base tile
+                        this.tile_Core[n].IsMoving = false;
+                        this.tile_Breakable[i].IsMoving = this.rng.RandomizeTrueFalse(4,1);
+                        this.tile_Breakable[i].SetPatrolSpeed(this.rng.RandomBetween(1, this.rng.MaxSpeed));
+                    }
                 }
             }
 
-            // attached the fell out bubble tile to a new core tile
-            for (let i:number = 0; i < this.tile_Bubble.length; i++) {
+            for (let i:number = 0; i < this.bubbleLimit; i++) {
                 if (this.tile_Bubble[i].Y > STAGE_HEIGHT) {
-                    this.rng.GenerateTAFollowTile(this.tile_Bubble[i], this.tile_Core);
-                    this.tile_Bubble[i].ShowMe("Bubbles/Bubbles_Idle");
-                    this.tile_Bubble[i].ReActivateMe();
+                    // console.log("bubble limit: " + this.bubbleLimit);
+
+                    let n:number;
+                    do {
+                        // make sure n does not get inside an occupied ID
+                        n = this.rng.RandomBetween(this.tile_Core.length - 35, this.tile_Core.length - 1);
+                    } while (this.occupiedID[n] == true);
+
+                    // console.log("bubble spawn at " + n + " " + this.occupiedID[n]);
+
+                    if (!this.rng.RandomizeTrueFalse(1,8)) {
+                        this.tile_Bubble[i].X = this.tile_Core[n].X;
+                        this.tile_Bubble[i].Y = this.tile_Core[n].Y;
+                        this.tile_Bubble[i].ShowMe("Bubbles/Bubbles_Idle");
+                        this.tile_Bubble[i].ReActivateMe();
+                        this.tile_Core[n].HideMe();
+                        this.tile_Core[n].CollisionPermission = false;
+
+                        // register occupiedID
+                        this.occupiedID[n] = true;
+    
+                        // immobile its base tile
+                        this.tile_Core[n].IsMoving = false;
+                        this.tile_Bubble[i].IsMoving = this.rng.RandomizeTrueFalse(4,1);
+                        this.tile_Bubble[i].SetPatrolSpeed(this.rng.RandomBetween(1, this.rng.MaxSpeed));
+                    }
                 }
             }
 
             // attached the fell out cloud tile to a new core tile
             for (let i:number = 0; i < this.tile_Cloud.length; i++) {
                 if (this.tile_Cloud[i].Y > STAGE_HEIGHT) {
-                    this.rng.GenerateTAFollowTile(this.tile_Cloud[i], this.tile_Core);
-                    
-                    if (this._score > 100) {
+
+                    let n:number;
+                    do {
+                        // make sure n does not get inside an occupied ID
+                        n = this.rng.RandomBetween(this.tile_Core.length - 35, this.tile_Core.length - 1);
+                    } while (this.occupiedID[n] == true);
+
+                    // console.log("cloud spawn at " + n + " " + this.occupiedID[n]);
+
+                    if (!this.rng.RandomizeTrueFalse(1,8) && this._score > 200) {
+                        this.tile_Cloud[i].X = this.tile_Core[n].X;
+                        this.tile_Cloud[i].Y = this.tile_Core[n].Y;
                         this.tile_Cloud[i].ShowMe("Idle/Cloud_Idle");
                         this.tile_Cloud[i].ActivateMe();
+                        this.tile_Core[n].HideMe();
+                        this.tile_Core[n].CollisionPermission = false;
+
+                        // register occupiedID
+                        this.occupiedID[n] = true;
+    
+                        // immobile its base tile
+                        this.tile_Core[n].IsMoving = false;
+                        this.tile_Cloud[i].IsMoving = this.rng.RandomizeTrueFalse(4,1);
+                        this.tile_Cloud[i].SetPatrolSpeed(this.rng.RandomBetween(1, this.rng.MaxSpeed));
                     }
                 }
             }
@@ -558,26 +813,33 @@ export default class GameplayState {
             // attached the fell out jetpack to a new core tile
             for (let i:number = 0; i < this.item_Jetpack.length; i++) {
                 if (this.item_Jetpack[i].Y > STAGE_HEIGHT) {
-
+                    
                     let n:number;                    
                     do {
                         // make sure n does not get inside an occupied ID
-                        n = this.rng.RandomBetween(this.tile_Core.length - 17, this.tile_Core.length - 1);
+                        n = this.rng.RandomBetween(this.tile_Core.length - 35, this.tile_Core.length - 1);
                     } while (this.occupiedID[n] != false);
-
+                    
                     this.item_Jetpack[i].X = this.tile_Core[n].X + this.tile_Core[n].Width / 2;
                     this.item_Jetpack[i].Y = this.tile_Core[n].Y;
+                    this.item_Jetpack[i].CollisionPermission = true;
                     this.item_Jetpack[i].ReEnableMe();
-
+                    
                     // register occupiedID
                     this.occupiedID[n] = true;
-
+                    
                     // immobile its base tile
                     this.tile_Core[n].IsMoving = false;
+                    
+                    if (!this.rng.RandomizeTrueFalse(1,4)) {
+                        this.item_Jetpack[i].FlyMe();
+                        this.item_Jetpack[i].CollisionPermission = false;
+                    }
                 }
             }
         }
 
         else this._cameraUpdateSignal = false;
     }
+    
 }

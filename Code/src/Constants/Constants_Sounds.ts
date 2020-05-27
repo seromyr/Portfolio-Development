@@ -61,4 +61,16 @@ export const SFX_MANIFEST = [
         id:"touchTrampoline",
         data:4
     },
+    {
+        type:"sound",
+        src:"./lib/Sounds/Breakable_Platforms.wav",
+        id:"break",
+        data:4
+    },
+    {
+        type:"sound",
+        src:"./lib/Sounds/Bubble_Platform_Disappear.wav",
+        id:"bubble",
+        data:4
+    }
 ];

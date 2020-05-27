@@ -5,7 +5,8 @@ import { PLAYER_JUMPSPEED, STAGE_WIDTH } from "../../Constants/Constants_General
 export default class Tile extends Entity {
 
     protected _allowCollision:boolean;
-    get CollisionPermission():boolean {return this._allowCollision;}    
+    get CollisionPermission():boolean {return this._allowCollision;}
+    set CollisionPermission(value:boolean) {this._allowCollision = value;}
 
     // gameplay variables
     protected _lethal:boolean;
@@ -31,7 +32,7 @@ export default class Tile extends Entity {
         this._tileSpeed = 0;
     }
 
-    public SetMotion(speed:number):void {
+    public SetPatrolSpeed(speed:number):void {
         this._tileSpeed = speed;
 
         // determine which side this tile is staying closer to then moving towards it

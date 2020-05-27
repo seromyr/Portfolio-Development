@@ -207,7 +207,7 @@
             <key type="filename">../Concepts/Tiles/Trampoline/Leaves/Leaves_Idle.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
-                <point_f>0,0</point_f>
+                <point_f>0.0555556,0.48</point_f>
                 <key>spriteScale</key>
                 <double>1</double>
                 <key>scale9Enabled</key>

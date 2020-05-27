@@ -1,10 +1,9 @@
+import { SCREEN_TITLE } from "../Constants/Constants_General";
 import AssetManager from "../Miscs/AssetManager";
 import ScreenManager from "./_ScreenManager";
-import { SCREEN_TITLE } from "../Constants/Constants_General";
 import GameplayState from "../GameLogic/GameplayState";
 import BitmapText from "./Bitmap_Text";
 import GameWorld from "../GameLogic/Enviroment/GameWorld";
-import { SFX_MANIFEST } from "../Constants/Constants_Sounds";
 
 export default class GameplayScreen extends ScreenManager {
 
@@ -40,8 +39,6 @@ export default class GameplayScreen extends ScreenManager {
 
         // construct gameworld visual
         this._gameWorld = new GameWorld(assetManager, stage);
-
-
     }
 
     public ShowMe():void {
@@ -71,14 +68,14 @@ export default class GameplayScreen extends ScreenManager {
 
         // update score
         if (this.GameplayIsRunning) {
-            if (this._gameplayState.Score > -100 && this._gameplayState.Score < 400) {
+            if (this._gameplayState.Score > 100 && this._gameplayState.Score < 400) {
                 if (this.soundCounter == 0) {
                     createjs.Sound.play("enterSurface");
                     this.soundCounter = 1;
                 }
             }
 
-            if (this._gameplayState.Score > 400) {
+            if (this._gameplayState.Score > 1000) {
                 if (this.soundCounter == 1) {
                     createjs.Sound.play("enterSpace");
                     this.soundCounter = 2;

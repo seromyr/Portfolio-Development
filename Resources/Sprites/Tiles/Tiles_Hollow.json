@@ -6,15 +6,56 @@
 
 "framerate": 30,
 "frames": [
-    [1, 1, 48, 16, 0, 0, 0]
+    [1, 1, 80, 9, 0, 0, -11],
+    [1, 1, 80, 9, 0, 0, -11],
+    [83, 1, 52, 9, 0, -9, -11],
+    [83, 1, 52, 9, 0, -9, -11],
+    [137, 1, 40, 9, 0, -9, -11],
+    [137, 1, 40, 9, 0, -9, -11],
+    [1, 12, 80, 14, 0, 0, -8],
+    [1, 12, 80, 14, 0, 0, -8],
+    [83, 12, 80, 21, 0, 0, -4],
+    [83, 12, 80, 21, 0, 0, -4],
+    [165, 12, 41, 21, 0, -45, -5],
+    [1, 35, 51, 22, 0, -35, -4],
+    [54, 35, 97, 25, 0, -2, -1],
+    [54, 35, 97, 25, 0, -2, -1],
+    [153, 35, 82, 26, 0, -9, 0],
+    [153, 35, 82, 26, 0, -9, 0],
+    [153, 35, 82, 26, 0, -9, 0],
+    [1, 63, 87, 26, 0, -7, 0],
+    [1, 63, 87, 26, 0, -7, 0],
+    [90, 63, 93, 26, 0, -4, 0],
+    [90, 63, 93, 26, 0, -4, 0],
+    [1, 91, 80, 28, 0, 0, 0],
+    [1, 91, 80, 28, 0, 0, 0],
+    [1, 91, 80, 28, 0, 0, 0],
+    [83, 91, 82, 28, 0, -9, 0],
+    [83, 91, 82, 28, 0, -9, 0],
+    [83, 91, 82, 28, 0, -9, 0],
+    [167, 91, 82, 28, 0, -9, 0],
+    [1, 121, 90, 28, 0, -5, 0],
+    [93, 121, 100, 28, 0, 0, 0],
+    [1, 151, 100, 28, 0, 0, 0],
+    [103, 151, 100, 28, 0, 0, 0],
+    [1, 181, 67, 28, 0, -19, 0],
+    [70, 181, 82, 28, 0, -9, 0]
 ],
 
 "animations": {
-    "Hollow": { "frames": [0] }
+    "Electrofield/Electrofield_Disappear/Electrofield_Disappear": { "frames": [21, 8, 6, 0, 2, 4] },
+    "Electrofield/Electrofield_Reappear/Electrofield_Reappear": { "frames": [5, 3, 1, 7, 9, 23] },
+    "Ink/Ink_Reappear/Ink_Reappear": { "frames": [10, 11, 32, 33, 26] },
+    "Fog/Fog_Disappear/Fog_Disappear": { "frames": [14, 17, 19, 12] },
+    "Fog/Fog_Reappear/Fog_Reappear": { "frames": [13, 20, 18, 16] },
+    "Fog/Fog_Idle": { "frames": [15] },
+    "Electrofield/Electrofield_Idle": { "frames": [22] },
+    "Ink/Ink_Disappear/Ink_Disappear": { "frames": [24, 27, 28, 29, 30, 31] },
+    "Ink/Ink_Idle": { "frames": [25] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:14507220aab30f11dab4c3e0f9fd5c6f:15761be277d9ce4f09a9610ef0f4161d:6010345b37e96e225083acc892dc9332$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:f35363b75031b64d5c8f40151161c93d:a68ee90b62fbafcafb99b1f6789c56d2:6010345b37e96e225083acc892dc9332$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 
