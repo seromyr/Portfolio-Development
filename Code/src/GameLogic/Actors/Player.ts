@@ -258,12 +258,12 @@ export default class Player extends Entity {
                 if (this.X >= tile[i].X - 16 && this.X <= tile[i].X + tile[i].Width + 16) {
                     if (this.Y >= tile[i].Y && this.Y < tile[i].Y + tile[i].Height) {
 
-                        console.log(`landed on a ${tile[i].Name} tile`);
+                        // console.log(`landed on a ${tile[i].Name} tile`);
 
                         if (tile[i].Lethal) {
                             this.Alive = false;
                             // console.log("dead by trap");
-                            this.Y -= 64;
+                            this.Y -= 128;
                         }
                         
                         else if (!tile[i].Lethal) {
@@ -301,7 +301,7 @@ export default class Player extends Entity {
                 //if player collides with a tile while falling down
                 if (this.X >= trampoline[i].X - 16 && this.X <= trampoline[i].X + trampoline[i].Width + 16) {
                     if (this.Y >= trampoline[i].Y && this.Y < trampoline[i].Y + trampoline[i].Height) {
-                        console.log(`landed on a ${trampoline[i].Name}`);
+                        // console.log(`landed on a ${trampoline[i].Name}`);
 
                         this.soundCounter = 1;
                         if (this.soundCounter == 1) {
@@ -334,7 +334,7 @@ export default class Player extends Entity {
                 //if player collides with a tile while falling down
                 if (this.X >= tileset[i].X - 16 && this.X <= tileset[i].X + tileset[i].Width + 16) {
                     if (this.Y >= tileset[i].Y && this.Y < tileset[i].Y + tileset[i].Height) {
-                        console.log(`landed on a ${tileset[i].Name}`);
+                        // console.log(`landed on a ${tileset[i].Name}`);
 
                         this.soundCounter = 1;
                         if (this.soundCounter == 1) {
@@ -367,11 +367,9 @@ export default class Player extends Entity {
         for (let i:number = 0; i < tileset.length; i++) {
             //if player collides with a hollow tile while falling down
             if (this.X >= tileset[i].X - 32 && this.X <= tileset[i].X + tileset[i].Width + 32) {
-                if (this.Y >= tileset[i].Y - tileset[i].Height && this.Y < tileset[i].Y + tileset[i].Height * 6) {
-                    console.log(`fell through a ${tileset[i].Name}`);
-
+                if (this.Y >= tileset[i].Y - tileset[i].Height * 2 && this.Y < tileset[i].Y + tileset[i].Height * 6) {
+                    // console.log(`fell through a ${tileset[i].Name}`);
                     tileset[i].DissolveMe();
-
                 }
             } else {
                 this._isGrounded = false;

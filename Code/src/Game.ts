@@ -34,7 +34,7 @@ let creditsScreen:CreditsScreen;
 
 // BOOT UP GAME
 function onReady(e:createjs.Event):void {
-    console.log(">> adding sprites to game");
+    // console.log(">> adding sprites to game");
 
     // show Main Menu upon game start
     mainMenu = new MainMenuScreen(assetManager, stage);
@@ -62,7 +62,7 @@ function onReady(e:createjs.Event):void {
     // startup the ticker
     createjs.Ticker.framerate = FRAME_RATE;
     createjs.Ticker.on("tick", onTick);        
-    console.log(">> game ready");
+    // console.log(">> game ready");
 }
 
 // CUSTOM EVENTS
@@ -120,7 +120,7 @@ function main():void {
     //let browser focus on gameplay canvas after loading
     window.focus();
 
-    console.log(">> initializing");
+    // console.log(">> initializing");
 
     // get reference to canvas
     canvas = <HTMLCanvasElement> document.getElementById("game-canvas");

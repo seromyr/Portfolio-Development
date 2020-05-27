@@ -19,7 +19,8 @@ export default class MainMenuScreen extends ScreenManager {
 
     public ShowMe():void {
         super.ShowMe();
-        this._version.WriteMessageCenter(96, STAGE_HEIGHT - 16, "v0.9e");
+        this._version.WriteMessageCenter(STAGE_WIDTH / 2, STAGE_HEIGHT - 8, "v1.0");
+        this._version.DisplaySize(0.25,0.25);
         this.stage.addChild(this._version.DisplayData);
     }
 }

@@ -1,0 +1,25 @@
+{
+
+"images": [
+    "Space_Background.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 487, 451, 0, -53, -218],
+    [1, 454, 600, 800, 0, 0, 0],
+    [1, 1256, 597, 321, 0, 0, -277]
+],
+
+"animations": {
+    "Space (third background)/Asteroids": { "frames": [0] },
+    "Space (third background)/Moon": { "frames": [1] },
+    "Space (third background)/Planets": { "frames": [2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:969cff6ad6fc3c7229d1e5339bbc55ea:24257a8f588060333769c84d8585aa3a:27f445d2accb5e559774e3d76cdde1d6$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

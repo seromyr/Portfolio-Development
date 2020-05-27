@@ -60,14 +60,14 @@ export const ASSET_MANIFEST = [
     // - Fonts
     {
         type:"json",
-        src:"./lib/Sprites/Fonts/glyphs_Pixeled.json",
-        id:"pixeled",
+        src:"./lib/Sprites/Fonts/glyphs_LucidaConsole.json",
+        id:"lucon",
         data:0
     },
     {
         type:"image",
-        src:"./lib/Sprites/Fonts/glyphs_Pixeled.png",
-        id:"pixeled",
+        src:"./lib/Sprites/Fonts/glyphs_LucidaConsole.png",
+        id:"lucon",
         data:0
     },
 ];

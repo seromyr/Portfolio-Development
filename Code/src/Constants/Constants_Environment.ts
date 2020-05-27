@@ -44,17 +44,4 @@ export const ENV_MANIFEST = [
         id:"bkgSpace",
         data:0
     },
-    // - Foregrounds
-    {
-        type:"json",
-        src:"./lib/Sprites/Environment/Environment.json",
-        id:"environment",
-        data:0
-    },
-    {
-        type:"image",
-        src:"./lib/Sprites/Environment/Environment.png",
-        id:"environment",
-        data:0
-    },
 ];

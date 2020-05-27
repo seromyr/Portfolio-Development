@@ -60,6 +60,8 @@ export default class GameplayState {
     get CameraSpeed():number {return this._cameraSpeed;}
     private _cameraUpdateSignal:boolean;
     get GameplaySignal():boolean {return this._cameraUpdateSignal}
+    get PlayerPosX():number {return this.mainChar.X;}
+    get PlayerPosY():number {return this.mainChar.Y;}
 
     // player controller
     private playerController:PlayerController;
@@ -213,7 +215,7 @@ export default class GameplayState {
             //     this.rng,
             //     this.occupiedID,
             //     this.rangeExpander);
-            this.Camera();
+            this.Watcher();
 
             // allow patrol mode on some tiles
             {
@@ -497,8 +499,8 @@ export default class GameplayState {
         }
     }
     
-    // Objects mover
-    private Camera():void {
+    // Move objects and increase game difficulty
+    private Watcher():void {
         // if player is on the upper half  of the camera, try to catch up with him
         if (this.mainChar.Y < STAGE_HEIGHT * 0.5 && this.mainChar.Jump) {
 

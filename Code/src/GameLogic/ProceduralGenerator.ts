@@ -24,16 +24,6 @@ export default class ProceduralGenerator {
         return randomNum;
     }
 
-    // Randomize a coordinates inside the gameplaysren
-    public RandomCoordinatesOnScreen():number[][] {
-        let randomCoords: number [][] = [[],[]];
-
-        randomCoords[0][0] = this.RandomBetween(0, STAGE_WIDTH);
-        randomCoords[0][1] = this.RandomBetween(0, STAGE_HEIGHT);
-
-        return randomCoords;
-    }
-
     public GenerateCoreTiles(tileset:Tile[], tileStart:Tile):void {
         // the 1st generated tile should stay close to the starting tile
         tileset[0].X = this.RandomBetween(0, STAGE_WIDTH - tileStart.Width);
@@ -46,28 +36,6 @@ export default class ProceduralGenerator {
 
             tileset[i].Y = this.RandomBetween(tileset[i - 1].Y - tileset[i - 1].Height * 1.5,
                                               tileset[i - 1].Y - tileset[i - 1].Height * 2);
-        }
-    }
-    
-    public GenerateTFollowTiles(tileset:Tile[], tile_Core:Tile[]):void {
-        // get a random ID and stay close to it
-        for (let i:number = 0; i < tileset.length; i++) {
-
-            let n:number = this.RandomBetween(0, tile_Core.length - 1);
-
-            // put X on the wider part of the screen
-            if (tile_Core[n].X < STAGE_WIDTH - tile_Core[n].X) {
-                
-                tileset[i].X = this.RandomBetween(tile_Core[n].X + tile_Core[n].Width,
-                                                  STAGE_WIDTH - tile_Core[n].Width);
-            }
-
-            else {
-                tileset[i].X = this.RandomBetween(0, tile_Core[n].X - tile_Core[n].Width);
-            }
-
-            tileset[i].Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * this._altMin,
-                                              tile_Core[n].Y + tile_Core[n].Height * this._altMax);
         }
     }
 
@@ -91,27 +59,12 @@ export default class ProceduralGenerator {
         }
     }
 
-    public GenerateTAFollowTile(tileset:Tile, tile_Core:Tile[]):void {
-        // get a random off the screen ID and stay close to it
-        let n:number = this.RandomBetween(tile_Core.length - 5, tile_Core.length - 1);
-        // put X on the wider part of the screen
-        if (tile_Core[n].X < STAGE_WIDTH - tile_Core[n].X) {            
-            tileset.X = this.RandomBetween(tile_Core[n].X + tile_Core[n].Width,
-                                           STAGE_WIDTH - tile_Core[n].Width);
-        } else {
-            tileset.X = this.RandomBetween(0, tile_Core[n].X - tile_Core[n].Width);
-        }
-
-        tileset.Y = this.RandomBetween(tile_Core[n].Y - tile_Core[n].Height * this._altMin,
-                                       tile_Core[n].Y + tile_Core[n].Height * this._altMax);
-    }
-
     public GenerateALowImpactTile(tile:Tile, tile_Core:Tile[]):void {
 
         let n:number = tile_Core.length - 1;
 
         // put X on the wider part of the screen
-        if (tile_Core[n].X < STAGE_WIDTH - tile_Core[n].X) {            
+        if (tile_Core[n].X < STAGE_WIDTH - tile_Core[n].X) {
             tile.X = this.RandomBetween(tile_Core[n].X + tile_Core[n].Width,
                                         STAGE_WIDTH - tile_Core[n].Width);
         } else {
@@ -119,7 +72,6 @@ export default class ProceduralGenerator {
         }
 
         // put Y higher than the highest tile of the core tile array array
-        // tile.Y = this.RandomBetween(tile_Core[n].Y, tile_Core[n].Y - tile_Core[n].Height * this._altMin);
         tile.Y = tile_Core[n].Y;
     }
 

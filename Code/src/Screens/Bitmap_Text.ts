@@ -8,7 +8,7 @@ export default class Bitmap_Text {
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
         //create bitmap numeric text
-        this._message = new createjs.BitmapText("", assetManager.getSpriteSheet("pixeled"));
+        this._message = new createjs.BitmapText("", assetManager.getSpriteSheet("lucon"));
     }
     
     public WriteMessageLeft(x:number, y:number, message:string):void {
@@ -26,5 +26,10 @@ export default class Bitmap_Text {
         this._message.y = y;        
         this._message.regX = 0;
         this._message.regX = this._message.getBounds().width / 2;
+    }
+
+    public DisplaySize(x:number, y:number):void {
+        this._message.scaleX = x;
+        this._message.scaleY = y;
     }
 }

@@ -1,0 +1,39 @@
+{
+
+"images": [
+    "Tiles_Cloud.png"
+],
+
+"framerate": 30,
+"frames": [
+    [1, 1, 80, 28, 0, 0, 0],
+    [1, 1, 80, 28, 0, 0, 0],
+    [1, 1, 80, 28, 0, 0, 0],
+    [1, 31, 80, 28, 0, 0, 0],
+    [1, 31, 80, 28, 0, 0, 0],
+    [1, 61, 80, 28, 0, 0, 0],
+    [1, 61, 80, 28, 0, 0, 0],
+    [1, 91, 80, 28, 0, 0, 0],
+    [1, 91, 80, 28, 0, 0, 0],
+    [1, 121, 80, 28, 0, 0, 0],
+    [1, 121, 80, 28, 0, 0, 0],
+    [1, 151, 80, 28, 0, 0, 0],
+    [1, 151, 80, 28, 0, 0, 0],
+    [1, 181, 80, 28, 0, 0, 0],
+    [1, 181, 80, 28, 0, 0, 0],
+    [1, 211, 80, 28, 0, 0, 0],
+    [1, 211, 80, 28, 0, 0, 0]
+],
+
+"animations": {
+    "Cloud Disappear/Cloud_Disappear": { "frames": [0, 3, 5, 7, 9, 11, 13, 15] },
+    "Cloud Reappear/Cloud_Reappear": { "frames": [16, 14, 12, 10, 8, 6, 4, 1] },
+    "Idle/Cloud_Idle": { "frames": [2] }
+},
+
+"texturepacker": [
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:b217fd0fab086c825f45c73103bc0dee:a07e9d73a89859e2e74d087c5afa3ce4:8a3e1a28a2a4db7e75a789efe041ffc4$",
+        "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
+]
+
+}

@@ -17,8 +17,10 @@ export default class ScreenManager {
     // screen objects
     protected background:createjs.Sprite;
     protected btnPlay:createjs.Sprite;
+    protected btnRetry:createjs.Sprite;
     protected btnShop:createjs.Sprite;
     protected btnMainMenu:createjs.Sprite;
+    protected btnMainMenuL:createjs.Sprite;
     protected btnCredits:createjs.Sprite;
 
     constructor(assetManager:AssetManager, stage:createjs.StageGL, bkgImage:string, screenType:string) {
@@ -32,24 +34,33 @@ export default class ScreenManager {
         this.screen.addChild(background);
 
         // set up Main Menu buttons
-        this.btnPlay = assetManager.getSprite("gameUI", "play", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 96);
+        this.btnPlay = assetManager.getSprite("gameUI", "play", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 64);
         let btnPlayEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnPlay, "play", "play highlight", "play confirm", false);
         
-        this.btnShop = assetManager.getSprite("gameUI", "shop", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 252);
+        this.btnRetry = assetManager.getSprite("gameUI", "retry", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 64);
+        let btnRetryEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnRetry, "retry", "retry highlight", "retry confirm", false);
+
+        this.btnShop = assetManager.getSprite("gameUI", "shop", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 256);
         let btnShopEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnShop, "shop", "shop highlight", "shop confirm", false);
         
         // set up Return to Main Menu button
         this.btnMainMenu = assetManager.getSprite("gameUI", "return", STAGE_WIDTH - 127, STAGE_HEIGHT - 35);
         let btnMainMenuEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnMainMenu, "return", "return highlight", "return confirm", false);
         
+        // set up Return to Main Menu button
+        this.btnMainMenuL = assetManager.getSprite("gameUI", "main menu", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 160);
+        let btnMainMenuLEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnMainMenuL, "main menu", "main menu highlight", "main menu confirm", false);
+        
         // set up Credits button
-        this.btnCredits = assetManager.getSprite("gameUI", "credits", STAGE_WIDTH - 127, STAGE_HEIGHT - 35);
+        this.btnCredits = assetManager.getSprite("gameUI", "credits", STAGE_WIDTH/2, STAGE_HEIGHT/2 + 160);
         let btnCreditsEffect:createjs.ButtonHelper = new createjs.ButtonHelper(this.btnCredits, "credits", "credits highlight", "credits confirm", false);
 
         // set up event listener for each button
         this.btnPlay.on("click", this.GotoPlay, this);
+        this.btnRetry.on("click", this.GotoPlay, this);
         this.btnShop.on("click", this.GotoShop, this);
         this.btnMainMenu.on("click", this.GotoMainMenu, this);
+        this.btnMainMenuL.on("click", this.GotoMainMenu, this);
         this.btnCredits.on("click", this.GotoCredits, this);
 
         // set up event for each button
@@ -60,7 +71,9 @@ export default class ScreenManager {
 
         // sound effect events
         this.btnPlay.on    ("mouseover", () => {createjs.Sound.play("btnHover");}, false);
+        this.btnRetry.on    ("mouseover", () => {createjs.Sound.play("btnHover");}, false);
         this.btnMainMenu.on("mouseover", () => {createjs.Sound.play("btnHover");}, false);
+        this.btnMainMenuL.on("mouseover", () => {createjs.Sound.play("btnHover");}, false);
         this.btnCredits.on ("mouseover", () => {createjs.Sound.play("btnHover");}, false);
     }
     
@@ -117,6 +130,16 @@ export default class ScreenManager {
         this.screen.removeChild(this.btnPlay);
     }
 
+    // display Rerty button on the screen
+    protected ShowRetryButton():void  {
+        this.screen.addChild(this.btnRetry);
+    }
+
+    // hide Play button from the screen
+    protected HideRetryButton():void  {
+        this.screen.removeChild(this.btnRetry);
+    }
+
     // display Shop button on the screen
     protected ShowShopButton():void  {
         this.screen.addChild(this.btnShop);
@@ -135,6 +158,16 @@ export default class ScreenManager {
     // hide Return button from the screen
     protected HideReturnButton():void  {
         this.screen.removeChild(this.btnMainMenu);
+    }
+
+    // display Main Menu button on the screen
+    protected ShowMainMenuButton():void  {
+        this.screen.addChild(this.btnMainMenuL);
+    }
+
+    // hide Return button from the screen
+    protected HideMainMenuButton():void  {
+        this.screen.removeChild(this.btnMainMenuL);
     }
 
     // display Show Credits button on the screen

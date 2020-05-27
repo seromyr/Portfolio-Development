@@ -181,6 +181,157 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_000.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_001.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_002.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_003.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_004.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_005.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_006.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_007.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_008.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_009.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_010.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_011.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_012.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_013.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_014.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_015.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_016.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_017.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_018.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_019.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_020.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_021.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_022.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_023.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_024.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_025.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_026.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_027.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_028.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_029.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_030.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_031.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_032.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_033.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_034.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_035.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_036.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_037.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_038.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_039.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_040.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_041.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_042.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_043.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_044.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_045.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_046.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_047.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_048.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_049.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_050.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_051.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_052.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_053.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_054.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_055.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_056.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_057.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_058.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_059.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_060.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_061.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_062.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_063.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_064.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_065.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_066.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_067.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_068.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_069.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_070.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_071.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_072.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_073.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_074.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_075.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_076.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_077.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_078.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_079.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_080.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_081.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_082.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_083.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_084.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_085.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_086.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_087.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_088.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_089.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_090.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_091.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_092.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_093.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_094.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_095.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_096.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_097.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_098.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_099.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_100.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_101.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_102.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_103.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_104.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_105.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_106.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_107.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_108.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_109.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_110.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_111.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_112.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_113.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_114.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_115.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_116.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_117.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_118.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_119.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_120.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_121.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_122.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_123.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_124.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_125.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_126.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_127.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_128.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_129.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_130.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_131.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_132.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_133.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_134.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_135.png</key>
+            <key type="filename">../Concepts/GameUI/Controls/keyboardControls_136.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>39,8,78,16</rect>
+                <key>scale9Paddings</key>
+                <rect>39,8,78,16</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Concepts/GameUI/CreditsScreen.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -246,6 +397,26 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../Concepts/GameUI/main menu confirm.png</key>
+            <key type="filename">../Concepts/GameUI/main menu highlight.png</key>
+            <key type="filename">../Concepts/GameUI/main menu.png</key>
+            <key type="filename">../Concepts/GameUI/retry confirm.png</key>
+            <key type="filename">../Concepts/GameUI/retry highlight.png</key>
+            <key type="filename">../Concepts/GameUI/retry.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>96,23,192,47</rect>
+                <key>scale9Paddings</key>
+                <rect>96,23,192,47</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../Concepts/GameUI/play confirm.png</key>
             <key type="filename">../Concepts/GameUI/play highlight.png</key>
             <key type="filename">../Concepts/GameUI/play.png</key>
@@ -290,6 +461,13 @@
             <filename>../Concepts/GameUI/credits confirm.png</filename>
             <filename>../Concepts/GameUI/credits highlight.png</filename>
             <filename>../Concepts/GameUI/credits.png</filename>
+            <filename>../Concepts/GameUI/Controls</filename>
+            <filename>../Concepts/GameUI/retry confirm.png</filename>
+            <filename>../Concepts/GameUI/retry highlight.png</filename>
+            <filename>../Concepts/GameUI/retry.png</filename>
+            <filename>../Concepts/GameUI/main menu confirm.png</filename>
+            <filename>../Concepts/GameUI/main menu highlight.png</filename>
+            <filename>../Concepts/GameUI/main menu.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

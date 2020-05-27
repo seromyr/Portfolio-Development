@@ -11,8 +11,8 @@ export default class Endcreen extends ScreenManager {
     constructor(assetManager:AssetManager, stage:createjs.StageGL) {
 
         super(assetManager, stage, "GameOver", SCREEN_TITLE[3]);
-        super.ShowPlayButton();
-        super.ShowReturnButton();
+        super.ShowRetryButton();
+        super.ShowMainMenuButton();
 
 
         this._score = new Bitmap_Text(assetManager, stage);
@@ -22,7 +22,7 @@ export default class Endcreen extends ScreenManager {
         super.ShowMe();
         
 
-        this._score.WriteMessageCenter(STAGE_WIDTH / 2,350, this._highscore);
+        this._score.WriteMessageCenter(STAGE_WIDTH / 2,350, this._highscore + "m");
         this.stage.addChild(this._score.DisplayData);
     }
 
