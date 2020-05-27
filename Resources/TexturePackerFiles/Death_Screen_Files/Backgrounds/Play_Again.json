@@ -6,15 +6,15 @@
 
 "framerate": 30,
 "frames": [
-    [1, 1, 600, 800, 0, 0, 0]
+    [0, 0, 600, 800, 0, 0, 0]
 ],
 
 "animations": {
-    "Death_Background": { "frames": [0] }
+    "Death_Screen_Background_v": { "frames": [0] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:1ab4a4e1bcfc76182c5d2f3dd39d58ed:2cf95ad0e07a7f798b65f09d08486ee4:8eaf98f61652f37db889424072e98348$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:9ad7946cf72fa5313fbad7e26b2a9f39:410aed15d092d8daf433e23ed1cc9f8d:8eaf98f61652f37db889424072e98348$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

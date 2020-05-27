@@ -10,11 +10,11 @@
 ],
 
 "animations": {
-    "Credits_Background": { "frames": [0] }
+    "Credits_Screen_Backgroundv": { "frames": [0] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:4385eb33dacd606106634b5e1a3f8cb0:0646229437bf0da684c22f1c43a49f3a:134640216c395f961ac5468bd91492f5$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:f0cc9cc73ee0f48a1d64bfae61517dde:3b4917fcd50275fc1e884d7937997960:134640216c395f961ac5468bd91492f5$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

@@ -1,7 +1,7 @@
 {
 
 "images": [
-    "Button_States.png"
+    "Play_Button_States.png"
 ],
 
 "framerate": 30,
@@ -18,7 +18,7 @@
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:d1afff8d25469762b25aa5d00b56b8dc:bc8ef717d743b908cf0981299ab27d80:33068fa017f03ab61c9b5532a361db2e$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:8946f75dbcb2a56441fbc496e871523f:e039445df3c50a4d7e791682d64e73f0:34c7acec5a7a75e6bc429cf82e2a5d32$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 
