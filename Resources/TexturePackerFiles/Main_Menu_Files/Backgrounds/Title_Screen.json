@@ -10,11 +10,11 @@
 ],
 
 "animations": {
-    "Title_Background": { "frames": [0] }
+    "Title_Screen_Background": { "frames": [0] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:cbb2d439ef71fcebe76e854d9f531ecf:064aca62748071d0bc58f8aec47ef885:5fcc268959ce5ff088b567ebab8ff8d9$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:d2a50b9ef28457ca91ac20c439891c8d:20db98625f2356828698db5e58e77cea:5fcc268959ce5ff088b567ebab8ff8d9$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 

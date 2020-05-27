@@ -13,11 +13,14 @@
 ],
 
 "animations": {
-    "Ocean Floor (first background)/Ocean_Floor_Layer": { "frames": [0, 1, 2, 3] }
+    "Ocean Floor (first background)/Blue": { "frames": [0] },
+    "Ocean Floor (first background)/Coral": { "frames": [1] },
+    "Ocean Floor (first background)/Seaweed": { "frames": [2] },
+    "Ocean Floor (first background)/Shells": { "frames": [3] }
 },
 
 "texturepacker": [
-        "SmartUpdateHash: $TexturePacker:SmartUpdate:fb3d72ea6aaff4e28a792e74df1ec527:2f98c11b61063dc83aede4e5d8451c0c:05d4d399a486b4c613bb376b969c93e7$",
+        "SmartUpdateHash: $TexturePacker:SmartUpdate:57273561a82dd4356c68db3db2ee73ff:0c7a7f743dfd4487094278b38d17c35d:05d4d399a486b4c613bb376b969c93e7$",
         "Created with TexturePacker (https://www.codeandweb.com/texturepacker) for EaselJS"
 ]
 
